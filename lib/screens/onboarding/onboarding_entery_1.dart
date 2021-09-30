@@ -1,18 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:food_delivery/sizer/size.dart';
-
-import '../../main.dart';
-import 'onboarding_entery_2.dart';
+import 'package:food_delivery/core/util/sizer/size.dart';
 
 class OnboardingEntery1 extends StatelessWidget {
   const OnboardingEntery1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig cfg = SizeConfig();
-    cfg.init(context);
     return SafeArea(
       child: Scaffold(
         body: Column(

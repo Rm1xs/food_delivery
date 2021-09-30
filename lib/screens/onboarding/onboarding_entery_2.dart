@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/sizer/size.dart';
+import 'package:food_delivery/core/util/sizer/size.dart';
 
 class OnboardingEntery2 extends StatelessWidget {
   const OnboardingEntery2({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class OnboardingEntery2 extends StatelessWidget {
                 child: Image.asset(
                   'assets/images/Illustration2.png',
                   fit: BoxFit.fitWidth,
-                )),
+                ),),
             Padding(
               padding: EdgeInsets.all(getProportionateScreenHeight(25)),
               child: const Align(

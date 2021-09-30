@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:food_delivery/ui/auth/signup/signup.dart';
-import 'package:food_delivery/ui/onboarding/onboarding_entery_1.dart';
-import 'package:food_delivery/ui/onboarding/onboarding_entery_2.dart';
-import 'package:food_delivery/ui/onboarding/onboarding_screen.dart';
+import 'package:food_delivery/screens/onboarding/onboarding_entery_1.dart';
+import 'package:food_delivery/screens/onboarding/onboarding_entery_2.dart';
+import 'package:food_delivery/screens/onboarding/onboarding_screen.dart';
+
+
+import 'core/util/sizer/size.dart';
+import 'features/auth/presentation/screen/login/signin.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +18,7 @@ class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     '/OnBoard1': (BuildContext context) => const OnboardingEntery1(),
     '/OnBoard2': (BuildContext context) => const OnboardingEntery2(),
-    '/SignUp': (BuildContext context) => const SignUp(),
+    '/SignUp': (BuildContext context) => const SignIn(),
   };
 
   @override
@@ -55,6 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig cfg = SizeConfig();
+    cfg.init(context);
     return const Onboarding();
   }
 }
