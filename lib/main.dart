@@ -1,25 +1,16 @@
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery/screens/onboarding/onboarding_entery_1.dart';
-import 'package:food_delivery/screens/onboarding/onboarding_entery_2.dart';
 import 'package:food_delivery/screens/onboarding/onboarding_screen.dart';
 
-
-import 'core/util/sizer/size.dart';
-import 'features/auth/presentation/screen/login/signin.dart';
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
-
-  final routes = <String, WidgetBuilder>{
-    '/OnBoard1': (BuildContext context) => const OnboardingEntery1(),
-    '/OnBoard2': (BuildContext context) => const OnboardingEntery2(),
-    '/SignUp': (BuildContext context) => const SignIn(),
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -30,36 +21,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const SafeArea(
         child: Scaffold(
-          body: SplashScreen(nextRoute: '/OnBoard1'),
+          body: Onboarding(),
         ),
       ),
-      routes: routes,
     );
-  }
-}
-
-class SplashScreen extends StatefulWidget {
-  final String nextRoute;
-
-  const SplashScreen({Key? key, required this.nextRoute}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacementNamed(widget.nextRoute);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig cfg = SizeConfig();
-    cfg.init(context);
-    return const Onboarding();
   }
 }

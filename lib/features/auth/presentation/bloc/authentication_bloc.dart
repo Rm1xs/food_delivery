@@ -30,14 +30,17 @@ class AuthenticationBloc
         : const AuthenticationState.unauthenticated());
   }
 
-  void _onLogoutRequested(
-      AppLogoutRequested event, Emitter<AuthenticationState> emit) {
-    unawaited(_authenticationRepository.logOut());
+  void _onLogoutRequested(AppLogoutRequested event, Emitter<AuthenticationState> emit) {
+    unawaited();
   }
 
   @override
   Future<void> close() {
     _userSubscription.cancel();
     return super.close();
+  }
+
+  void unawaited() {
+    _authenticationRepository.logOut();
   }
 }
