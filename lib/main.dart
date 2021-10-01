@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/auth/presentation/screen/login/signin.dart';
+import 'package:food_delivery/features/auth/presentation/screen/signup/signup.dart';
 import 'package:food_delivery/screens/onboarding/onboarding_screen.dart';
+
+import 'core/util/sizer/size.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const SafeArea(
         child: Scaffold(
-          body: Onboarding(),
+          body: SignUp(),
         ),
       ),
     );
