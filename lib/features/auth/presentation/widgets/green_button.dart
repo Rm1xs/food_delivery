@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/auth/presentation/screen/login/signin.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/signup.dart';
 import 'package:sizer/sizer.dart';
 
@@ -45,7 +46,7 @@ class GreenButton extends StatelessWidget {
         ),
         onPressed: () {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => SignUp()));
+              .push(MaterialPageRoute(builder: (context) => SignIn()));
         },
         child: Padding(
           padding: EdgeInsets.only(

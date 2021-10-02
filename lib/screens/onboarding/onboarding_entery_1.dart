@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/green_button.dart';
-import 'onboarding_entery_2.dart';
 import 'package:sizer/sizer.dart';
-import 'package:sizer/sizer.dart';
+
 
 class OnboardingEntery1 extends StatelessWidget {
   const OnboardingEntery1({Key? key}) : super(key: key);
@@ -13,8 +12,7 @@ class OnboardingEntery1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SafeArea(
-          child: Padding(
+        body: Padding(
             padding: EdgeInsets.all(3.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +47,7 @@ class OnboardingEntery1 extends StatelessWidget {
                       'Here You Can find a chef or dish for every\ntaste and color. Enjoy!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 13.sp,
+                        fontSize: 10.sp,
                       ),
                     ),
                   ),
@@ -59,7 +57,6 @@ class OnboardingEntery1 extends StatelessWidget {
                 ),
               ],
             ),
-          ),
         ),
       ),
     );

@@ -112,7 +112,7 @@ class SignIn extends StatelessWidget {
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
+                            children: [
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
                                 child: Icon(
@@ -123,7 +123,7 @@ class SignIn extends StatelessWidget {
                               Text(
                                 'Facebook',
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 15),
+                                    color: Colors.black, fontSize: 11.sp),
                               ),
                             ],
                           ),
@@ -156,7 +156,7 @@ class SignIn extends StatelessWidget {
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
+                            children: [
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
                                 child: Icon(
@@ -167,7 +167,7 @@ class SignIn extends StatelessWidget {
                               Text(
                                 'Google',
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 15),
+                                    color: Colors.black, fontSize: 11.sp),
                               ),
                             ],
                           ),
