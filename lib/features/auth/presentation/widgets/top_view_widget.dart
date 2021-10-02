@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/core/util/sizer/size.dart';
 import 'package:sizer/sizer.dart';
 
 class TopViewWidget extends StatelessWidget {

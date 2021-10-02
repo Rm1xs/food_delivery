@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/core/util/sizer/size.dart';
+import 'package:food_delivery/features/auth/presentation/screen/signup/signup.dart';
 import 'package:sizer/sizer.dart';
 
 class GreenButton extends StatelessWidget {
+  final String text;
+
   const GreenButton({
     Key? key,
+    required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 7.h,
-      width: 70.w,
+      height: 6.5.h,
+      width: 35.w,
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
@@ -41,15 +44,16 @@ class GreenButton extends StatelessWidget {
           shadowColor: MaterialStateProperty.all(Colors.transparent),
         ),
         onPressed: () {
-          Navigator.pushNamed(context, '/OnBoard2');
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => SignUp()));
         },
-        child: const Padding(
+        child: Padding(
           padding: EdgeInsets.only(
             top: 10,
             bottom: 10,
           ),
           child: Text(
-            'Login',
+            text,
             style: TextStyle(
               fontSize: 18,
               // fontWeight: FontWeight.w700,

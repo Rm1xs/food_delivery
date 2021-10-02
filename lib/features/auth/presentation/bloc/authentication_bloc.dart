@@ -31,16 +31,13 @@ class AuthenticationBloc
   }
 
   void _onLogoutRequested(AppLogoutRequested event, Emitter<AuthenticationState> emit) {
-    unawaited();
+    //unawaited
+    _authenticationRepository.logOut();
   }
 
   @override
   Future<void> close() {
     _userSubscription.cancel();
     return super.close();
-  }
-
-  void unawaited() {
-    _authenticationRepository.logOut();
   }
 }
