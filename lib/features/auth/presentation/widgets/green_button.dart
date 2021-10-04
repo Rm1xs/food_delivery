@@ -47,9 +47,9 @@ class GreenButton extends StatelessWidget {
           shadowColor: MaterialStateProperty.all(Colors.transparent),
         ),
         onPressed: () {
-          if (redirectToRoute == signInRoute) {
+          if (redirectToRoute == signUpRoute) {
             Navigator.of(context).pushNamedAndRemoveUntil(
-                signInRoute, (Route<dynamic> route) => false);
+                signUpRoute, (Route<dynamic> route) => false);
           } else {
             Navigator.pushNamed(context, redirectToRoute);
           }
