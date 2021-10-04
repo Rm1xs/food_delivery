@@ -10,10 +10,11 @@ class AuthenticationBloc
       {required AuthUseCaseImplementation authenticationRepository})
       : _authenticationRepository = authenticationRepository,
         super(
-        authenticationRepository.currentUser().isNotEmpty
-            ? AuthenticationState.authenticated(authenticationRepository.currentUser())
-            : const AuthenticationState.unauthenticated(),
-      ) {
+          authenticationRepository.currentUser().isNotEmpty
+              ? AuthenticationState.authenticated(
+                  authenticationRepository.currentUser())
+              : const AuthenticationState.unauthenticated(),
+        ) {
     on<AppUserChanged>(_onUserChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
     _userSubscription = _authenticationRepository.user().listen(
@@ -30,7 +31,8 @@ class AuthenticationBloc
         : const AuthenticationState.unauthenticated());
   }
 
-  void _onLogoutRequested(AppLogoutRequested event, Emitter<AuthenticationState> emit) {
+  void _onLogoutRequested(
+      AppLogoutRequested event, Emitter<AuthenticationState> emit) {
     unawaited(_authenticationRepository.logOut());
   }
 

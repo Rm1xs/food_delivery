@@ -14,7 +14,7 @@ class LoginButton extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
+            ? const CircularProgressIndicator(color: Color.fromRGBO(21, 190, 119, 1),)
             : Container(
                 height: 7.h,
                 width: 40.w,
@@ -51,9 +51,7 @@ class LoginButton extends StatelessWidget {
                     shadowColor: MaterialStateProperty.all(Colors.transparent),
                   ),
                   onPressed: state.status.isValidated
-                      ? () => context
-                          .read<LoginCubit>()
-                          .logInWithCredentials()
+                      ? () => context.read<LoginCubit>().logInWithCredentials()
                       : null,
                   child: Padding(
                     padding: const EdgeInsets.only(
