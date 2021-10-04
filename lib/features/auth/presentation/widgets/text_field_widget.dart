@@ -15,13 +15,13 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey, width: 0.0),
           borderRadius: BorderRadius.all(
             Radius.circular(15.0),
           ),
         ),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         hintText: hintText,
         hintStyle: TextStyle(color: Colors.grey[400]),
         fillColor: Colors.white,

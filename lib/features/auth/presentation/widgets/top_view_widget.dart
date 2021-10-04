@@ -14,7 +14,7 @@ class TopViewWidget extends StatelessWidget {
         children: [
           ShaderMask(
             shaderCallback: (rect) {
-              return LinearGradient(
+              return const LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [Colors.white, Colors.transparent],
