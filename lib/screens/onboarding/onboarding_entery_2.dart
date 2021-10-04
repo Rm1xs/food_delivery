@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/route/routes_path.dart';
-import 'package:food_delivery/features/auth/presentation/screen/login/sign_in.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/green_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';

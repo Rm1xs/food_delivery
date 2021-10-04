@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart'
     as customUser;
@@ -5,10 +7,16 @@ import 'package:food_delivery/features/auth/domain/repositories/auth_repository.
 import 'package:hive/hive.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
-  Box box = Hive.box('userBox');
+  late final Box box;
   final FirebaseAuth _firebaseAuth;
 
-  AuthRepositoryImplementation(this._firebaseAuth);
+  AuthRepositoryImplementation(this._firebaseAuth) {
+    openBox();
+  }
+
+  Future<void> openBox() async {
+    box = await Hive.openBox('userBox');
+  }
 
   @override
   customUser.User currentUser() {
