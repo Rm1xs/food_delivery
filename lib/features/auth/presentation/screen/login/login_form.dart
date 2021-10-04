@@ -9,7 +9,6 @@ import 'package:food_delivery/features/auth/presentation/screen/login/cubit/logi
 import 'package:food_delivery/features/auth/presentation/screen/login/cubit/login_state.dart';
 import 'package:food_delivery/features/auth/presentation/screen/login/login_widgets/button_login.dart';
 import 'package:food_delivery/features/auth/presentation/screen/login/login_widgets/email_input_login.dart';
-import 'package:food_delivery/features/auth/presentation/widgets/green_button.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/top_view_widget.dart';
 import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,14 +27,46 @@ class SignIn extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure')),
+                SnackBar(
+                  content: const Text('Authentication Failure'),
+                  action: SnackBarAction(
+                    label: 'Hide',
+                    textColor: Colors.white,
+                    onPressed: () {},
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  backgroundColor: Colors.deepOrangeAccent,
+                )
             );
+        }
+        if(state.status.isSubmissionSuccess){
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+                SnackBar(
+                  content: const Text('Authentication Success'),
+                  action: SnackBarAction(
+                    label: 'Hide',
+                    textColor: Colors.white,
+                    onPressed: () {},
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  backgroundColor: Colors.green,
+                )
+            );
+             Navigator.pushNamed(context, entery1Route);
         }
       },
       child: SingleChildScrollView(
         child: Column(
           children: [
-            TopViewWidget(),
+            const TopViewWidget(),
             Padding(
               padding: EdgeInsets.all(3.h),
               child: SizedBox(
@@ -61,7 +92,7 @@ class SignIn extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(5.w, 1.h, 5.w, 0.h),
+              padding: EdgeInsets.fromLTRB(5.w, 2.h, 5.w, 0.h),
               child: SizedBox(
                 width: double.infinity,
                 height: 8.h,

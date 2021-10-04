@@ -54,9 +54,6 @@ class LoginButton extends StatelessWidget {
                       ? () => context
                           .read<LoginCubit>()
                           .logInWithCredentials()
-                          .whenComplete(
-                            () => Navigator.pushNamed(context, entery1Route),
-                          )
                       : null,
                   child: Padding(
                     padding: const EdgeInsets.only(
