@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/green_button.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/top_view_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 class SignIn extends StatelessWidget {
@@ -24,9 +27,11 @@ class SignIn extends StatelessWidget {
                   child: Text(
                     'Login To Your Account',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.sp,
+                    style: GoogleFonts.ptSans(
+                      textStyle: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -41,6 +46,13 @@ class SignIn extends StatelessWidget {
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.grey, width: 0.0),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15.0),
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueAccent, width: 1),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
@@ -67,6 +79,13 @@ class SignIn extends StatelessWidget {
                             Radius.circular(15.0),
                           ),
                         ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueAccent, width: 1),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15.0),
+                          ),
+                        ),
                         border: const OutlineInputBorder(),
                         hintText: 'Password',
                         hintStyle: TextStyle(color: Colors.grey[400]),
@@ -80,9 +99,11 @@ class SignIn extends StatelessWidget {
                 child: Text(
                   'Or Continue With',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
+                  style: GoogleFonts.ptSans(
+                    textStyle: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -132,7 +153,7 @@ class SignIn extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   Padding(
                     padding: EdgeInsets.fromLTRB(5.w, 1.h, 5.w, 0.h),
                     child: SizedBox(
@@ -179,18 +200,26 @@ class SignIn extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.all(3.5.h),
-                child: Text(
-                  'Forgot Your Password?',
-                  style: TextStyle(
-                      color: Colors.lightGreen[800],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10.sp,
-                      decoration: TextDecoration.underline),
-                ),
+                padding: EdgeInsets.all(4.h),
+                child: InkWell(
+                    child: Text(
+                      'Forgot Your Password ?',
+                      style: GoogleFonts.ptSans(
+                        textStyle: const TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 0.3,
+                          color: Color.fromRGBO(83, 232, 139, 1),
+                        ),
+                      ),
+                    ),
+                    onTap: () => Navigator.pushNamed(context, entery1Route)),
               ),
-              const GreenButton(
-                text: 'Login', redirectToRoute: signUpRoute,
+              Padding(
+                padding: EdgeInsets.all(1.h),
+                child: const GreenButton(
+                  text: 'Login',
+                  redirectToRoute: signUpRoute,
+                ),
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/route/routes_path.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 class GreenButton extends StatelessWidget {
@@ -60,10 +61,11 @@ class GreenButton extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: TextStyle(
-              fontSize: 11.sp,
-              // fontWeight: FontWeight.w700,
-              color: Colors.white,
+            style: GoogleFonts.ptSans(
+              textStyle: TextStyle(
+                fontSize: 11.sp,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

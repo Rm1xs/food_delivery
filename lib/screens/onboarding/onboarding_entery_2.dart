@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:food_delivery/features/auth/presentation/screen/login/sign_in.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/green_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 class OnboardingEntery2 extends StatelessWidget {
@@ -31,9 +33,11 @@ class OnboardingEntery2 extends StatelessWidget {
                   child: Text(
                     'Food Ninja is Where Your\nComfort Food Lives',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
+                    style: GoogleFonts.ptSans(
+                      textStyle: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -45,8 +49,10 @@ class OnboardingEntery2 extends StatelessWidget {
                   child: Text(
                     'Enjoy a fast and smooth food delivery at\nyour doorstep',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 11.sp,
+                    style: GoogleFonts.ptSans(
+                      textStyle: TextStyle(
+                        fontSize: 11.sp,
+                      ),
                     ),
                   ),
                 ),
