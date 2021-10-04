@@ -5,6 +5,7 @@ import 'package:food_delivery/features/auth/presentation/widgets/round_check_box
 import 'package:food_delivery/features/auth/presentation/widgets/text_field_widget.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/text_widget.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/top_view_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 class SignUp extends StatelessWidget {
@@ -68,8 +69,19 @@ class SignUp extends StatelessWidget {
               const GreenButton(text: 'Create Account', redirectToRoute: signInRoute,), //10
               Container(
                 height: 7.h,
-                child: const Center(
-                  child: Text('already have an account?'),
+                child: Center(
+                  child: InkWell(
+                      child: Text(
+                        'Already have account ?',
+                        style: GoogleFonts.ptSans(
+                          textStyle: const TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 0.3,
+                            color: Color.fromRGBO(83, 232, 139, 1),
+                          ),
+                        ),
+                      ),
+                      onTap: () => Navigator.pushNamed(context, signInRoute)),
                 ),
               ), //5
             ],

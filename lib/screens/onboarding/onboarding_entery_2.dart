@@ -56,7 +56,7 @@ class OnboardingEntery2 extends StatelessWidget {
                   ),
                 ),
               ),
-              const GreenButton(text: 'Next', redirectToRoute: signInRoute),
+              const GreenButton(text: 'Next', redirectToRoute: signUpRoute),
             ],
           ),
         ),

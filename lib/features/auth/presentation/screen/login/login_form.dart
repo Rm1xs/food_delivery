@@ -28,7 +28,7 @@ class SignIn extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(
                 SnackBar(
-                  content: const Text('Authentication Failure'),
+                  content: const Text('Authentication Failure!'),
                   action: SnackBarAction(
                     label: 'Hide',
                     textColor: Colors.white,
@@ -158,7 +158,7 @@ class SignIn extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: EdgeInsets.fromLTRB(5.w, 2.h, 5.w, 0.h),
                   child: SizedBox(
