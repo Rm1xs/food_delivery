@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery/screens/onboarding/onboarding_screen.dart';
-import 'core/util/route/route_generator.dart';
+import 'package:food_delivery/core/route/routes.dart' as customRoutes;
+import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:sizer/sizer.dart';
 
 Future<void> main() async {
@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SafeArea(child: Scaffold(body: Onboarding(),)),
+        onGenerateRoute: customRoutes.Router.generateRoute,
+        initialRoute: onboardingRoute,
       );
     });
   }

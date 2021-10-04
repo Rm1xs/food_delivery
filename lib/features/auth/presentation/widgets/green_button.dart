@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/features/auth/presentation/screen/login/signin.dart';
-import 'package:food_delivery/features/auth/presentation/screen/signup/signup.dart';
+import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:sizer/sizer.dart';
 
 class GreenButton extends StatelessWidget {
   final String text;
+  final String redirectToRoute;
 
   const GreenButton({
     Key? key,
     required this.text,
+    required this.redirectToRoute,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 6.5.h,
-      width: 35.w,
+      height: 7.h,
+      width: 40.w,
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
@@ -45,18 +46,22 @@ class GreenButton extends StatelessWidget {
           shadowColor: MaterialStateProperty.all(Colors.transparent),
         ),
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => SignIn()));
+          if (redirectToRoute == signInRoute) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                signInRoute, (Route<dynamic> route) => false);
+          } else {
+            Navigator.pushNamed(context, redirectToRoute);
+          }
         },
         child: Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 10,
             bottom: 10,
           ),
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 11.sp,
               // fontWeight: FontWeight.w700,
               color: Colors.white,
             ),

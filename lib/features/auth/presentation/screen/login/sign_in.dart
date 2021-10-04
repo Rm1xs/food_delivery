@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/green_button.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/top_view_widget.dart';
 import 'package:sizer/sizer.dart';
@@ -113,7 +114,7 @@ class SignIn extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
                                 child: Icon(
                                   FontAwesome5.facebook,
@@ -131,7 +132,7 @@ class SignIn extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding: EdgeInsets.fromLTRB(5.w, 1.h, 5.w, 0.h),
                     child: SizedBox(
@@ -157,7 +158,7 @@ class SignIn extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
                                 child: Icon(
                                   FontAwesome5.google,
@@ -188,8 +189,8 @@ class SignIn extends StatelessWidget {
                       decoration: TextDecoration.underline),
                 ),
               ),
-              GreenButton(
-                text: 'Login',
+              const GreenButton(
+                text: 'Login', redirectToRoute: signUpRoute,
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/green_button.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/round_check_box.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/text_field_widget.dart';
@@ -16,7 +17,7 @@ class SignUp extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              TopViewWidget(), //35
+              const TopViewWidget(), //35
               TextWidget(text: 'Sign Up For Free'), //5
 
               Padding(
@@ -64,10 +65,10 @@ class SignUp extends StatelessWidget {
                 ),
               ), //30
 
-              GreenButton(text: 'Create Account',), //10
+              const GreenButton(text: 'Create Account', redirectToRoute: signInRoute,), //10
               Container(
                 height: 7.h,
-                child: Center(
+                child: const Center(
                   child: Text('already have an account?'),
                 ),
               ), //5
