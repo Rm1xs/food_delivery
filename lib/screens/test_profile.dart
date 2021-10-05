@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/auth/data/models/user.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
 import 'package:provider/src/provider.dart';
@@ -13,9 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    //error
     final user = sl<AuthenticationBloc>().state.user;
-    var a = user;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -23,7 +22,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             key: const Key('homePage_logout_iconButton'),
             icon: const Icon(Icons.exit_to_app),
-            onPressed: () => context.read<AuthenticationBloc>().add(AppLogoutRequested()),
+            onPressed: () => sl<AuthenticationBloc>().add(AppLogoutRequested()),
           )
         ],
       ),
