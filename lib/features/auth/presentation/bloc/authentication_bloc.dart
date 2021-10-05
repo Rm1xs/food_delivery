@@ -10,9 +10,9 @@ class AuthenticationBloc
       {required AuthUseCaseImplementation authenticationRepository})
       : _authenticationRepository = authenticationRepository,
         super(
-          authenticationRepository.currentUser().isNotEmpty
+          authenticationRepository.currentUser.isNotEmpty
               ? AuthenticationState.authenticated(
-                  authenticationRepository.currentUser())
+                  authenticationRepository.currentUser)
               : const AuthenticationState.unauthenticated(),
         ) {
     on<AppUserChanged>(_onUserChanged);

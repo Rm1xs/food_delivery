@@ -22,7 +22,7 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImplementation(FirebaseAuth.instance),
+        () => AuthRepositoryImplementation(),
   );
 
   // Data sources

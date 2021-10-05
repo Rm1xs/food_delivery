@@ -15,6 +15,7 @@ class HomePage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     //error
     final user = sl<AuthenticationBloc>().state.user;
+    var a = user;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),

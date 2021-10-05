@@ -5,22 +5,23 @@ import 'package:food_delivery/features/auth/domain/repositories/auth_repository.
 import 'package:hive/hive.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
-  late final Box box;
+  // final Box _box;
   final FirebaseAuth _firebaseAuth;
+  // AuthRepositoryImplementation(this._firebaseAuth) {
+  //   FirebaseAuth? firebaseAuth;
+  //   openBox();
+  // }
+  AuthRepositoryImplementation({
+    FirebaseAuth? firebaseAuth,
+    // Box? box,
+  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
-  AuthRepositoryImplementation(this._firebaseAuth) {
-    openBox();
-  }
-
-  Future<void> openBox() async {
-    box = await Hive.openBox('userBox');
-  }
 
   @override
-  customUser.User currentUser() {
+  customUser.User get currentUser {
     String uid = _firebaseAuth.currentUser!.uid;
-    User value = box.get(uid);
-    return value.toUser;
+    //User value = _box.get(uid);
+    return  customUser.User.empty;
   }
 
   @override
@@ -67,7 +68,7 @@ class AuthRepositoryImplementation implements AuthRepository {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
       final user =
           firebaseUser == null ? customUser.User.empty : firebaseUser.toUser;
-      box.put(user.id, user);
+     // _box.put(user.id, user);
       return user;
     });
   }
