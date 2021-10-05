@@ -60,7 +60,7 @@ class SignIn extends StatelessWidget {
                   backgroundColor: Colors.green,
                 )
             );
-             Navigator.pushNamed(context, entery1Route);
+             Navigator.pushNamed(context, homePage);
         }
       },
       child: SingleChildScrollView(
@@ -119,7 +119,7 @@ class SignIn extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(5.w, 2.h, 5.w, 0.h),
                   child: SizedBox(
                     width: 40.w,
-                    height: 7.h,
+                    height: 7.5.h,
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ButtonStyle(
@@ -163,7 +163,7 @@ class SignIn extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(5.w, 2.h, 5.w, 0.h),
                   child: SizedBox(
                     width: 40.w,
-                    height: 7.h,
+                    height: 7.5.h,
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ButtonStyle(

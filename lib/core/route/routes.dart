@@ -5,6 +5,7 @@ import 'package:food_delivery/screens/congrats/sign_up_success.dart';
 import 'package:food_delivery/screens/onboarding/onboarding_entery_1.dart';
 import 'package:food_delivery/screens/onboarding/onboarding_entery_2.dart';
 import 'package:food_delivery/screens/onboarding/onboarding_screen.dart';
+import 'package:food_delivery/screens/test_profile.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -21,6 +22,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => const SignUp());
       case '/SignUpSuccess':
         return MaterialPageRoute(builder: (_) => const SignUpSuccess());
+      case '/HomePage':
+        return MaterialPageRoute(builder: (_) => const HomePage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

@@ -8,8 +8,8 @@ class AuthUseCaseImplementation extends UseCase {
   final AuthRepository repository;
 
   @override
-  User currentUser()  {
-    return repository.currentUser();
+  User get currentUser {
+    return repository.currentUser;
   }
 
   @override

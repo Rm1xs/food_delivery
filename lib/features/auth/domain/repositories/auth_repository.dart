@@ -11,7 +11,7 @@ abstract class AuthRepository {
   Future<void> signUp(String email, String password);
 
   ///Get current User
-  User currentUser();
+  User get currentUser;
 
   ///Get info of User
   Stream<User> user();
