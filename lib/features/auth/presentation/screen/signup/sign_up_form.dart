@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/route/routes_path.dart';
-import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
+import 'package:food_delivery/features/auth/presentation/screen/login/login_page.dart';
+import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_page.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_button.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_confirm_password_input.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_email_input.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_password_input.dart';
-import 'package:food_delivery/features/auth/presentation/widgets/green_button.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/round_check_box.dart';
-import 'package:food_delivery/features/auth/presentation/widgets/text_field_widget.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/text_widget.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/top_view_widget.dart';
 import 'package:formz/formz.dart';
@@ -68,7 +67,7 @@ class SignUp extends StatelessWidget {
                               onTap: (selected) {},
                             ),
                             SizedBox(width: 10),
-                            Text('Email Me About Special Fisting'),
+                            Text('Email Me About Special'),
                           ],
                         ),
                       ],
@@ -81,17 +80,18 @@ class SignUp extends StatelessWidget {
                   height: 7.h,
                   child: Center(
                     child: InkWell(
-                        child: Text(
-                          'Already have account ?',
-                          style: GoogleFonts.ptSans(
-                            textStyle: const TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationThickness: 0.3,
-                              color: Color.fromRGBO(83, 232, 139, 1),
-                            ),
+                      child: Text(
+                        'Already have account ?',
+                        style: GoogleFonts.ptSans(
+                          textStyle: const TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 0.3,
+                            color: Color.fromRGBO(83, 232, 139, 1),
                           ),
                         ),
-                        onTap: () => Navigator.pushNamed(context, signInRoute)),
+                      ),
+                      onTap: () => Navigator.push(context, SignUpPage.route())
+                    ),
                   ),
                 ), //5
               ],
@@ -102,11 +102,3 @@ class SignUp extends StatelessWidget {
     );
   }
 }
-
-//30
-//5
-//40
-//7
-//7
-
-//92 ALL

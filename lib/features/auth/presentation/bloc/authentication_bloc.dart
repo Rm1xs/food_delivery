@@ -33,7 +33,7 @@ class AuthenticationBloc
 
   void _onLogoutRequested(
       AppLogoutRequested event, Emitter<AuthenticationState> emit) {
-    unawaited(_authenticationRepository.logOut());
+    _authenticationRepository.logOut();
   }
 
   @override

@@ -5,3 +5,4 @@ const String signInRoute = '/signIn';
 const String signUpRoute = '/signUp';
 const String signUpSuccess = '/SignUpSuccess';
 const String homePage = '/HomePage';
+const String compliteRegistration = '/CompliteRegistration';

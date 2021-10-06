@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/cubit/sign_up_cubit.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/cubit/sign_up_state.dart';
 import 'package:formz/formz.dart';

@@ -18,12 +18,39 @@ class ConfirmPasswordInput extends StatelessWidget {
               .confirmedPasswordChanged(confirmPassword),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'confirm password',
-            helperText: '',
-            errorText: state.confirmedPassword.invalid
-                ? 'passwords do not match'
-                : null,
-          ),
+              errorStyle: TextStyle(height: 0),
+              errorText: state.confirmedPassword.invalid
+                  ? ''
+                  : null,
+              focusedErrorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+              errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueAccent, width: 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+              border: const OutlineInputBorder(),
+              labelText: 'Confirm Password',
+              hintStyle: TextStyle(color: Colors.grey[400]),
+              fillColor: Colors.white,
+              filled: true),
         );
       },
     );

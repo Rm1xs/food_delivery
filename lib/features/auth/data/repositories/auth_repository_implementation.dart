@@ -1,27 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart'
     as customUser;
-import 'package:food_delivery/features/auth/data/models/user_hive.dart';
 import 'package:food_delivery/features/auth/domain/repositories/auth_repository.dart';
-import 'package:hive/hive.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
-  final Box _box;
   final FirebaseAuth _firebaseAuth;
 
   AuthRepositoryImplementation({
     FirebaseAuth? firebaseAuth,
-    Box? box,
-  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance, _box = box ?? Hive.box<UserHive>('userBox');
-
+  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   @override
   customUser.User get currentUser {
-    customUser.User? value;
-    String uid = _firebaseAuth.currentUser!.uid;
-    value = _box.get(uid);
-
-    return value ?? customUser.User.empty;
+    //customUser.User? value;
+    if (_firebaseAuth.currentUser == null) {
+      return customUser.User.empty;
+    } else {
+      customUser.User user = customUser.User.empty;
+      _firebaseAuth.authStateChanges().map((firebaseUser) {
+        user =
+            firebaseUser == null ? customUser.User.empty : firebaseUser.toUser;
+      });
+      return user;
+    }
   }
 
   @override
@@ -68,8 +69,6 @@ class AuthRepositoryImplementation implements AuthRepository {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
       final user =
           firebaseUser == null ? customUser.User.empty : firebaseUser.toUser;
-      //_box.put(user.id, user);
-      _box.add(user);
       return user;
     });
   }
@@ -81,7 +80,6 @@ extension on User {
         id: uid, email: email, name: displayName, photo: photoURL);
   }
 }
-
 
 /// Thrown if during the sign up process if a failure occurs.
 class SignUpFailure implements Exception {}

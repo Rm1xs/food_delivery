@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/features/auth/data/models/user.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
 import 'package:provider/src/provider.dart';
@@ -10,11 +9,14 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   static Page page() => const MaterialPage<void>(child: HomePage());
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => const HomePage());
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final user = sl<AuthenticationBloc>().state.user;
+    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),

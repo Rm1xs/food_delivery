@@ -14,10 +14,37 @@ class EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
-            helperText: '',
-            errorText: state.email.invalid ? 'invalid email' : null,
-          ),
+              errorStyle: const TextStyle(height: 0),
+              errorText: state.email.invalid ? '' : null,
+              focusedErrorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+              errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueAccent, width: 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+              border: const OutlineInputBorder(),
+              labelText: 'Email',
+              hintStyle: TextStyle(color: Colors.grey[400]),
+              fillColor: Colors.white,
+              filled: true),
         );
       },
     );

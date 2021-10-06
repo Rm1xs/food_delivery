@@ -42,26 +42,26 @@ class SignIn extends StatelessWidget {
                 )
             );
         }
-        if(state.status.isSubmissionSuccess){
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-                SnackBar(
-                  content: const Text('Authentication Success'),
-                  action: SnackBarAction(
-                    label: 'Hide',
-                    textColor: Colors.white,
-                    onPressed: () {},
-                  ),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  backgroundColor: Colors.green,
-                )
-            );
-             Navigator.pushNamed(context, homePage);
-        }
+        // if(state.status.isSubmissionSuccess){
+        //   ScaffoldMessenger.of(context)
+        //     ..hideCurrentSnackBar()
+        //     ..showSnackBar(
+        //         SnackBar(
+        //           content: const Text('Authentication Success'),
+        //           action: SnackBarAction(
+        //             label: 'Hide',
+        //             textColor: Colors.white,
+        //             onPressed: () {},
+        //           ),
+        //           behavior: SnackBarBehavior.floating,
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(24),
+        //           ),
+        //           backgroundColor: Colors.green,
+        //         )
+        //     );
+        //      // Navigator.pushNamed(context, homePage);
+        // }
       },
       child: SingleChildScrollView(
         child: Column(
