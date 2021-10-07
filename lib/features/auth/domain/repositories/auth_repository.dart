@@ -7,6 +7,9 @@ abstract class AuthRepository {
   ///Login
   Future<void> logInWithGoogle();
 
+  ///Sms
+  Future<void> getSmsConfirmation(String phoneNumber);
+
   ///SignUp
   Future<void> signUp(String email, String password);
 

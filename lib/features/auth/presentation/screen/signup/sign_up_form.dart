@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/core/route/routes_path.dart';
-import 'package:food_delivery/features/auth/presentation/screen/login/login_page.dart';
-import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_page.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_button.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_confirm_password_input.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_email_input.dart';
@@ -24,6 +21,7 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SignUpCubit, SignUpState>(
       listener: (context, state) {
+
         if (state.status.isSubmissionSuccess) {
           Navigator.of(context).pop();
         } else if (state.status.isSubmissionFailure) {
@@ -49,9 +47,9 @@ class SignUp extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        EmailInput(),
-                        PasswordInput(),
-                        ConfirmPasswordInput(),
+                        SizedBox(height: 7.h, child: EmailInput()),
+                        SizedBox(height: 7.h, child: PasswordInput()),
+                        SizedBox(height: 7.h, child: ConfirmPasswordInput()),
                         Row(
                           children: [
                             RoundCheckBox(
@@ -90,7 +88,7 @@ class SignUp extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onTap: () => Navigator.push(context, SignUpPage.route())
+                      onTap: () => Navigator.of(context).pop()
                     ),
                   ),
                 ), //5

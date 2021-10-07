@@ -72,7 +72,30 @@ class AuthRepositoryImplementation implements AuthRepository {
       return user;
     });
   }
+
+  @override
+  Future<void> getSmsConfirmation(String phoneNumber) async {
+    // _firebaseAuth.verifyPhoneNumber(
+    //     phoneNumber: phoneNumber,
+    //     timeout: Duration(seconds: 30),
+    //     verificationCompleted: _onVerificationCompleted,
+    //     verificationFailed: (Exception authException){
+    //       print(authException);
+    //     },
+    //     codeSent: _onCodeSent,
+    //     codeAutoRetrievalTimeout: null
+    // );
+  }
 }
+
+_onCodeSent(String verificationId, int? forceResendingToken) {
+
+}
+
+_onVerificationCompleted(PhoneAuthCredential authCredential) async {
+
+}
+
 
 extension on User {
   customUser.User get toUser {

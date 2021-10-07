@@ -3,8 +3,8 @@ import 'package:food_delivery/features/auth/presentation/bloc/authentication_blo
 
 import '../../injection.dart';
 
-class CompliteRegistration extends StatelessWidget {
-  CompliteRegistration({Key? key}) : super(key: key);
+class CompleteRegistration extends StatelessWidget {
+  CompleteRegistration({Key? key}) : super(key: key);
   final user = sl<AuthenticationBloc>().state.user;
   @override
   Widget build(BuildContext context) {
