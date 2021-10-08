@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/features/auth/presentation/screen/login/login_page.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_page.dart';
 import 'package:food_delivery/screens/congrats/sign_up_success.dart';
-import 'package:food_delivery/screens/details/complete_registration.dart';
+import 'package:food_delivery/screens/details/complete_registration_page.dart';
 import 'package:food_delivery/screens/onboarding/onboarding_entery_1.dart';
 import 'package:food_delivery/screens/onboarding/onboarding_entery_2.dart';
 import 'package:food_delivery/screens/onboarding/onboarding_screen.dart';

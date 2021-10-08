@@ -6,12 +6,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sizer/sizer.dart';
 import '../../injection.dart';
+import 'coomplete_payment_page.dart';
 
 class CompleteRegistration extends StatefulWidget {
   const CompleteRegistration({Key? key}) : super(key: key);
 
   static Page page() => const MaterialPage<void>(child: CompleteRegistration());
 
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => CompletePaymentPage());
+  }
   @override
   State<CompleteRegistration> createState() => _CompleteRegistrationState();
 }
@@ -43,14 +47,14 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
     if (_auth.currentUser != null) {
       if (_auth.currentUser!.phoneNumber != null) {
         showSmsEnterField = false;
-        size = 35;
+        size = 30;
       } else {
         showSmsEnterField = true;
-        size = 25;
+        size = 20;
       }
     } else {
       showSmsEnterField = true;
-      size = 25;
+      size = 20;
     }
     super.initState();
   }
@@ -61,17 +65,9 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Column(
-            children: [
-              Text(
-                _auth.currentUser!.email ?? 'Unknown error, try re-login',
-                style: TextStyle(color: Colors.black, fontSize: 12.sp),
-              ),
-              Text(
-                _auth.currentUser?.uid ?? 'Set phone number',
-                style: TextStyle(fontSize: 6.sp, color: Color.fromRGBO(249, 168, 77, 1)),
-              ),
-            ],
+          title: Text(
+            _auth.currentUser!.email ?? 'Unknown error, try re-login',
+            style: TextStyle(color: Colors.black, fontSize: 12.sp),
           ),
           backgroundColor: Colors.white,
           elevation: 0,
@@ -84,14 +80,14 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   color: const Color.fromRGBO(249, 168, 77, 1)
-                      .withOpacity(0.5), //Colors.white.withOpacity(0.5),
+                      .withOpacity(0.2), //Colors.white.withOpacity(0.5),
                 ),
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   icon: const Icon(
                     Icons.logout,
                   ),
-                  color: const Color.fromRGBO(218, 99, 23, 1),
+                  color: const Color.fromRGBO(218, 99, 23, 1).withOpacity(1),
                   onPressed: () =>
                       sl<AuthenticationBloc>().add(AppLogoutRequested()),
                 ),
@@ -126,7 +122,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 3.h, 0, 0),
                   child: SizedBox(
-                    height: 7.h,
+                    height: 8.h,
                     child: TextField(
                       controller: nameController,
                       keyboardType: TextInputType.text,
@@ -156,7 +152,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
                   child: SizedBox(
-                    height: 7.h,
+                    height: 8.h,
                     child: TextField(
                       controller: surnameController,
                       keyboardType: TextInputType.text,
@@ -183,40 +179,39 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: showSmsEnterField,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                    child: SizedBox(
-                      height: 7.h,
-                      child: TextField(
-                        controller: phoneController,
-                        inputFormatters: [maskFormatter],
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.grey, width: 0.0),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
-                              ),
+
+                if(showSmsEnterField)
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                  child: SizedBox(
+                    height: 8.h,
+                    child: TextField(
+                      controller: phoneController,
+                      inputFormatters: [maskFormatter],
+                      decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 0.0),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.0),
                             ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.blueAccent, width: 1),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
-                              ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.blueAccent, width: 1),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.0),
                             ),
-                            border: const OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              onPressed: () => {getSms()},
-                              icon: const Icon(Icons.send),
-                            ),
-                            labelText: 'Phone',
-                            hintStyle: TextStyle(color: Colors.grey[400]),
-                            fillColor: Colors.white,
-                            filled: true),
-                      ),
+                          ),
+                          border: const OutlineInputBorder(),
+                          suffixIcon: IconButton(
+                            onPressed: () => {getSms()},
+                            icon: const Icon(Icons.send),
+                          ),
+                          labelText: 'Phone',
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                          fillColor: Colors.white,
+                          filled: true),
                     ),
                   ),
                 ),
@@ -259,10 +254,13 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                               MaterialStateProperty.all(Colors.transparent),
                         ),
                         onPressed: () async {
-                          await _auth.currentUser?.updateDisplayName(
-                              nameController.text.trim() +
-                                  ' ' +
-                                  surnameController.text.trim());
+                          if(nameController.text.isNotEmpty && surnameController.text.isNotEmpty) {
+                            await _auth.currentUser?.updateDisplayName(
+                                nameController.text.trim() +
+                                    ' ' +
+                                    surnameController.text.trim());
+                          }
+                          Navigator.of(context).push(CompleteRegistration.route());
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(

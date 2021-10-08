@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'injection.dart' as di;
-import 'features/auth/data/models/user_hive.dart';
 
 // class MainFeatureInit {
 //   Future<void> init() async {

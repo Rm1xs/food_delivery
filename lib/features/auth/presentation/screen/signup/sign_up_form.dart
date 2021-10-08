@@ -38,12 +38,20 @@ class SignUp extends StatelessWidget {
             child: Column(
               children: [
                 const TopViewWidget(), //35
-                TextWidget(text: 'Sign Up For Free'), //5
-
+                Text(
+                  'Sign Up For Free',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.ptSans(
+                    textStyle: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 2.h),
                   child: Container(
-                    height: 43.h,
+                    height: 35.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -73,7 +81,10 @@ class SignUp extends StatelessWidget {
                   ),
                 ), //30
 
-                SignUpButton(), //10
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 8.h, 0, 0),
+                  child: SignUpButton(),
+                ), //10
                 Container(
                   height: 7.h,
                   child: Center(
