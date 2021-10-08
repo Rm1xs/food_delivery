@@ -36,9 +36,4 @@ class AuthUseCaseImplementation extends UseCase {
   Stream<User> user() {
     return repository.user();
   }
-
-  @override
-  Future<void> getSmsConfirmation(String phoneNumber) async {
-    return await repository.getSmsConfirmation(phoneNumber);
-  }
 }

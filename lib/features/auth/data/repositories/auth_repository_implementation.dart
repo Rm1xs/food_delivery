@@ -12,7 +12,6 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   customUser.User get currentUser {
-    //customUser.User? value;
     if (_firebaseAuth.currentUser == null) {
       return customUser.User.empty;
     } else {
@@ -72,35 +71,17 @@ class AuthRepositoryImplementation implements AuthRepository {
       return user;
     });
   }
-
-  @override
-  Future<void> getSmsConfirmation(String phoneNumber) async {
-    // _firebaseAuth.verifyPhoneNumber(
-    //     phoneNumber: phoneNumber,
-    //     timeout: Duration(seconds: 30),
-    //     verificationCompleted: _onVerificationCompleted,
-    //     verificationFailed: (Exception authException){
-    //       print(authException);
-    //     },
-    //     codeSent: _onCodeSent,
-    //     codeAutoRetrievalTimeout: null
-    // );
-  }
 }
-
-_onCodeSent(String verificationId, int? forceResendingToken) {
-
-}
-
-_onVerificationCompleted(PhoneAuthCredential authCredential) async {
-
-}
-
 
 extension on User {
   customUser.User get toUser {
     return customUser.User(
-        id: uid, email: email, name: displayName, photo: photoURL);
+        id: uid,
+        email: email,
+        name: displayName,
+        photo: photoURL,
+        phone: phoneNumber
+    );
   }
 }
 
