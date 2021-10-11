@@ -1,6 +1,6 @@
 import 'package:food_delivery/features/auth/data/models/user.dart';
 
-abstract class UseCase {
+abstract class AuthUseCase {
   ///Login
   Future<void> logInWithEmailAndPassword(String email, String password);
 

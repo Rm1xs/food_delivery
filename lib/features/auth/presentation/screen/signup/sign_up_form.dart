@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/features/auth/presentation/screen/login/login_page.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_button.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_confirm_password_input.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_email_input.dart';
@@ -99,7 +100,7 @@ class SignUp extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onTap: () => Navigator.of(context).pop()
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginPage()))
                     ),
                   ),
                 ), //5

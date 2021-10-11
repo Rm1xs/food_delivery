@@ -8,11 +8,10 @@ List<Page> onGenerateAppViewPages(
     AuthenticationStatus state, List<Page<dynamic>> pages) {
   switch (state) {
     case AuthenticationStatus.authenticated:
-      return [SignUpPage.page(), CompleteRegistration.page()];
+      return [CompleteRegistration.page()];
     case AuthenticationStatus.unauthenticated:
       return [LoginPage.page(), SignUpPage.page()];
     default:
       return [CompleteRegistration.page()];
   }
 }
-

@@ -1,8 +1,8 @@
-import 'package:food_delivery/core/domain/usescase/usecase.dart';
+import 'package:food_delivery/core/domain/usescase/auth_usecase.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart';
 import 'package:food_delivery/features/auth/domain/repositories/auth_repository.dart';
 
-class AuthUseCaseImplementation extends UseCase {
+class AuthUseCaseImplementation extends AuthUseCase {
   AuthUseCaseImplementation(this.repository);
 
   final AuthRepository repository;

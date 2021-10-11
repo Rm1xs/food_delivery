@@ -19,6 +19,7 @@ class _OnboardingState extends State<Onboarding> {
     timerRedirect();
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Stack(
           children: [
             ShaderMask(

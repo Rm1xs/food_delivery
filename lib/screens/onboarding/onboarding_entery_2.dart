@@ -12,6 +12,7 @@ class OnboardingEntery2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Padding(
           padding: EdgeInsets.all(3.h),
           child: Column(

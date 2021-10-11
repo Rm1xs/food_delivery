@@ -18,6 +18,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: BlocProvider(
           create: (_) => LoginCubit(sl<AuthUseCaseImplementation>()),
           child: const SignIn(),

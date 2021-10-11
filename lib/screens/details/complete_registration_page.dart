@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sizer/sizer.dart';
 import '../../injection.dart';
-import 'coomplete_payment_page.dart';
+import 'complete_payment_page.dart';
 
 class CompleteRegistration extends StatefulWidget {
   const CompleteRegistration({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class CompleteRegistration extends StatefulWidget {
   static Page page() => const MaterialPage<void>(child: CompleteRegistration());
 
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => CompletePaymentPage());
+    return MaterialPageRoute<void>(builder: (_) => CompleteRegistration());
   }
   @override
   State<CompleteRegistration> createState() => _CompleteRegistrationState();
@@ -48,6 +48,9 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       if (_auth.currentUser!.phoneNumber != null) {
         showSmsEnterField = false;
         size = 30;
+        Future(() {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => CompletePaymentPage()));
+        });
       } else {
         showSmsEnterField = true;
         size = 20;
@@ -56,6 +59,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       showSmsEnterField = true;
       size = 20;
     }
+
     super.initState();
   }
 
@@ -63,6 +67,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           centerTitle: true,
           title: Text(
@@ -260,7 +265,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                                     ' ' +
                                     surnameController.text.trim());
                           }
-                          Navigator.of(context).push(CompleteRegistration.route());
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => CompletePaymentPage()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(
