@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart'
     as customUser;
 import 'package:food_delivery/features/auth/domain/repositories/auth_repository.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
   final FirebaseAuth _firebaseAuth;
@@ -37,9 +38,19 @@ class AuthRepositoryImplementation implements AuthRepository {
   }
 
   @override
-  Future<void> logInWithGoogle() {
-    // TODO: implement logInWithGoogle
-    throw UnimplementedError();
+  Future<void> logInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      await _firebaseAuth.signInWithCredential(credential);
+    } on Exception {
+      throw LogInWithEmailAndPasswordFailure();
+    }
   }
 
   @override
@@ -80,8 +91,7 @@ extension on User {
         email: email,
         name: displayName,
         photo: photoURL,
-        phone: phoneNumber
-    );
+        phone: phoneNumber);
   }
 }
 

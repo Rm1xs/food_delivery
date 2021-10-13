@@ -22,7 +22,7 @@ class CompleteRegistration extends StatefulWidget {
 
 class _CompleteRegistrationState extends State<CompleteRegistration> {
   //Get current user and Firebase instance
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   //Phone number refactor mask
   var maskFormatter = MaskTextInputFormatter(
@@ -59,6 +59,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       showSmsEnterField = true;
       size = 20;
     }
+
 
     super.initState();
   }
@@ -148,6 +149,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                           ),
                           border: const OutlineInputBorder(),
                           labelText: 'Name',
+                          hintText: _auth.currentUser!.displayName,
                           hintStyle: TextStyle(color: Colors.grey[400]),
                           fillColor: Colors.white,
                           filled: true),
@@ -178,45 +180,47 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                           ),
                           border: const OutlineInputBorder(),
                           labelText: 'Surname',
+                          hintText: _auth.currentUser!.displayName,
                           hintStyle: TextStyle(color: Colors.grey[400]),
                           fillColor: Colors.white,
                           filled: true),
                     ),
                   ),
                 ),
-
-                if(showSmsEnterField)
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                  child: SizedBox(
-                    height: 8.h,
-                    child: TextField(
-                      controller: phoneController,
-                      inputFormatters: [maskFormatter],
-                      decoration: InputDecoration(
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.grey, width: 0.0),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15.0),
+                Visibility(
+                  visible: showSmsEnterField,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                    child: SizedBox(
+                      height: 8.h,
+                      child: TextField(
+                        controller: phoneController,
+                        inputFormatters: [maskFormatter],
+                        decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 0.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
                             ),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.blueAccent, width: 1),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15.0),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.blueAccent, width: 1),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
                             ),
-                          ),
-                          border: const OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            onPressed: () => {getSms()},
-                            icon: const Icon(Icons.send),
-                          ),
-                          labelText: 'Phone',
-                          hintStyle: TextStyle(color: Colors.grey[400]),
-                          fillColor: Colors.white,
-                          filled: true),
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              onPressed: () => {getSms()},
+                              icon: const Icon(Icons.send),
+                            ),
+                            labelText: 'Phone',
+                            hintStyle: TextStyle(color: Colors.grey[400]),
+                            fillColor: Colors.white,
+                            filled: true),
+                      ),
                     ),
                   ),
                 ),
@@ -296,7 +300,12 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
   void getSms() async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneController.text,
-      timeout: const Duration(seconds: 15),
+      verificationCompleted: (phoneAuthCredential) async {
+        setState(() {
+          showSmsEnterField = false;
+        });
+      },
+      verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) async {
         String smsCode;
         showDialog(
@@ -323,50 +332,25 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                   PhoneAuthCredential credential = PhoneAuthProvider.credential(
                       verificationId: verificationId, smsCode: smsCode);
                   await _auth.currentUser
-                      ?.updatePhoneNumber(credential)
-                      .catchError((e) {
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        SnackBar(content: Text(e.toString())),
-                      );
-                  });
+                      ?.updatePhoneNumber(credential);
+                  if(_auth.currentUser!.phoneNumber!.isNotEmpty){
+                    setState(() {
+                      showSmsEnterField = false;
+                      size = 30;
+                    });
+                  }
+                  else{
+                    setState(() {
+                      showSmsEnterField = true;
+                      size = 20;
+                    });
+                  }
                   Navigator.pop(context);
                 },
               )
             ],
           ),
         );
-      },
-      verificationCompleted: (phoneAuthCredential) async {
-        setState(() {
-          showSmsEnterField = false;
-        });
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(
-                  content: Text('The provided phone number is not valid.')),
-            );
-        } else if (e.code == 'id-token-expired') {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(content: Text('Token expired')),
-            );
-        } else if (e.code == 'phone-number-already-exists') {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(content: Text('Phone number already exists')),
-            );
-        }
-        setState(() {
-          showSmsEnterField = true;
-        });
       },
       codeAutoRetrievalTimeout: (verificationId) async {},
     );

@@ -14,6 +14,7 @@ import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
+import 'login_widgets/button_login_google.dart';
 import 'login_widgets/password_input_login.dart';
 
 class SignIn extends StatelessWidget {
@@ -159,49 +160,7 @@ class SignIn extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(5.w, 2.h, 5.w, 0.h),
-                  child: SizedBox(
-                    width: 40.w,
-                    height: 7.5.h,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(13),
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 12,
-                          bottom: 12,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                              child: Icon(
-                                FontAwesome5.google,
-                                color: Colors.blueAccent,
-                              ),
-                            ),
-                            Text(
-                              'Google',
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 11.sp),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                ButtonLoginGoogle(),
               ],
             ),
             Padding(
