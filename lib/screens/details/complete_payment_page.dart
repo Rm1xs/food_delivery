@@ -1,15 +1,28 @@
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+import '../../features/payment/presentation/screen/add_payment_page.dart';
+import '../../injection.dart';
 
-import 'add_payment_page.dart';
-
-class CompletePaymentPage extends StatelessWidget {
+class CompletePaymentPage extends StatefulWidget {
   CompletePaymentPage({Key? key}) : super(key: key);
 
+  @override
+  State<CompletePaymentPage> createState() => _CompletePaymentPageState();
+}
+
+class _CompletePaymentPageState extends State<CompletePaymentPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<bool> card = sl<PaymentCubit>().checkCard();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,143 +116,62 @@ class CompletePaymentPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 5.h, 0, 0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => AddPaymentPage()));
-                    },
-                    child: ClayContainer(
-                      borderRadius: 20,
-                      depth: 8,
-                      spread: 8,
-                      child: SizedBox(
-                        height: 12.h,
-                        width: double.infinity,
-                        child: Image.asset('assets/images/visa.png'),
-                      ),
-                    ),
-                  ),
+                FutureBuilder<bool>(
+                  future: sl<PaymentCubit>().checkCard(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    switch (snapshot.connectionState) {
+                      default:
+                        if (snapshot.data == true) {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(0, 5.h, 0, 0),
+                            child: ClayContainer(
+                              borderRadius: 20,
+                              depth: 8,
+                              spread: 8,
+                              child: SizedBox(
+                                height: 12.h,
+                                width: double.infinity,
+                                child: Center(
+                                    child: Text(
+                                  'Card already exist',
+                                  style: GoogleFonts.ptSans(
+                                    textStyle: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(218, 99, 23, 1),
+                                    ),
+                                  ),
+                                )),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(0, 5.h, 0, 0),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => AddPaymentPage()));
+                              },
+                              child: ClayContainer(
+                                borderRadius: 20,
+                                depth: 8,
+                                spread: 8,
+                                child: SizedBox(
+                                  height: 12.h,
+                                  width: double.infinity,
+                                  child: Image.asset('assets/images/visa.png'),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                    }
+                  },
                 ),
-                // Padding(
-                //   padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                //   child: InkWell(
-                //     onTap: () {
-                //       print("Tapped on container");
-                //     },
-                //     child: Container(
-                //       height: 12.h,
-                //       width: double.infinity,
-                //       decoration: BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: const BorderRadius.only(
-                //             topLeft: Radius.circular(10),
-                //             topRight: Radius.circular(10),
-                //             bottomLeft: Radius.circular(10),
-                //             bottomRight: Radius.circular(10)
-                //         ),
-                //         boxShadow: [
-                //           BoxShadow(
-                //             color: Colors.grey.withOpacity(0.5),
-                //             spreadRadius: 1,
-                //             blurRadius: 7,
-                //             offset: const Offset(0, 1), // changes position of shadow
-                //           ),
-                //         ],
-                //       ),
-                //       child: Image.asset('assets/images/visa.png', color: Colors.grey,),
-                //     ),
-                //   ),
-                // ),
-                // Padding(
-                //   padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                //   child: InkWell(
-                //     onTap: () {
-                //       print("Tapped on container");
-                //     },
-                //     child: Container(
-                //       height: 12.h,
-                //       width: double.infinity,
-                //       decoration: BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: const BorderRadius.only(
-                //             topLeft: Radius.circular(10),
-                //             topRight: Radius.circular(10),
-                //             bottomLeft: Radius.circular(10),
-                //             bottomRight: Radius.circular(10)
-                //         ),
-                //         boxShadow: [
-                //           BoxShadow(
-                //             color: Colors.grey.withOpacity(0.5),
-                //             spreadRadius: 1,
-                //             blurRadius: 7,
-                //             offset: const Offset(0, 1), // changes position of shadow
-                //           ),
-                //         ],
-                //       ),
-                //       child: Image.asset('assets/images/visa.png', color: Colors.grey,),
-                //     ),
-                //   ),
-                // ),
-                // Padding(
-                //   padding: EdgeInsets.fromLTRB(0, 10.h, 0, 0),
-                //   child: Center(
-                //     child: Container(
-                //       height: 7.h,
-                //       width: 40.w,
-                //       decoration: BoxDecoration(
-                //         boxShadow: const [
-                //           BoxShadow(
-                //               color: Colors.black26,
-                //               offset: Offset(0, 4),
-                //               blurRadius: 5.0)
-                //         ],
-                //         gradient: const LinearGradient(
-                //           begin: Alignment.topLeft,
-                //           end: Alignment.bottomRight,
-                //           stops: [0.0, 1.0],
-                //           colors: [
-                //             Color.fromRGBO(83, 232, 139, 1),
-                //             Color.fromRGBO(21, 190, 119, 1),
-                //           ],
-                //         ),
-                //         color: Colors.deepPurple.shade300,
-                //         borderRadius: BorderRadius.circular(13),
-                //       ),
-                //       child: ElevatedButton(
-                //         style: ButtonStyle(
-                //           shape:
-                //           MaterialStateProperty.all<RoundedRectangleBorder>(
-                //             RoundedRectangleBorder(
-                //               borderRadius: BorderRadius.circular(13),
-                //             ),
-                //           ),
-                //           backgroundColor:
-                //           MaterialStateProperty.all(Colors.transparent),
-                //           shadowColor:
-                //           MaterialStateProperty.all(Colors.transparent),
-                //         ),
-                //         onPressed: ()  {},
-                //         child: Padding(
-                //           padding: const EdgeInsets.only(
-                //             top: 10,
-                //             bottom: 10,
-                //           ),
-                //           child: Text(
-                //             'Next',
-                //             style: GoogleFonts.ptSans(
-                //               textStyle: TextStyle(
-                //                 fontSize: 11.sp,
-                //                 color: Colors.white,
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),

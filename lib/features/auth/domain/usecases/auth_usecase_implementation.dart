@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:food_delivery/core/domain/usescase/auth_usecase.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart';
 import 'package:food_delivery/features/auth/domain/repositories/auth_repository.dart';
@@ -35,5 +37,10 @@ class AuthUseCaseImplementation extends AuthUseCase {
   @override
   Stream<User> user() {
     return repository.user();
+  }
+
+  @override
+  Future<void> uploadProfileImage(File _imageFile) async {
+    return await repository.uploadProfileImage(_imageFile);
   }
 }

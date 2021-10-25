@@ -18,7 +18,10 @@ dependencies:
   equatable: ^2.0.3
   flutter_bloc: ^7.3.0
   firebase_core: ^1.7.0
+  firebase_storage: ^10.0.6
   firebase_auth: ^3.1.2
+  replay_cubit:
+  cloud_firestore: ^2.5.4
   google_sign_in: ^5.1.1
   google_fonts: ^2.1.0
   formz: ^0.4.0
@@ -26,6 +29,7 @@ dependencies:
   flow_builder: ^0.0.4
   mask_text_input_formatter: ^2.0.0
   clay_containers: ^0.3.2
+  image_picker: ^0.8.4+3
   #flutter_neumorphic: ^3.1.0
   #flutter_credit_card: ^3.0.0
 

@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food_delivery/core/validation/card_date.dart';
 import 'package:food_delivery/core/validation/card_number.dart';
+import 'package:food_delivery/features/payment/presentation/cubit/payment_cubit.dart';
+import 'package:food_delivery/features/payment/presentation/widgets/bottom_card_decoration_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../injection.dart';
 
 class AddPaymentPage extends StatefulWidget {
   AddPaymentPage({Key? key}) : super(key: key);
@@ -22,12 +24,12 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
   final numberController = TextEditingController();
   final holderController = TextEditingController();
   final dateController = TextEditingController();
+  final cvvController = TextEditingController();
 
   String number = '';
   String holder = '';
   String date = '';
-
-  DateTime _selectedDate = DateTime.now();
+  String cvv = '';
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +53,8 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                   ),
                   color: const Color.fromRGBO(218, 99, 23, 1),
                   onPressed: () => {Navigator.of(context).pop()}
-                // sl<AuthenticationBloc>().add(AppLogoutRequested()),
-              ),
+                  // sl<AuthenticationBloc>().add(AppLogoutRequested()),
+                  ),
             ),
           ),
           centerTitle: true,
@@ -90,8 +92,8 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                     ),
                     color: const Color.fromRGBO(218, 99, 23, 1),
                     onPressed: () => {}
-                  // sl<AuthenticationBloc>().add(AppLogoutRequested()),
-                ),
+                    // sl<AuthenticationBloc>().add(AppLogoutRequested()),
+                    ),
               ),
             ),
           ],
@@ -100,10 +102,10 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
           child: Column(
             children: [
               SizedBox(
-                height: 35.h,
+                height: 33.h,
                 width: double.infinity,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(4.h, 2.h, 4.h, 8.h),
+                  padding: EdgeInsets.fromLTRB(4.h, 2.h, 4.h, 4.h),
                   child: ClayContainer(
                     color: Colors.grey[700],
                     borderRadius: 20,
@@ -114,15 +116,16 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                         Padding(
                           padding: EdgeInsets.all(2.h),
                           child: Container(
-                              alignment: Alignment.topRight,
-                              child: Image.asset(
-                                'assets/images/mastercard.png',
-                                height: 5.h,
-                                width: 5.h,
-                              )),
+                            alignment: Alignment.topRight,
+                            child: Image.asset(
+                              'assets/images/mastercard.png',
+                              height: 5.h,
+                              width: 5.h,
+                            ),
+                          ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(2.h, 2.h, 2.h, 0),
+                          padding: EdgeInsets.fromLTRB(2.h, 4.h, 2.h, 0),
                           child: Container(
                             alignment: Alignment.bottomLeft,
                             child: Text(
@@ -136,31 +139,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(2.h, 5.h, 2.h, 0),
-                          child: Row(
-                            children: [
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'CARDHOLDER NAME',
-                                  style: GoogleFonts.inconsolata(
-                                    textStyle: TextStyle(
-                                        fontSize: 8.sp, color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-                              Text(
-                                'VALID THRU',
-                                style: GoogleFonts.inconsolata(
-                                  textStyle: TextStyle(
-                                      fontSize: 8.sp, color: Colors.white),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        BottomCardDecoration(),
                         Padding(
                           padding: EdgeInsets.fromLTRB(2.h, 1.h, 2.h, 0),
                           child: Row(
@@ -200,7 +179,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                       CardNumberFormatter(
                           separator: ' ', mask: 'xxxx xxxx xxxx xxxx')
                     ],
-                    maxLength: 19,
+                    //maxLength: 19,
                     controller: numberController,
                     keyboardType: TextInputType.number,
                     onChanged: (text) {
@@ -211,14 +190,14 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                     decoration: InputDecoration(
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.grey, width: 0.0),
+                              BorderSide(color: Colors.grey, width: 0.0),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
                         ),
                         focusedBorder: const OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 1),
+                              BorderSide(color: Colors.blueAccent, width: 1),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
@@ -232,7 +211,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(4.h, 1.h, 4.h, 0),
+                padding: EdgeInsets.fromLTRB(4.h, 2.h, 4.h, 0),
                 child: SizedBox(
                   height: 8.h,
                   child: TextField(
@@ -243,7 +222,8 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: Text("Select Year"),
-                          content: Container( // Need to use container to add size constraint.
+                          content: Container(
+                            // Need to use container to add size constraint.
                             width: 300,
                             height: 300,
                             child: CupertinoDatePicker(
@@ -255,7 +235,6 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                               },
                               minimumYear: 2010,
                               maximumYear: 2030,
-
                               initialDateTime: DateTime.now(),
                               mode: CupertinoDatePickerMode.date,
                             ),
@@ -267,14 +246,14 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                     decoration: InputDecoration(
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.grey, width: 0.0),
+                              BorderSide(color: Colors.grey, width: 0.0),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
                         ),
                         focusedBorder: const OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 1),
+                              BorderSide(color: Colors.blueAccent, width: 1),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
@@ -288,7 +267,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(4.h, 1.h, 4.h, 0),
+                padding: EdgeInsets.fromLTRB(4.h, 2.h, 4.h, 0),
                 child: SizedBox(
                   height: 8.h,
                   child: TextField(
@@ -302,14 +281,14 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                     decoration: InputDecoration(
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.grey, width: 0.0),
+                              BorderSide(color: Colors.grey, width: 0.0),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
                         ),
                         focusedBorder: const OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 1),
+                              BorderSide(color: Colors.blueAccent, width: 1),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
@@ -323,24 +302,25 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(4.h, 1.h, 4.h, 0),
+                padding: EdgeInsets.fromLTRB(4.h, 2.h, 4.h, 0),
                 child: SizedBox(
                   height: 8.h,
                   child: TextField(
+                    controller: cvvController,
                     keyboardType: TextInputType.number,
                     obscureText: true,
-                    maxLength: 3,
+                    //maxLength: 3,
                     decoration: InputDecoration(
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.grey, width: 0.0),
+                              BorderSide(color: Colors.grey, width: 0.0),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
                         ),
                         focusedBorder: const OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 1),
+                              BorderSide(color: Colors.blueAccent, width: 1),
                           borderRadius: BorderRadius.all(
                             Radius.circular(15.0),
                           ),
@@ -353,6 +333,15 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                   ),
                 ),
               ),
+              ElevatedButton(
+                onPressed: () => sl<PaymentCubit>().addCard(
+                    numberController.text,
+                    dateController.text,
+                    holderController.text,
+                    cvvController.text),
+                //() => context.read<PaymentCubit>().addCard(),
+                child: const Text('Save'),
+              ),
             ],
           ),
         ),
@@ -362,25 +351,21 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
 
   void handleReadOnlyInputClick(context) {
     showBottomSheet(
-        context: context,
-        builder: (_) =>
-            Scaffold(
-              body: SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                child: YearPicker(
-                  selectedDate: DateTime(1997),
-                  firstDate: DateTime(1995),
-                  lastDate: DateTime.now(),
-                  onChanged: (val) {
-                    print(val);
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            )
+      context: context,
+      builder: (_) => Scaffold(
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: YearPicker(
+            selectedDate: DateTime(1997),
+            firstDate: DateTime(1995),
+            lastDate: DateTime.now(),
+            onChanged: (val) {
+              print(val);
+              Navigator.pop(context);
+            },
+          ),
+        ),
+      ),
     );
   }
 }

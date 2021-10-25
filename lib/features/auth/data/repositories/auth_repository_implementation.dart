@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart'
     as customUser;
 import 'package:food_delivery/features/auth/domain/repositories/auth_repository.dart';
@@ -81,6 +84,19 @@ class AuthRepositoryImplementation implements AuthRepository {
           firebaseUser == null ? customUser.User.empty : firebaseUser.toUser;
       return user;
     });
+  }
+
+  @override
+  Future<void> uploadProfileImage(File _imageFile) async {
+    var uid = _firebaseAuth.currentUser!.uid;
+    String fileName = _imageFile.path;
+    var firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('uploads-$uid/$fileName');
+    var uploadTask = firebaseStorageRef.putFile(_imageFile);
+    var taskSnapshot = await uploadTask;
+    taskSnapshot.ref.getDownloadURL().then(
+          (value) => print("Done: $value"),
+        );
   }
 }
 

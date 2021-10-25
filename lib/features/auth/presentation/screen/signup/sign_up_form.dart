@@ -5,8 +5,6 @@ import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_w
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_confirm_password_input.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_email_input.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/sign_up_widgets/sign_up_password_input.dart';
-import 'package:food_delivery/features/auth/presentation/widgets/round_check_box.dart';
-import 'package:food_delivery/features/auth/presentation/widgets/text_widget.dart';
 import 'package:food_delivery/features/auth/presentation/widgets/top_view_widget.dart';
 import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';

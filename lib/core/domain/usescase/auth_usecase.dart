@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:food_delivery/features/auth/data/models/user.dart';
 
 abstract class AuthUseCase {
@@ -12,6 +14,8 @@ abstract class AuthUseCase {
 
   ///Get current User
   User get currentUser;
+
+  Future<void> uploadProfileImage(File _imageFile);
 
   ///Get info of User
   Stream<User> user();
