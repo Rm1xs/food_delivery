@@ -4,7 +4,6 @@ import 'package:food_delivery/features/payment/data/models/card_model.dart';
 import 'package:food_delivery/features/payment/domain/repositories/payment_repository.dart';
 
 class PaymentRepositoryImplementation implements PaymentRepository {
-
   @override
   Future<void> saveCardInfo(
       String number, String dateTime, String holder, String cvv) async {
@@ -29,7 +28,6 @@ class PaymentRepositoryImplementation implements PaymentRepository {
     final String idToken = tokenResult.uid;
     try {
       var collectionRef = FirebaseFirestore.instance.collection('Cards');
-
       var doc = await collectionRef.doc(idToken).get();
       return doc.exists;
     } catch (e) {

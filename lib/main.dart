@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/injection.dart';
 import 'package:sizer/sizer.dart';
 import 'core/route/flow_route/routes/auth_route.dart';
-import 'core/route/routes_path.dart';
 import 'features/auth/domain/usecases/auth_usecase_implementation.dart';
 import 'features/auth/presentation/bloc/authentication_bloc.dart';
 import 'features/auth/presentation/bloc/authentication_state.dart';

@@ -139,7 +139,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                             ),
                           ),
                         ),
-                        BottomCardDecoration(),
+                        const BottomCardDecoration(),
                         Padding(
                           padding: EdgeInsets.fromLTRB(2.h, 1.h, 2.h, 0),
                           child: Row(
@@ -333,14 +333,67 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () => sl<PaymentCubit>().addCard(
-                    numberController.text,
-                    dateController.text,
-                    holderController.text,
-                    cvvController.text),
-                //() => context.read<PaymentCubit>().addCard(),
-                child: const Text('Save'),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 4.h, 0, 0),
+                child: Center(
+                  child: Container(
+                    height: 7.h,
+                    width: 40.w,
+                    decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black26,
+                            offset: Offset(0, 4),
+                            blurRadius: 5.0)
+                      ],
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [0.0, 1.0],
+                        colors: [
+                          Color.fromRGBO(83, 232, 139, 1),
+                          Color.fromRGBO(21, 190, 119, 1),
+                        ],
+                      ),
+                      color: Colors.deepPurple.shade300,
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        shape:
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                        ),
+                        backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                        shadowColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                      ),
+                      onPressed: () => sl<PaymentCubit>().addCard(
+                          numberController.text,
+                          dateController.text,
+                          holderController.text,
+                          cvvController.text),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                        ),
+                        child: Text(
+                          'Save',
+                          style: GoogleFonts.ptSans(
+                            textStyle: TextStyle(
+                              fontSize: 11.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

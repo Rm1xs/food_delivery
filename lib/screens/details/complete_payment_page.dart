@@ -1,6 +1,8 @@
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
+import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
 import 'package:food_delivery/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -55,11 +57,11 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
           title: Column(
             children: [
               Text(
-                _auth.currentUser!.email ?? 'Unknown error, try re-login',
+                _auth.currentUser?.email ?? 'Unknown error, try re-login',
                 style: TextStyle(color: Colors.black, fontSize: 12.sp),
               ),
               Text(
-                _auth.currentUser?.displayName ?? 'Set phone number',
+                _auth.currentUser?.displayName ?? 'Set name and surname',
                 style: TextStyle(
                     fontSize: 8.sp,
                     color: const Color.fromRGBO(249, 168, 77, 1)),
@@ -80,14 +82,15 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                       .withOpacity(0.2), //Colors.white.withOpacity(0.5),
                 ),
                 child: IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: const Icon(
-                      Icons.logout,
-                    ),
-                    color: const Color.fromRGBO(218, 99, 23, 1),
-                    onPressed: () => {}
-                    // sl<AuthenticationBloc>().add(AppLogoutRequested()),
-                    ),
+                  padding: EdgeInsets.zero,
+                  icon: const Icon(
+                    Icons.logout,
+                  ),
+                  color: const Color.fromRGBO(218, 99, 23, 1),
+                  onPressed: () =>
+                      sl<AuthenticationBloc>().add(AppLogoutRequested()),
+                  // sl<AuthenticationBloc>().add(AppLogoutRequested()),
+                ),
               ),
             ),
           ],
@@ -124,25 +127,14 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                       default:
                         if (snapshot.data == true) {
                           return Padding(
-                            padding: EdgeInsets.fromLTRB(0, 5.h, 0, 0),
-                            child: ClayContainer(
-                              borderRadius: 20,
-                              depth: 8,
-                              spread: 8,
-                              child: SizedBox(
-                                height: 12.h,
-                                width: double.infinity,
-                                child: Center(
-                                    child: Text(
-                                  'Card already exist',
-                                  style: GoogleFonts.ptSans(
-                                    textStyle: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(218, 99, 23, 1),
-                                    ),
-                                  ),
-                                )),
+                            padding: EdgeInsets.fromLTRB(0, 3.h, 0, 0),
+                            child: Text(
+                              'Card already exist, add new ?',
+                              style: GoogleFonts.ptSans(
+                                textStyle: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: const Color.fromRGBO(218, 99, 23, 1),
+                                ),
                               ),
                             ),
                           );

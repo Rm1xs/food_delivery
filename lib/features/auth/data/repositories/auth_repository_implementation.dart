@@ -16,6 +16,7 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   customUser.User get currentUser {
+    //_firebaseAuth.currentUser?.reload();
     if (_firebaseAuth.currentUser == null) {
       return customUser.User.empty;
     } else {

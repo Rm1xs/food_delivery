@@ -2,11 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
+import 'package:food_delivery/features/food/presentation/screen/food_main_content.dart';
+import 'package:food_delivery/features/food/presentation/screen/food_main_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sizer/sizer.dart';
 import '../../injection.dart';
 import 'complete_payment_page.dart';
+
+String codeNumber = '';
 
 class CompleteRegistration extends StatefulWidget {
   const CompleteRegistration({Key? key}) : super(key: key);
@@ -16,6 +20,7 @@ class CompleteRegistration extends StatefulWidget {
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => CompleteRegistration());
   }
+
   @override
   State<CompleteRegistration> createState() => _CompleteRegistrationState();
 }
@@ -47,20 +52,24 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
     if (_auth.currentUser != null) {
       if (_auth.currentUser!.phoneNumber != null) {
         showSmsEnterField = false;
-        size = 30;
+        size = 28;
+        // Future(() {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (_) => CompletePaymentPage()));
+        // });
         Future(() {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => CompletePaymentPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => FoodMainNavigation()));
         });
+
       } else {
         showSmsEnterField = true;
-        size = 20;
+        size = 22;
       }
     } else {
       showSmsEnterField = true;
-      size = 20;
+      size = 22;
     }
-
-
     super.initState();
   }
 
@@ -225,6 +234,21 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                   ),
                 ),
                 Padding(
+                  padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                  child: Visibility(
+                    visible: !showSmsEnterField,
+                    child: Text(
+                      'Already saved name and surname - ${_auth.currentUser?.displayName}.',
+                      style: GoogleFonts.ptSans(
+                        textStyle: TextStyle(
+                          fontSize: 10.sp,
+                          color: const Color.fromRGBO(218, 99, 23, 1).withOpacity(1),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: EdgeInsets.fromLTRB(0, size.h, 0, 0),
                   child: Center(
                     child: Container(
@@ -263,13 +287,17 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                               MaterialStateProperty.all(Colors.transparent),
                         ),
                         onPressed: () async {
-                          if(nameController.text.isNotEmpty && surnameController.text.isNotEmpty) {
+                          if (nameController.text.isNotEmpty &&
+                              surnameController.text.isNotEmpty) {
                             await _auth.currentUser?.updateDisplayName(
                                 nameController.text.trim() +
                                     ' ' +
                                     surnameController.text.trim());
                           }
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => CompletePaymentPage()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => CompletePaymentPage()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -297,6 +325,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       ),
     );
   }
+
   void getSms() async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneController.text,
@@ -305,41 +334,42 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
           showSmsEnterField = false;
         });
       },
-      verificationFailed: (FirebaseAuthException e) {},
+      verificationFailed: (FirebaseAuthException e) {
+        SnackBar(
+            content: Text("Hi Im snackbar!!!"),
+            action: SnackBarAction(
+                label: 'Dismiss',
+                onPressed: () {
+
+                }
+            )
+        );
+      },
       codeSent: (String verificationId, int? resendToken) async {
         String smsCode;
         showDialog(
           context: context,
           barrierDismissible: false,
           builder: (context) => AlertDialog(
-            title: const Text("Enter SMS Code"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                TextField(
-                  controller: otpController,
-                ),
-              ],
-            ),
+            title: const Text("Enter 6-digit\nVerification code"),
+            content: InputFields(),
             actions: <Widget>[
               FlatButton(
                 child: const Text("Done"),
                 textColor: Colors.white,
                 color: Colors.redAccent,
                 onPressed: () async {
-                  smsCode = otpController.text.trim();
+                  smsCode = codeNumber.trim();
 
                   PhoneAuthCredential credential = PhoneAuthProvider.credential(
                       verificationId: verificationId, smsCode: smsCode);
-                  await _auth.currentUser
-                      ?.updatePhoneNumber(credential);
-                  if(_auth.currentUser!.phoneNumber!.isNotEmpty){
+                  await _auth.currentUser?.updatePhoneNumber(credential);
+                  if (_auth.currentUser!.phoneNumber!.isNotEmpty) {
                     setState(() {
                       showSmsEnterField = false;
                       size = 30;
                     });
-                  }
-                  else{
+                  } else {
                     setState(() {
                       showSmsEnterField = true;
                       size = 20;
@@ -353,6 +383,137 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
         );
       },
       codeAutoRetrievalTimeout: (verificationId) async {},
+    );
+  }
+}
+
+class InputFields extends StatefulWidget {
+  const InputFields({Key? key}) : super(key: key);
+
+  @override
+  _InputFieldsState createState() => _InputFieldsState();
+}
+
+class _InputFieldsState extends State<InputFields> {
+  final FocusNode _focusDigit1 = FocusNode();
+  final FocusNode _focusDigit2 = FocusNode();
+  final FocusNode _focusDigit3 = FocusNode();
+  final FocusNode _focusDigit4 = FocusNode();
+  final FocusNode _focusDigit5 = FocusNode();
+  final FocusNode _focusDigit6 = FocusNode();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _focusDigit1.dispose();
+    _focusDigit2.dispose();
+    _focusDigit3.dispose();
+    _focusDigit4.dispose();
+    _focusDigit5.dispose();
+    _focusDigit6.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.05,
+      ),
+      child: Row(
+        children: [
+          CodeInput(
+            focusNode0: null,
+            focusNode1: _focusDigit1,
+            focusNode2: _focusDigit2,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          CodeInput(
+            focusNode0: _focusDigit1,
+            focusNode1: _focusDigit2,
+            focusNode2: _focusDigit3,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          CodeInput(
+            focusNode0: _focusDigit2,
+            focusNode1: _focusDigit3,
+            focusNode2: _focusDigit4,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          CodeInput(
+            focusNode0: _focusDigit3,
+            focusNode1: _focusDigit4,
+            focusNode2: _focusDigit5,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          CodeInput(
+            focusNode0: _focusDigit4,
+            focusNode1: _focusDigit5,
+            focusNode2: _focusDigit6,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          CodeInput(
+            focusNode0: _focusDigit5,
+            focusNode1: _focusDigit6,
+            focusNode2: null,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CodeInput extends StatelessWidget {
+  final FocusNode? focusNode0;
+  final FocusNode? focusNode1;
+  final FocusNode? focusNode2;
+
+  const CodeInput({
+    Key? key,
+    this.focusNode0,
+    this.focusNode1,
+    this.focusNode2,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.035,
+          child: TextField(
+            focusNode: focusNode1,
+            textAlign: TextAlign.center,
+            maxLength: 1,
+            onChanged: (str) {
+              if (str.length == 1) {
+                codeNumber += str;
+                FocusScope.of(context).requestFocus(focusNode2);
+              } else if (str.isEmpty) {
+
+                var res = codeNumber.substring(0, codeNumber.length-2);
+                codeNumber = res;
+                FocusScope.of(context).requestFocus(focusNode0);
+              }
+            },
+            decoration: const InputDecoration(
+              hintText: "*",
+              hintStyle: TextStyle(color: Colors.grey),
+              counterText: "",
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
