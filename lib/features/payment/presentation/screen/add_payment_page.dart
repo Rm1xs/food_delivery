@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/core/validation/card_number.dart';
+import 'package:food_delivery/features/food/presentation/screen/food_main_navigation.dart';
 import 'package:food_delivery/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:food_delivery/features/payment/presentation/widgets/bottom_card_decoration_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -361,21 +362,27 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         shape:
-                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(13),
                           ),
                         ),
                         backgroundColor:
-                        MaterialStateProperty.all(Colors.transparent),
+                            MaterialStateProperty.all(Colors.transparent),
                         shadowColor:
-                        MaterialStateProperty.all(Colors.transparent),
+                            MaterialStateProperty.all(Colors.transparent),
                       ),
-                      onPressed: () => sl<PaymentCubit>().addCard(
-                          numberController.text,
-                          dateController.text,
-                          holderController.text,
-                          cvvController.text),
+                      onPressed: () => {
+                        sl<PaymentCubit>().addCard(
+                            numberController.text,
+                            dateController.text,
+                            holderController.text,
+                            cvvController.text),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const FoodMainNavigation())),
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(
                           top: 10,

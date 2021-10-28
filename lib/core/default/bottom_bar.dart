@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomAnimatedBottomBar extends StatelessWidget {
   const CustomAnimatedBottomBar({
@@ -8,8 +9,8 @@ class CustomAnimatedBottomBar extends StatelessWidget {
     this.iconSize = 24,
     this.backgroundColor,
     this.itemCornerRadius = 50,
-    this.containerHeight = 40,
-    this.animationDuration = const Duration(milliseconds: 370),
+    this.containerHeight = 50,
+    this.animationDuration = const Duration(milliseconds: 300),
     this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
     required this.items,
     required this.onItemSelected,
@@ -34,14 +35,10 @@ class CustomAnimatedBottomBar extends StatelessWidget {
     final bgColor = backgroundColor ?? Theme.of(context).bottomAppBarColor;
 
     return ClipRRect(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20.0),
-        topRight: Radius.circular(20.0),
-        bottomLeft: Radius.circular(20.0),
-        bottomRight: Radius.circular(20.0),
-      ),
       child: Container(
+        margin: EdgeInsets.only(left: 5.w, right: 5.w, bottom: 2.h, top: 2.h),
         decoration: BoxDecoration(
+          borderRadius:  BorderRadius.circular(15),
           color: bgColor,
           boxShadow: [
             if (showElevation)
@@ -54,7 +51,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: containerHeight,
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           child: Row(
             mainAxisAlignment: mainAxisAlignment,
             children: items.map((item) {
@@ -105,21 +102,21 @@ class _ItemWidget extends StatelessWidget {
       container: true,
       selected: isSelected,
       child: AnimatedContainer(
-        width: isSelected ? 130 : 50,
+        width: isSelected ? 110 : 50,
         height: double.maxFinite,
         duration: animationDuration,
         curve: curve,
         decoration: BoxDecoration(
           color:
-          isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
+              isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
           borderRadius: BorderRadius.circular(itemCornerRadius),
         ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: NeverScrollableScrollPhysics(),
           child: Container(
-            width: isSelected ? 130 : 50,
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            width: isSelected ? 110 : 50,
+            padding: EdgeInsets.symmetric(horizontal: 7),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -131,8 +128,8 @@ class _ItemWidget extends StatelessWidget {
                     color: isSelected
                         ? item.activeColor.withOpacity(1)
                         : item.inactiveColor == null
-                        ? item.activeColor
-                        : item.inactiveColor,
+                            ? item.activeColor
+                            : item.inactiveColor,
                   ),
                   child: item.icon,
                 ),

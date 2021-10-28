@@ -53,15 +53,10 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       if (_auth.currentUser!.phoneNumber != null) {
         showSmsEnterField = false;
         size = 28;
-        // Future(() {
-        //   Navigator.push(context,
-        //       MaterialPageRoute(builder: (_) => CompletePaymentPage()));
-        // });
         Future(() {
           Navigator.push(context,
-              MaterialPageRoute(builder: (_) => FoodMainNavigation()));
+              MaterialPageRoute(builder: (_) => const FoodMainNavigation()));
         });
-
       } else {
         showSmsEnterField = true;
         size = 22;
@@ -222,7 +217,9 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                             ),
                             border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
-                              onPressed: () => {getSms()},
+                              onPressed: () => {
+                                verifyPhoneNumber(),
+                              },
                               icon: const Icon(Icons.send),
                             ),
                             labelText: 'Phone',
@@ -238,11 +235,12 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                   child: Visibility(
                     visible: !showSmsEnterField,
                     child: Text(
-                      'Already saved name and surname - ${_auth.currentUser?.displayName}.',
+                      'Already verified number for user - ${_auth.currentUser?.displayName}.',
                       style: GoogleFonts.ptSans(
                         textStyle: TextStyle(
                           fontSize: 10.sp,
-                          color: const Color.fromRGBO(218, 99, 23, 1).withOpacity(1),
+                          color: const Color.fromRGBO(218, 99, 23, 1)
+                              .withOpacity(1),
                         ),
                       ),
                     ),
@@ -326,24 +324,25 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
     );
   }
 
-  void getSms() async {
+  void verifyPhoneNumber() async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneController.text,
-      verificationCompleted: (phoneAuthCredential) async {
-        setState(() {
-          showSmsEnterField = false;
-        });
+      verificationCompleted: (PhoneAuthCredential credential) {
+        Navigator.pop(context);
+        SnackBar(
+            content: const Text('Phone verified!'),
+            action: SnackBarAction(label: 'Dismiss', onPressed: () {}));
       },
       verificationFailed: (FirebaseAuthException e) {
-        SnackBar(
-            content: Text("Hi Im snackbar!!!"),
-            action: SnackBarAction(
-                label: 'Dismiss',
-                onPressed: () {
-
-                }
-            )
-        );
+        if (e.code == 'invalid-phone-number') {
+          SnackBar(
+              content: const Text('The provided phone number is not valid.'),
+              action: SnackBarAction(label: 'Dismiss', onPressed: () {}));
+        } else {
+          SnackBar(
+              content: const Text('Unknown error'),
+              action: SnackBarAction(label: 'Dismiss', onPressed: () {}));
+        }
       },
       codeSent: (String verificationId, int? resendToken) async {
         String smsCode;
@@ -360,14 +359,18 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                 color: Colors.redAccent,
                 onPressed: () async {
                   smsCode = codeNumber.trim();
-
                   PhoneAuthCredential credential = PhoneAuthProvider.credential(
                       verificationId: verificationId, smsCode: smsCode);
+
+                  //await _auth.signInWithCredential(credential);
                   await _auth.currentUser?.updatePhoneNumber(credential);
                   if (_auth.currentUser!.phoneNumber!.isNotEmpty) {
                     setState(() {
                       showSmsEnterField = false;
                       size = 30;
+                      SnackBar(
+                          content: const Text('Phone verified'),
+                          action: SnackBarAction(label: 'Dismiss', onPressed: () {}));
                     });
                   } else {
                     setState(() {
@@ -382,7 +385,10 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
           ),
         );
       },
-      codeAutoRetrievalTimeout: (verificationId) async {},
+      timeout: const Duration(seconds: 60),
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Auto-resolution timed out...
+      },
     );
   }
 }
@@ -500,8 +506,7 @@ class CodeInput extends StatelessWidget {
                 codeNumber += str;
                 FocusScope.of(context).requestFocus(focusNode2);
               } else if (str.isEmpty) {
-
-                var res = codeNumber.substring(0, codeNumber.length-2);
+                var res = codeNumber.substring(0, codeNumber.length - 2);
                 codeNumber = res;
                 FocusScope.of(context).requestFocus(focusNode0);
               }

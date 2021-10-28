@@ -34,7 +34,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
       child: Scaffold(
         //backgroundColor: Colors.white,
         appBar: PreferredSize(
-          preferredSize: Size(double.infinity, 20.h),
+          preferredSize: Size(double.infinity, 22.h),
           child: Padding(
             padding: EdgeInsets.fromLTRB(6.w, 8.h, 6.w, 0),
             child: Row(
@@ -62,21 +62,24 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(6.w, 0.h, 0.w, 0),
                   child: Container(
-                    width: 12.w,
-                    height: 6.h,
+                    //width: 10.w,
+                    //height: 5.h,
                     child: ClayContainer(
                       color: Colors.white,
-                      borderRadius: 12,
-                      depth: 12,
+                      borderRadius: 15,
+                      depth: 20,
                       spread: 8,
-                      child: IconButton(
-                          padding: EdgeInsets.zero,
-                          icon: const IconTheme(
-                            data: IconThemeData(color: Colors.green),
-                            child: Icon(Icons.notifications_none_sharp),
-                          ),
-                          color: Colors.white,
-                          onPressed: () => {}),
+                      child: Stack(children: [
+                        IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: IconTheme(
+                              data: IconThemeData(color: Colors.green[300]),
+                              child: Icon(Icons.notifications_none_sharp),
+                            ),
+                            color: Colors.white,
+                            onPressed: () => {}),
+                        _redDot(),
+                      ],)
                     ),
                   ),
                 ),
@@ -133,6 +136,26 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
           textAlign: TextAlign.center,
         ),
       ],
+    );
+  }
+  Widget _redDot() {
+    return Positioned(
+      right: 3.6.w,
+      top: 1.6.h,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(7),
+        ),
+        constraints: const BoxConstraints(
+          minWidth: 4,
+          minHeight: 4,
+        ),
+        child: SizedBox(
+          width: 1,
+          height: 1,
+        ),
+      ),
     );
   }
 }
