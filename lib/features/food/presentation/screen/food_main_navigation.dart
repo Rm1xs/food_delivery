@@ -1,6 +1,7 @@
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/default/bottom_bar.dart';
+import 'package:food_delivery/core/default/red_dot.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,7 +15,7 @@ class FoodMainNavigation extends StatefulWidget {
 }
 
 class _FoodMainNavigationState extends State<FoodMainNavigation> {
-  static const List<Widget> _pages = <Widget>[
+  static final List<Widget> _pages = <Widget>[
     FoodMainPage(),
     Icon(
       Icons.perm_phone_msg,
@@ -32,7 +33,6 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        //backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: Size(double.infinity, 22.h),
           child: Padding(
@@ -69,17 +69,20 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
                       borderRadius: 15,
                       depth: 20,
                       spread: 8,
-                      child: Stack(children: [
-                        IconButton(
+                      child: Stack(
+                        children: [
+                          IconButton(
                             padding: EdgeInsets.zero,
                             icon: IconTheme(
                               data: IconThemeData(color: Colors.green[300]),
                               child: Icon(Icons.notifications_none_sharp),
                             ),
                             color: Colors.white,
-                            onPressed: () => {}),
-                        _redDot(),
-                      ],)
+                            onPressed: () => {},
+                          ),
+                          redDot(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -87,17 +90,24 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
             ),
           ),
         ),
-        bottomNavigationBar: _buildBottomBar(),
-        body: Center(
-          child: _pages.elementAt(_selectedIndex), //New
+        body: Stack(
+          children: [
+            Container(
+              child: _pages.elementAt(_selectedIndex),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: _bottomBar(),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildBottomBar() {
+  Widget _bottomBar() {
     return CustomAnimatedBottomBar(
-      containerHeight: 8.h,
+      containerHeight: 7.h,
       backgroundColor: Colors.white,
       selectedIndex: _selectedIndex,
       showElevation: true,
@@ -138,25 +148,4 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
       ],
     );
   }
-  Widget _redDot() {
-    return Positioned(
-      right: 3.6.w,
-      top: 1.6.h,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(7),
-        ),
-        constraints: const BoxConstraints(
-          minWidth: 4,
-          minHeight: 4,
-        ),
-        child: SizedBox(
-          width: 1,
-          height: 1,
-        ),
-      ),
-    );
-  }
 }
-

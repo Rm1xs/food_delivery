@@ -1,14 +1,11 @@
 import 'dart:ui';
-
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttericon/elusive_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:food_delivery/features/food/presentation/screen/food_search.dart';
+import 'package:food_delivery/features/food/presentation/screen/food_search_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,20 +14,19 @@ class FoodMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        //backgroundColor: Colors.white,
-        body: SingleChildScrollView(
+    return SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 10.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: 71.w,
+                      width: 73.w,
                       //height: 7.h,
                       child: Hero(
                         tag: 'search',
@@ -74,7 +70,7 @@ class FoodMainPage extends StatelessWidget {
                     ),
                     Container(
                       //width: 6.h,
-                      height: 6.h,
+                      //height: 6.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12.0),
                         color: const Color.fromRGBO(218, 99, 23, 1)
@@ -514,7 +510,6 @@ class FoodMainPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }

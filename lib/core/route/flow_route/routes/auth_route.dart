@@ -12,6 +12,6 @@ List<Page> onGenerateAppViewPages(
     case AuthenticationStatus.unauthenticated:
       return [LoginPage.page(), SignUpPage.page()];
     default:
-      return [CompleteRegistration.page()];
+      return [];
   }
 }

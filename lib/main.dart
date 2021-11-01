@@ -1,4 +1,5 @@
 import 'dart:async';
+//import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,8 @@ import 'package:food_delivery/core/route/routes.dart' as customRoutes;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  //final cameras = await availableCameras();
+  //final firstCamera = cameras.first;
   await di.init();
   runApp(MyApp());
 }
