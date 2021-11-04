@@ -11,92 +11,254 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size(double.infinity, 22.h),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(6.w, 8.h, 6.w, 0),
-            child: Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Find Your',
-                      style: GoogleFonts.ptSans(
-                        textStyle: TextStyle(
-                            fontSize: 23.sp, fontWeight: FontWeight.bold),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Hero(
+                tag: 'search',
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: IconTheme(
+                        data: IconThemeData(
+                          color:
+                              const Color.fromRGBO(218, 99, 23, 1).withOpacity(1),
+                        ),
+                        child: const Icon(Icons.search),
                       ),
-                    ),
-                    Text(
-                      'Favorite Food',
-                      style: GoogleFonts.ptSans(
-                        textStyle: TextStyle(
-                            fontSize: 25.sp, fontWeight: FontWeight.bold),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(6.w, 0.h, 0.w, 0),
-                  child: Container(
-                    //width: 10.w,
-                    //height: 5.h,
-                    child: ClayContainer(
-                      color: Colors.white,
-                      borderRadius: 15,
-                      depth: 20,
-                      spread: 8,
-                      child: Stack(
-                        children: [
-                          IconButton(
-                              padding: EdgeInsets.zero,
-                              icon: IconTheme(
-                                data: IconThemeData(color: Colors.green[300]),
-                                child: Icon(Icons.notifications_none_sharp),
-                              ),
-                              color: Colors.white,
-                              onPressed: () => {}),
-                          redDot(),
-                        ],
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.transparent, width: 0.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.transparent, width: 0.0),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      filled: true,
+                      hintStyle: TextStyle(
+                          color: const Color.fromRGBO(218, 99, 23, 1)
+                              .withOpacity(0.4)),
+                      hintText: 'What do you want to order?',
+                      contentPadding: EdgeInsets.all(10.0),
+                      fillColor:
+                          const Color.fromRGBO(218, 99, 23, 1).withOpacity(0.08),
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        body: Hero(
-          tag: 'search',
-          child: TextField(
-            decoration: InputDecoration(
-              prefixIcon: IconTheme(
-                data: IconThemeData(
-                  color: const Color.fromRGBO(218, 99, 23, 1).withOpacity(1),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(7.w, 3.h, 0.w, 0),
+                child: Text(
+                  'Popular Menu',
+                  style: GoogleFonts.ptSans(
+                    textStyle:
+                        TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                child: const Icon(Icons.search),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
+              Padding(
+                padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                child: ClayContainer(
+                  color: Colors.white,
+                  spread: 5,
+                  depth: 10,
+                  borderRadius: 20,
+                  child: Container(
+                    height: 12.h,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Image.asset(
+                              'assets/images/MenuPhoto.png',
+                              // width: 17.w,
+                              // height: 9.h,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(6.w, 3.h, 0.w, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Herbal Pancake',
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                'Warung Herbal',
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 11.sp, color: Colors.grey),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0),
+                          child: Text(
+                            '7€',
+                            style: GoogleFonts.ptSans(
+                              textStyle: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromRGBO(218, 99, 23, 1),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: Colors.transparent, width: 0.0),
-                borderRadius: BorderRadius.circular(20.0),
+              Padding(
+                padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                child: ClayContainer(
+                  color: Colors.white,
+                  spread: 5,
+                  depth: 10,
+                  borderRadius: 20,
+                  child: Container(
+                    height: 12.h,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Image.asset(
+                              'assets/images/MenuPhoto.png',
+                              // width: 17.w,
+                              // height: 9.h,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(6.w, 3.h, 0.w, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Herbal Pancake',
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                'Warung Herbal',
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 11.sp, color: Colors.grey),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0),
+                          child: Text(
+                            '7€',
+                            style: GoogleFonts.ptSans(
+                              textStyle: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromRGBO(218, 99, 23, 1),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: Colors.transparent, width: 0.0),
-                borderRadius: BorderRadius.circular(20.0),
+              Padding(
+                padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                child: ClayContainer(
+                  color: Colors.white,
+                  spread: 5,
+                  depth: 10,
+                  borderRadius: 20,
+                  child: Container(
+                    height: 12.h,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Image.asset(
+                              'assets/images/MenuPhoto.png',
+                              // width: 17.w,
+                              // height: 9.h,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(6.w, 3.h, 0.w, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Herbal Pancake',
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                'Warung Herbal',
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 11.sp, color: Colors.grey),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0),
+                          child: Text(
+                            '7€',
+                            style: GoogleFonts.ptSans(
+                              textStyle: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromRGBO(218, 99, 23, 1),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              filled: true,
-              hintStyle: TextStyle(
-                  color: const Color.fromRGBO(218, 99, 23, 1).withOpacity(0.4)),
-              hintText: 'What do you want to order?',
-              contentPadding: EdgeInsets.all(10.0),
-              fillColor: const Color.fromRGBO(218, 99, 23, 1).withOpacity(0.08),
-            ),
+            ],
           ),
         ),
       ),
