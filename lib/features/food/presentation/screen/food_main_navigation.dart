@@ -2,8 +2,11 @@ import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/default/bottom_bar.dart';
 import 'package:food_delivery/core/default/red_dot.dart';
-import 'package:food_delivery/screens/appbar/appbar.dart';
-import 'package:food_delivery/screens/appbar/appbar2.dart';
+import 'package:food_delivery/features/orders/presentation/screen/order_page.dart';
+import 'package:food_delivery/features/profile/presentation/screen/profile_page.dart';
+import 'package:food_delivery/screens/appbar/appbar_with_text.dart';
+import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
+import 'package:food_delivery/screens/appbar/without_appbar.dart';
 import 'package:food_delivery/screens/notification/notification_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -23,11 +26,9 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
   static final List<Widget> _pages = <Widget>[
     const FoodMainPage(),
     const Search(),
+    const ProfilePage(),
+    const OrderPage(),
     const AllChatPage(),
-    const Icon(
-      Icons.chat,
-      size: 150,
-    ),
   ];
 
   int _selectedIndex = 0;
@@ -35,7 +36,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
 
   @override
   void initState() {
-    appbar = appBar1(context);
+    appbar = appbarWithText(context);
     super.initState();
   }
 
@@ -68,16 +69,26 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
       itemCornerRadius: 12,
       curve: Curves.easeIn,
       onItemSelected: (index) => setState(() => {
-            if (index == 2)
+            if (index == 4)
               {
                 setState(() {
-                  appbar = appbar2('Chat', true, context);
+                  appbar = appbarWithButton('Chat', true, context);
+                })
+              }
+            else if(index == 2){
+              setState(() {
+                appbar = withoutAppBar(context);
+              })
+            }
+            else if(index == 3){
+                setState(() {
+                  appbar = appbarWithButton('Order details', false, context);
                 })
               }
             else
               {
                 setState(() {
-                  appbar = appBar1(context);
+                  appbar = appbarWithText(context);
                 })
               },
             _selectedIndex = index

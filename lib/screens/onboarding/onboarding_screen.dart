@@ -1,10 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/route/routes_path.dart';
-import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
-import '../../injection.dart';
-import 'onboarding_entery_1.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({Key? key}) : super(key: key);

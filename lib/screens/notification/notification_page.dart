@@ -1,6 +1,6 @@
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery/screens/appbar/appbar2.dart';
+import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
@@ -11,7 +11,7 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appbar2('Notification', false, context),
+        appBar: appbarWithButton('Notification', false, context),
         body: Column(
           children: [
             Padding(
