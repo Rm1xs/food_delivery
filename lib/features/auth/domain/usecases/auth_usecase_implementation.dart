@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:food_delivery/core/domain/usescase/auth_usecase.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart';
 import 'package:food_delivery/features/auth/domain/repositories/auth_repository.dart';

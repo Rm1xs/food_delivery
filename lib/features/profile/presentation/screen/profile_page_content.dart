@@ -1,24 +1,40 @@
 import 'package:camera/camera.dart';
 import 'package:clay_containers/clay_containers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:food_delivery/core/default/curve_painter.dart';
+import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:food_delivery/screens/profile_photo/profile_image_camera.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+import '../../../../injection.dart';
+
+class ProfilePageContent extends StatefulWidget {
+  const ProfilePageContent({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfilePageContent> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePageContent> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   void getCamera() async {
     await availableCameras().then((value) => camera = value.first);
+  }
+
+  void checkDeliveryProfile() {
+    var res = sl<ProfileCubit>().checkProfile();
+    res.then((value) => {
+          if (value.exists == true)
+            {print('Already created')}
+          else
+            {sl<ProfileCubit>().createProfile()}
+        });
   }
 
   late CameraDescription camera;
@@ -26,6 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     getCamera();
+    checkDeliveryProfile();
     super.initState();
   }
 
@@ -52,11 +69,13 @@ class _ProfilePageState extends State<ProfilePage> {
           right: 5,
           child: InkWell(
             onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => ProfileImagePage(
-                          camera: camera,
-                        ))),
+              context,
+              MaterialPageRoute(
+                builder: (_) => ProfileImagePage(
+                  camera: camera,
+                ),
+              ),
+            ),
             child: const Icon(
               Icons.upload_outlined,
               size: 20,
@@ -120,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Row(
                           children: [
                             Text(
-                              'Nikita Kartashov',
+                              _auth.currentUser?.displayName ?? 'Unknown',
                               style: GoogleFonts.ptSans(
                                 textStyle: TextStyle(
                                     fontSize: 18.sp,
@@ -139,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(6.w, 1.h, 6.w, 0),
                         child: Text(
-                          'neket45786@gmail.com',
+                          _auth.currentUser?.email ?? 'Unknown',
                           style: GoogleFonts.ptSans(
                             textStyle: TextStyle(
                               color: Colors.grey,

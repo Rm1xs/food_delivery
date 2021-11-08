@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-abstract class ProfileUseCase {
+abstract class ProfileRepository {
   Future<void> crateDeliveryProfile();
 
   Future<DocumentSnapshot<Map<String, dynamic>>> checkDeliveryProfile();

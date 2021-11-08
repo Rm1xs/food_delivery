@@ -10,6 +10,10 @@ import 'features/payment/data/repositories/payment_repository_implementation.dar
 import 'features/payment/domain/repositories/payment_repository.dart';
 import 'features/payment/domain/usecases/payment_usecase_implementation.dart';
 import 'features/payment/presentation/cubit/payment_cubit.dart';
+import 'features/profile/data/repositories/profile_repository_implementation.dart';
+import 'features/profile/domain/repositories/profile_repository.dart';
+import 'features/profile/domain/usecases/profile_usecase_implementation.dart';
+import 'features/profile/presentation/cubit/profile_cubit.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -26,10 +30,14 @@ Future<void> init() async {
   sl.registerFactory(
     () => PaymentCubit(sl()),
   );
+  sl.registerFactory(
+        () => ProfileCubit(sl()),
+  );
 
   // Use cases
   sl.registerLazySingleton(() => AuthUseCaseImplementation(sl()));
   sl.registerLazySingleton(() => PaymentUseCaseImplementation(sl()));
+  sl.registerLazySingleton(() => ProfileUseCaseImplementation(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
@@ -37,5 +45,8 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<PaymentRepository>(
     () => PaymentRepositoryImplementation(),
+  );
+  sl.registerLazySingleton<ProfileRepository>(
+        () => ProfileRepositoryImplementation(),
   );
 }

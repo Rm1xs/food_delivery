@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/core/default/bottom_bar.dart';
 import 'package:food_delivery/core/default/red_dot.dart';
 import 'package:food_delivery/features/orders/presentation/screen/order_page.dart';
-import 'package:food_delivery/features/profile/presentation/screen/profile_page.dart';
+import 'package:food_delivery/features/profile/presentation/screen/profile_page_content.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_text.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
 import 'package:food_delivery/screens/appbar/without_appbar.dart';
@@ -26,8 +26,9 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
   static final List<Widget> _pages = <Widget>[
     const FoodMainPage(),
     const Search(),
-    const ProfilePage(),
+    const ProfilePageContent(),
     const OrderPage(),
+    //const AnimatedContainerApp(),
     const AllChatPage(),
   ];
 
