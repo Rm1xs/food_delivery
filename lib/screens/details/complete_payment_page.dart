@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
+import 'package:food_delivery/features/food/presentation/screen/food_main_navigation.dart';
 import 'package:food_delivery/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -128,14 +129,30 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                         if (snapshot.data == true) {
                           return Padding(
                             padding: EdgeInsets.fromLTRB(0, 3.h, 0, 0),
-                            child: Text(
-                              'Card already exist, add new ?',
-                              style: GoogleFonts.ptSans(
-                                textStyle: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: const Color.fromRGBO(218, 99, 23, 1),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Card already exist, add new ?',
+                                  style: GoogleFonts.ptSans(
+                                    textStyle: TextStyle(
+                                      fontSize: 12.sp,
+                                      color:
+                                          const Color.fromRGBO(218, 99, 23, 1),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                ElevatedButton(
+                                  onPressed: () => {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => FoodMainNavigation(),
+                                      ),
+                                    ),
+                                  },
+                                  child: const Text('Go to app'),
+                                ),
+                              ],
                             ),
                           );
                         } else {

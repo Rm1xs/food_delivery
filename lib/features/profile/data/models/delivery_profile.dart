@@ -4,6 +4,8 @@ class DeliveryProfile {
   final int vouchers;
   final String email;
   Orders? orders;
+  FinishedOrders? history;
+  Favourite? favourite;
 
   DeliveryProfile(
       this.name, this.subscription, this.vouchers, this.email);
@@ -26,6 +28,26 @@ class Orders {
 
   Orders(this.orderNumber, this.meal, this.orderDate, this.totalValue,
       this.status);
+}
+
+class FinishedOrders {
+  final int orderNumber;
+  final List<String> meal;
+  final DateTime orderDate;
+  final String totalValue;
+  final StatusOrder status;
+
+  FinishedOrders(this.orderNumber, this.meal, this.orderDate, this.totalValue,
+      this.status);
+}
+
+class Favourite {
+  final int id;
+  final String name;
+  final String description;
+  final double price;
+
+  Favourite(this.id, this.name, this.description, this.price);
 }
 
 enum Subscription { start, middle, advanced, gold }

@@ -225,5 +225,15 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
       ],
     );
   }
+
+  void animateOrder() {
+    setState(() {
+      _width = MediaQuery.of(context).size.width;
+      _height = MediaQuery.of(context).size.height * 0.25;
+      _color = Colors.green;
+      _borderRadius = BorderRadius.circular(10);
+    });
+  }
 }
+
 //PatternOrder.png

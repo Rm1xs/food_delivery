@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_delivery/core/domain/usescase/profile_usecase.dart';
 import 'package:food_delivery/features/profile/domain/repositories/profile_repository.dart';
@@ -10,24 +12,6 @@ class ProfileUseCaseImplementation extends ProfileUseCase {
   @override
   Future<void> crateDeliveryProfile() async {
     await repository.crateDeliveryProfile();
-  }
-
-  @override
-  Future<void> currentOrders() {
-    // TODO: implement currentOrders
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> currentVouchers() {
-    // TODO: implement currentVouchers
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> finishedOrders() {
-    // TODO: implement finishedOrders
-    throw UnimplementedError();
   }
 
   @override
@@ -49,9 +33,8 @@ class ProfileUseCaseImplementation extends ProfileUseCase {
   }
 
   @override
-  Future<void> saveImageProfile() {
-    // TODO: implement saveImageProfile
-    throw UnimplementedError();
+  Future<void> saveImageProfile(File path) async {
+    await repository.saveImageProfile(path);
   }
 
   @override
@@ -63,5 +46,10 @@ class ProfileUseCaseImplementation extends ProfileUseCase {
   @override
   Future<DocumentSnapshot<Map<String, dynamic>>> checkDeliveryProfile() {
     return repository.checkDeliveryProfile();
+  }
+
+  @override
+  Future<DocumentSnapshot> getDeliveryProfile() {
+    return repository.getDeliveryProfile();
   }
 }

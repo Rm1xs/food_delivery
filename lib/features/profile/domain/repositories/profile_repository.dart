@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class ProfileRepository {
@@ -5,7 +7,9 @@ abstract class ProfileRepository {
 
   Future<DocumentSnapshot<Map<String, dynamic>>> checkDeliveryProfile();
 
-  Future<void> saveImageProfile();
+  Future<DocumentSnapshot> getDeliveryProfile();
+
+  Future<void> saveImageProfile(File path);
 
   Future<void> updateImageProfile();
 
@@ -14,10 +18,4 @@ abstract class ProfileRepository {
   Future<void> saveFavourite();
 
   Future<void> removeFavourite();
-
-  Future<void> currentVouchers();
-
-  Future<void> currentOrders();
-
-  Future<void> finishedOrders();
 }

@@ -20,6 +20,7 @@ dependencies:
   firebase_core: ^1.7.0
   firebase_storage: ^10.0.6
   firebase_auth: ^3.1.2
+  firebase_app_check: ^0.0.3
   replay_cubit:
   cloud_firestore: ^2.5.4
   google_sign_in: ^5.1.1

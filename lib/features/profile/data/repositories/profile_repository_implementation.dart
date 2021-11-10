@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:food_delivery/features/profile/data/models/delivery_profile.dart';
 import 'package:food_delivery/features/profile/domain/repositories/profile_repository.dart';
 
@@ -28,24 +31,6 @@ class ProfileRepositoryImplementation implements ProfileRepository {
   }
 
   @override
-  Future<void> currentOrders() {
-    // TODO: implement currentVouchers
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> currentVouchers() {
-    // TODO: implement currentVouchers
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> finishedOrders() {
-    // TODO: implement finishedOrders
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> getMembership() {
     // TODO: implement getMembership
     throw UnimplementedError();
@@ -64,9 +49,15 @@ class ProfileRepositoryImplementation implements ProfileRepository {
   }
 
   @override
-  Future<void> saveImageProfile() {
-    // TODO: implement saveImageProfile
-    throw UnimplementedError();
+  Future<void> saveImageProfile(File path) async {
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child('profile_images').child('profile_image_$idToken');
+    UploadTask uploadTask = ref.putFile(path);
+    uploadTask.then((res) {
+      res.ref.getDownloadURL();
+    });
   }
 
   @override
@@ -86,5 +77,16 @@ class ProfileRepositoryImplementation implements ProfileRepository {
         .get()
         .then((value) => value);
     return result;
+  }
+
+  @override
+  Future<DocumentSnapshot> getDeliveryProfile() async {
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    var document = await FirebaseFirestore.instance
+        .collection('Delivery Profiles')
+        .doc(idToken)
+        .get();
+    return document;
   }
 }

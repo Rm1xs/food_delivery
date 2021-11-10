@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class ProfileUseCase {
@@ -5,7 +7,9 @@ abstract class ProfileUseCase {
 
   Future<DocumentSnapshot<Map<String, dynamic>>> checkDeliveryProfile();
 
-  Future<void> saveImageProfile();
+  Future<DocumentSnapshot> getDeliveryProfile();
+
+  Future<void> saveImageProfile(File path);
 
   Future<void> updateImageProfile();
 
@@ -15,9 +19,9 @@ abstract class ProfileUseCase {
 
   Future<void> removeFavourite();
 
-  Future<void> currentVouchers();
-
-  Future<void> currentOrders();
-
-  Future<void> finishedOrders();
+  // Future<void> currentVouchers();
+  //
+  // Future<void> currentOrders();
+  //
+  // Future<void> finishedOrders();
 }
