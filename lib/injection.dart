@@ -6,6 +6,10 @@ import 'package:get_it/get_it.dart';
 import 'features/auth/data/repositories/auth_repository_implementation.dart';
 import 'features/auth/presentation/screen/login/cubit/login_cubit.dart';
 import 'features/auth/presentation/screen/signup/cubit/sign_up_cubit.dart';
+import 'features/food/data/repositories/food_repository_implementation.dart';
+import 'features/food/domain/repositories/food_repository.dart';
+import 'features/food/domain/usecases/food_usecase_implementation.dart';
+import 'features/food/presentation/cubit/food_cubit.dart';
 import 'features/payment/data/repositories/payment_repository_implementation.dart';
 import 'features/payment/domain/repositories/payment_repository.dart';
 import 'features/payment/domain/usecases/payment_usecase_implementation.dart';
@@ -31,13 +35,17 @@ Future<void> init() async {
     () => PaymentCubit(sl()),
   );
   sl.registerFactory(
-        () => ProfileCubit(sl()),
+    () => ProfileCubit(sl()),
+  );
+  sl.registerFactory(
+    () => FoodCubit(sl()),
   );
 
   // Use cases
   sl.registerLazySingleton(() => AuthUseCaseImplementation(sl()));
   sl.registerLazySingleton(() => PaymentUseCaseImplementation(sl()));
   sl.registerLazySingleton(() => ProfileUseCaseImplementation(sl()));
+  sl.registerLazySingleton(() => FoodUseCaseImplementation(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
@@ -47,6 +55,9 @@ Future<void> init() async {
     () => PaymentRepositoryImplementation(),
   );
   sl.registerLazySingleton<ProfileRepository>(
-        () => ProfileRepositoryImplementation(),
+    () => ProfileRepositoryImplementation(),
+  );
+  sl.registerLazySingleton<FoodRepository>(
+        () => FoodRepositoryImplementation(),
   );
 }

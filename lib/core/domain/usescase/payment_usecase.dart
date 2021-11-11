@@ -3,5 +3,5 @@ abstract class PaymentUseCase {
 
   Future<void> saveCardInfo(String number, String dateTime, String holder, String cvv);
 
-  Future<bool>  checkCard();
+  Future<bool> checkCard();
 }

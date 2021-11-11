@@ -3,12 +3,11 @@ class DeliveryProfile {
   final String subscription;
   final int vouchers;
   final String email;
-  Orders? orders;
-  FinishedOrders? history;
-  Favourite? favourite;
+  List<Orders>? orders = [];
+  List<FinishedOrders>? history = [];
+  List<Favourite>? favourite = [];
 
-  DeliveryProfile(
-      this.name, this.subscription, this.vouchers, this.email);
+  DeliveryProfile(this.name, this.subscription, this.vouchers, this.email);
 
   Map<String, dynamic> toJson() => {
         'name': name,
@@ -16,6 +15,8 @@ class DeliveryProfile {
         'vouchers': vouchers,
         'email': email,
         'orders': orders,
+        'history': history,
+        'favourite': favourite,
       };
 }
 

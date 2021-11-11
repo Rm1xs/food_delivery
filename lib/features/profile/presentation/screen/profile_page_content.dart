@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:food_delivery/core/default/curve_painter.dart';
+import 'package:food_delivery/features/profile/data/models/delivery_profile.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:food_delivery/screens/profile_photo/profile_image.dart';
 import 'package:food_delivery/screens/profile_photo/profile_image_page.dart';
@@ -218,388 +219,15 @@ class _ProfilePageState extends State<ProfilePageContent> {
                               ),
                             ),
                           ),
+                          favourite(snapshotData),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
-                            child: ClayContainer(
-                              color: Colors.white,
-                              spread: 5,
-                              depth: 10,
-                              borderRadius: 20,
-                              height: 12.h,
-                              width: double.infinity,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.w, 0, 3.w, 0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.asset(
-                                        'assets/images/PhotoMenu.png',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(3.w, 2.h, 6.w, 0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Spacy fresh crab',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Text(
-                                          'Waroenk kita',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 10.sp,
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                        Text(
-                                          '35',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 13.sp,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: ElevatedButton(
-                                      child: const Text('Buy Again'),
-                                      onPressed: () => print("it's pressed"),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                        onPrimary: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
-                            child: ClayContainer(
-                              color: Colors.white,
-                              spread: 5,
-                              depth: 10,
-                              borderRadius: 20,
-                              height: 12.h,
-                              width: double.infinity,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.w, 0, 3.w, 0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.asset(
-                                        'assets/images/PhotoMenu.png',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(3.w, 2.h, 6.w, 0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Spacy fresh crab',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Text(
-                                          'Waroenk kita',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 10.sp,
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                        Text(
-                                          '35',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 13.sp,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: ElevatedButton(
-                                      child: const Text('Buy Again'),
-                                      onPressed: () => print("it's pressed"),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                        onPrimary: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
-                            child: ClayContainer(
-                              color: Colors.white,
-                              spread: 5,
-                              depth: 10,
-                              borderRadius: 20,
-                              height: 12.h,
-                              width: double.infinity,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.w, 0, 3.w, 0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.asset(
-                                        'assets/images/PhotoMenu.png',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(3.w, 2.h, 6.w, 0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Spacy fresh crab',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Text(
-                                          'Waroenk kita',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 10.sp,
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                        Text(
-                                          '35',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 13.sp,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: ElevatedButton(
-                                      child: const Text('Buy Again'),
-                                      onPressed: () => print("it's pressed"),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                        onPrimary: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
-                            child: ClayContainer(
-                              color: Colors.white,
-                              spread: 5,
-                              depth: 10,
-                              borderRadius: 20,
-                              height: 12.h,
-                              width: double.infinity,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.w, 0, 3.w, 0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.asset(
-                                        'assets/images/PhotoMenu.png',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(3.w, 2.h, 6.w, 0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Spacy fresh crab',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Text(
-                                          'Waroenk kita',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 10.sp,
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                        Text(
-                                          '35',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 13.sp,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: ElevatedButton(
-                                      child: const Text('Buy Again'),
-                                      onPressed: () => print("it's pressed"),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                        onPrimary: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 10.h),
-                            child: ClayContainer(
-                              color: Colors.white,
-                              spread: 5,
-                              depth: 10,
-                              borderRadius: 20,
-                              height: 12.h,
-                              width: double.infinity,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.w, 0, 3.w, 0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.asset(
-                                        'assets/images/PhotoMenu.png',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(3.w, 2.h, 6.w, 0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Spacy fresh crab',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Text(
-                                          'Waroenk kita',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 10.sp,
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                        Text(
-                                          '35',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 13.sp,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: ElevatedButton(
-                                      child: const Text('Buy Again'),
-                                      onPressed: () => print("it's pressed"),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                        onPrimary: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                            padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                            child: Text(
+                              'My Orders',
+                              style: GoogleFonts.ptSans(
+                                textStyle: TextStyle(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -619,5 +247,100 @@ class _ProfilePageState extends State<ProfilePageContent> {
   //Methods
   void _getCamera() async {
     await availableCameras().then((value) => camera = value.first);
+  }
+
+  Widget favourite(Map<dynamic, dynamic> snapshotData) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 12.h),
+      child: Flex(
+        direction: Axis.horizontal,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshotData['favourite'].length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+                  child: ClayContainer(
+                    color: Colors.white,
+                    spread: 5,
+                    depth: 10,
+                    borderRadius: 20,
+                    height: 12.h,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5.w, 0, 3.w, 0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Image.asset(
+                              'assets/images/PhotoMenu.png',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(3.w, 2.h, 6.w, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                snapshotData['favourite'][index],
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                'Waroenk kita',
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 10.sp, color: Colors.grey),
+                                ),
+                              ),
+                              Text(
+                                '35',
+                                style: GoogleFonts.ptSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 13.sp,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: ElevatedButton(
+                            child: const Text('Buy Again'),
+                            onPressed: () => print("it's pressed"),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                              onPrimary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32.0),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget orders() {
+    return Text('sd');
   }
 }

@@ -31,4 +31,10 @@ class ProfileCubit extends Cubit {
   void updateProfileImage(File path) async {
     await _authenticationRepository.saveImageProfile(path);
   }
+  
+  Future<String> getFavourite() async {
+    var a = await _authenticationRepository.getDeliveryProfile();
+    var res = a.get('favourite');
+    return res.toString();
+  }
 }
