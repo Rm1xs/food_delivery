@@ -1,4 +1,4 @@
-class FoodModel{
+class FoodModel {
   FoodModel({
     required this.hits,
   });
@@ -6,8 +6,9 @@ class FoodModel{
   List<HitModel> hits;
 
   factory FoodModel.fromJson(Map<String, dynamic> json) => FoodModel(
-    hits: List<HitModel>.from(json['hits'].map((dynamic x) => HitModel.fromJson(x))),
-  );
+        hits: List<HitModel>.from(
+            json['hits'].map((dynamic x) => HitModel.fromJson(x))),
+      );
 }
 
 class HitModel {
@@ -16,8 +17,8 @@ class HitModel {
   });
 
   factory HitModel.fromJson(Map<String, dynamic> json) => HitModel(
-    recipe: RecipeClassModel.fromJson(json['recipe']),
-  );
+        recipe: RecipeClassModel.fromJson(json['recipe']),
+      );
 
   RecipeClassModel recipe;
 }
@@ -29,6 +30,7 @@ class RecipeClassModel {
     required this.ingredientLines,
     required this.calories,
     required this.dietLabels,
+    required this.dish,
   });
 
   factory RecipeClassModel.fromJson(Map<String, dynamic> json) =>
@@ -36,24 +38,27 @@ class RecipeClassModel {
         label: json['label'],
         image: json['image'],
         ingredientLines:
-        List<String>.from(json['ingredientLines'].map((dynamic x) => x)),
+            List<String>.from(json['ingredientLines'].map((dynamic x) => x)),
         calories: json['calories'].toDouble(),
         dietLabels: List<String>.from(json['dietLabels'].map((dynamic x) => x)),
+        dish: json['dishType'],
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'label': label,
-    'image': image,
-    'dietLabels': List<dynamic>.from(dietLabels.map<dynamic>((dynamic x) => x)),
-    'ingredientLines':
-    List<String>.from(ingredientLines.map<String>((String x) => x)),
-    'calories': calories,
-  };
+        'label': label,
+        'image': image,
+        'dietLabels':
+            List<dynamic>.from(dietLabels.map<dynamic>((dynamic x) => x)),
+        'ingredientLines':
+            List<String>.from(ingredientLines.map<String>((String x) => x)),
+        'calories': calories,
+        'dish': dish,
+      };
 
   String label;
   String image;
   List<String> ingredientLines;
   double calories;
-
+  List<dynamic> dish;
   List<String> dietLabels;
 }

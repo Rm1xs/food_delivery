@@ -35,9 +35,9 @@ class CustomAnimatedBottomBar extends StatelessWidget {
     final bgColor = backgroundColor ?? Theme.of(context).bottomAppBarColor;
 
     return Container(
-      margin: EdgeInsets.only(left: 5.w, right: 5.w, bottom: 2.h, top: 2.h),
+      margin: EdgeInsets.only(left: 3.w, right: 3.w, bottom: 2.h, top: 2.h),
       decoration: BoxDecoration(
-        borderRadius:  BorderRadius.circular(15),
+        borderRadius:  BorderRadius.circular(13),
         color: bgColor,
         boxShadow: [
           if (showElevation)
@@ -50,7 +50,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: containerHeight,
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
         child: Row(
           mainAxisAlignment: mainAxisAlignment,
           children: items.map((item) {
@@ -100,7 +100,7 @@ class _ItemWidget extends StatelessWidget {
       container: true,
       selected: isSelected,
       child: AnimatedContainer(
-        width: isSelected ? 110 : 50,
+        width: isSelected ? 100 : 40,
         height: double.maxFinite,
         duration: animationDuration,
         curve: curve,

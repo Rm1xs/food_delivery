@@ -41,14 +41,23 @@ class _ProfilePageState extends State<ProfilePageContent> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
+            children: [
+              const CircularProgressIndicator(color: Color.fromRGBO(218, 99, 23, 1),),
               Center(
                 child: Padding(
                   padding: EdgeInsets.all(5.0),
-                  child: Text('Loading Profile...'),
+                  child: Text('Loading...', style:
+                  GoogleFonts.ptSans(
+                    textStyle: TextStyle(
+                        color: const Color.fromRGBO(218, 99, 23, 1)
+                            .withOpacity(0.5),
+                        fontSize: 13.sp,
+                        fontWeight:
+                        FontWeight
+                            .bold),
+                  ),),
                 ),
               ),
-              CircularProgressIndicator(),
             ],
           );
         }

@@ -32,7 +32,6 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
     const Search(),
     const ProfilePageContent(),
     const OrderPage(),
-    //const AnimatedContainerApp(),
     const AllChatPage(),
   ];
 
@@ -70,7 +69,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
 
   Widget _bottomBar() {
     return CustomAnimatedBottomBar(
-      containerHeight: 7.h,
+      containerHeight: 8.h,
       backgroundColor: Colors.white,
       selectedIndex: _selectedIndex,
       showElevation: true,
