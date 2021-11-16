@@ -348,8 +348,4 @@ class _ProfilePageState extends State<ProfilePageContent> {
       ),
     );
   }
-
-  Widget orders() {
-    return Text('sd');
-  }
 }

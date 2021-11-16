@@ -5,4 +5,6 @@ abstract class FoodUseCase {
   Future<void> getRestaurants();
 
   Future<FoodModel> searchFood(String name);
+
+  Future<void> addToFavourite(String name, String imageUrl);
 }

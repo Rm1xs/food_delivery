@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +8,14 @@ import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../injection.dart';
+
 class FoodDetailsPage extends StatelessWidget {
   FoodDetailsPage({Key? key, required this.data}) : super(key: key);
   RecipeClassModel? data;
-  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -107,12 +112,15 @@ class FoodDetailsPage extends StatelessWidget {
                                                     Radius.circular(20)),
                                             color: Colors.redAccent
                                                 .withOpacity(0.2)),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(5.0),
-                                          child: Icon(
-                                            Icons.local_fire_department,
-                                            size: 20,
-                                            color: Colors.red,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: InkWell(
+                                            onTap: () => _doSomething(),
+                                            child: const Icon(
+                                              Icons.local_fire_department,
+                                              size: 20,
+                                              color: Colors.red,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -154,7 +162,7 @@ class FoodDetailsPage extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(4.w, 0, 0, 0),
                                   child: const Icon(
                                     Icons.shop,
                                     size: 20,
@@ -171,7 +179,38 @@ class FoodDetailsPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(4.w, 0, 0, 0),
+                                  child: const Icon(
+                                    Icons.fastfood,
+                                    size: 20,
+                                    color: Colors.greenAccent,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(1.w, 0, 0, 0),
+                                  child: Text(
+                                    data!.calories.toInt().toString() +
+                                        ' Calories',
+                                    style: GoogleFonts.ptSans(
+                                      textStyle: TextStyle(
+                                          fontSize: 11.sp, color: Colors.grey),
+                                    ),
+                                  ),
+                                ),
                               ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(6.w, 5.h, 6.w, 0),
+                            child: Text(
+                              'Composition',
+                              style: GoogleFonts.ptSans(
+                                color: Colors.black,
+                                textStyle: TextStyle(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                           Flex(
@@ -180,18 +219,22 @@ class FoodDetailsPage extends StatelessWidget {
                               Expanded(
                                 child: Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+                                      EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 10.h),
                                   child: ListView.builder(
                                     physics: const ScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: data!.ingredientLines.length,
                                     itemBuilder: (context, index) {
-                                      return Text(
-                                        data!.ingredientLines[index],
-                                        style: GoogleFonts.ptSans(
-                                          color: Colors.black,
-                                          textStyle: TextStyle(
-                                            fontSize: 11.sp,
+                                      return Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(0, 0, 0, 1.h),
+                                        child: Text(
+                                          data!.ingredientLines[index],
+                                          style: GoogleFonts.lato(
+                                            color: Colors.black,
+                                            textStyle: TextStyle(
+                                              fontSize: 11.sp,
+                                            ),
                                           ),
                                         ),
                                       );
@@ -211,22 +254,28 @@ class FoodDetailsPage extends StatelessWidget {
             Positioned(
               top: 85.h,
               bottom: 2.h,
-              left: 6.w,
-              right: 6.w,
+              left: 4.w,
+              right: 4.w,
               child: RoundedLoadingButton(
-                child: Text('Tap me!', style: TextStyle(color: Colors.white)),
+                resetAfterDuration: true,
+                color: Colors.green,
+                borderRadius: 12,
+                //width: double.maxFinite,
+                child: Text('Add ${data!.label} To Chart',
+                    style: TextStyle(color: Colors.white)),
                 controller: _btnController,
                 onPressed: () => _doSomething(),
-              )
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
   void _doSomething() async {
-    Timer(Duration(seconds: 3), () {
-      _btnController.success();
-    });
+    sl<FoodCubit>()
+        .addToFavourite(data!.label, data!.image)
+        .whenComplete(() => _btnController.success());
   }
 }

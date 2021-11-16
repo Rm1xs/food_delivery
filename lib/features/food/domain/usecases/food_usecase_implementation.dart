@@ -17,4 +17,8 @@ class FoodUseCaseImplementation extends FoodUseCase{
     return repository.searchFood(name);
   }
 
+  @override
+  Future<void> addToFavourite(String name, String imageUrl) {
+    return repository.addToFavourite(name, imageUrl);
+  }
 }

@@ -69,7 +69,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
 
   Widget _bottomBar() {
     return CustomAnimatedBottomBar(
-      containerHeight: 8.h,
+      containerHeight: 7.5.h,
       backgroundColor: Colors.white,
       selectedIndex: _selectedIndex,
       showElevation: true,

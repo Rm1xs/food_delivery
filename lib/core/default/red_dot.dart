@@ -14,7 +14,7 @@ Widget redDot() {
         minWidth: 4,
         minHeight: 4,
       ),
-      child: SizedBox(
+      child: const SizedBox(
         width: 1,
         height: 1,
       ),

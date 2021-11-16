@@ -6,5 +6,4 @@ const String signUpRoute = '/signUp';
 const String signUpSuccess = '/SignUpSuccess';
 const String homePage = '/HomePage';
 const String completeRegistration = '/CompleteRegistration';
-
 const String profilePhoto = '/ProfileImagePage';

@@ -113,7 +113,7 @@ class _ItemWidget extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           physics: NeverScrollableScrollPhysics(),
           child: Container(
-            width: isSelected ? 110 : 50,
+            width: isSelected ? 110 : 40,
             padding: EdgeInsets.symmetric(horizontal: 7),
             child: Row(
               mainAxisSize: MainAxisSize.max,

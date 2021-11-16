@@ -43,12 +43,17 @@ class FinishedOrders {
 }
 
 class Favourite {
-  final int id;
   final String name;
   final String description;
   final double price;
 
-  Favourite(this.id, this.name, this.description, this.price);
+  Favourite(this.name, this.description, this.price);
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'description': description,
+    'price': price,
+  };
 }
 
 enum Subscription { start, middle, advanced, gold }

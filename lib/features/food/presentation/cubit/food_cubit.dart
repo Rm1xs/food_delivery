@@ -10,4 +10,8 @@ class FoodCubit extends Cubit {
   Future<FoodModel> getFood(String name) async {
     return await _foodRepository.searchFood(name);
   }
+
+  Future<void> addToFavourite(String name, String imageUrl) async{
+    return await _foodRepository.addToFavourite(name, imageUrl);
+  }
 }

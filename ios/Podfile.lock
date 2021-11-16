@@ -355,6 +355,9 @@ PODS:
     - Firebase/Firestore (= 8.9.0)
     - firebase_core
     - Flutter
+  - Firebase/AppCheck (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseAppCheck (~> 8.9.0-beta)
   - Firebase/Auth (8.9.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.9.0)
@@ -366,17 +369,25 @@ PODS:
   - Firebase/Storage (8.9.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 8.9.0)
-  - firebase_auth (3.1.5):
+  - firebase_app_check (0.0.3):
+    - Firebase/AppCheck (= 8.9.0)
+    - firebase_core
+    - Flutter
+  - firebase_auth (3.2.0):
     - Firebase/Auth (= 8.9.0)
     - firebase_core
     - Flutter
-  - firebase_core (1.9.0):
+  - firebase_core (1.10.0):
     - Firebase/CoreOnly (= 8.9.0)
     - Flutter
-  - firebase_storage (10.0.7):
+  - firebase_storage (10.1.0):
     - Firebase/Storage (= 8.9.0)
     - firebase_core
     - Flutter
+  - FirebaseAppCheck (8.9.0-beta):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.6)
+    - PromisesObjC (< 3.0, >= 1.2)
   - FirebaseAuth (8.9.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
@@ -477,6 +488,7 @@ PODS:
 DEPENDENCIES:
   - camera (from `.symlinks/plugins/camera/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - firebase_app_check (from `.symlinks/plugins/firebase_app_check/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
@@ -491,6 +503,7 @@ SPEC REPOS:
     - AppAuth
     - BoringSSL-GRPC
     - Firebase
+    - FirebaseAppCheck
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -512,6 +525,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/camera/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  firebase_app_check:
+    :path: ".symlinks/plugins/firebase_app_check/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -534,9 +549,11 @@ SPEC CHECKSUMS:
   camera: fe33292aff715a981eb34d7ce7b35b54337ff34c
   cloud_firestore: 0c744725c0d1544d77db2c8eb35ef919cb19a176
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
-  firebase_auth: 86102828222240509991057a51ae9e9952bcbb5b
-  firebase_core: 3aa324017663581c1d250b66518b86298fda337c
-  firebase_storage: 959eca9a8a365aa24d99896ee2c370346b4debb7
+  firebase_app_check: e27eb8da06920f5dca81d6289107ee60e52594a8
+  firebase_auth: 0d56cc4d105ff70d1547a7fcb10ee574ad05adf5
+  firebase_core: f770e033e790657b3505f04be4cb24c482912f11
+  firebase_storage: a3bbe618ef41930ae31da8f4691d37e4ed84f14d
+  FirebaseAppCheck: eb4c5c6984804b728f71ae89711455dcf6a21054
   FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
@@ -557,6 +574,6 @@ SPEC CHECKSUMS:
   path_provider: d1e9807085df1f9cc9318206cd649dc0b76be3de
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
 
-PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
+PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
 COCOAPODS: 1.11.0.beta.2
