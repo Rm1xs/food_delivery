@@ -56,5 +56,17 @@ class Favourite {
   };
 }
 
-enum Subscription { start, middle, advanced, gold }
+enum Subscription { Iron, Bronse, Gold, Diamond }
 enum StatusOrder { ongoing, completed }
+
+extension CovertSubToString on Subscription {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
+}
+
+extension ConvertOrdToString on StatusOrder {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
+}

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -32,6 +33,28 @@ class FoodDetailsPage extends StatelessWidget {
                 child: Image.network(
                   data!.image,
                   fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: const Color.fromRGBO(249, 168, 77, 1)
+                      .withOpacity(0.4), //Colors.white.withOpacity(0.5),
+                ),
+                child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(
+                      Icons.arrow_back,
+                    ),
+                    color: Colors.green,
+                    onPressed: () => {Navigator.of(context).pop()}
+                  // sl<AuthenticationBloc>().add(AppLogoutRequested()),
                 ),
               ),
             ),
@@ -93,13 +116,13 @@ class FoodDetailsPage extends StatelessWidget {
                                               Radius.circular(20)),
                                           color: Colors.greenAccent
                                               .withOpacity(0.2)),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Icon(
-                                          Icons.location_on,
-                                          size: 20,
+                                      child: const IconButton(
+                                        icon: Icon(
+                                          Icons.location_on_outlined,
+                                          size: 25,
                                           color: Colors.green,
                                         ),
+                                        onPressed: null,
                                       ),
                                     ),
                                     Padding(
@@ -110,18 +133,17 @@ class FoodDetailsPage extends StatelessWidget {
                                             borderRadius:
                                                 const BorderRadius.all(
                                                     Radius.circular(20)),
-                                            color: Colors.redAccent
+                                            color: Colors.greenAccent
                                                 .withOpacity(0.2)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: InkWell(
-                                            onTap: () => _doSomething(),
-                                            child: const Icon(
-                                              Icons.local_fire_department,
-                                              size: 20,
-                                              color: Colors.red,
-                                            ),
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            Icons
+                                                .local_fire_department_outlined,
+                                            size: 25,
+                                            color: Colors.red,
                                           ),
+                                          onPressed: () =>
+                                              _addToFavourite(context),
                                         ),
                                       ),
                                     ),
@@ -262,9 +284,9 @@ class FoodDetailsPage extends StatelessWidget {
                 borderRadius: 12,
                 //width: double.maxFinite,
                 child: Text('Add ${data!.label} To Chart',
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.white)),
                 controller: _btnController,
-                onPressed: () => _doSomething(),
+                onPressed: () => {},
               ),
             ),
           ],
@@ -273,9 +295,13 @@ class FoodDetailsPage extends StatelessWidget {
     );
   }
 
-  void _doSomething() async {
+  void _addToFavourite(BuildContext context) async {
     sl<FoodCubit>()
         .addToFavourite(data!.label, data!.image)
-        .whenComplete(() => _btnController.success());
+        .whenComplete(() => {
+              //_btnController.success(),
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Added to your favourite')))
+            });
   }
 }

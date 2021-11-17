@@ -23,7 +23,7 @@ class ProfileRepositoryImplementation implements ProfileRepository {
     String email = tokenResult.email ?? 'Unknown';
 
     DeliveryProfile post =
-        DeliveryProfile(name, Subscription.start.toString(), 0, email);
+        DeliveryProfile(name, Subscription.Iron.toShortString(), 0, email);
 
     Map<String, dynamic> postData = post.toJson();
     await deliveryProfile.doc(idToken.toString()).set(postData);
@@ -52,7 +52,8 @@ class ProfileRepositoryImplementation implements ProfileRepository {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     FirebaseStorage storage = FirebaseStorage.instance;
-    Reference ref = storage.ref().child('profile_images').child('profile_image_$idToken');
+    Reference ref =
+        storage.ref().child('profile_images').child('profile_image_$idToken');
     UploadTask uploadTask = ref.putFile(path);
     uploadTask.then((res) {
       res.ref.getDownloadURL();

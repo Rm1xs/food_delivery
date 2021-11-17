@@ -34,14 +34,14 @@ class FoodRepositoryImplementation implements FoodRepository {
 
   @override
   Future<void> addToFavourite(String name, String imageUrl) async {
-    //Map<String, dynamic> values
+    Map<String, dynamic> values = {name : imageUrl};
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference profileData =
         FirebaseFirestore.instance.collection('Delivery Profiles');
     //Favourite post = Favourite(name, imageUrl, 123.6);
     await profileData.doc(idToken.toString()).update({
-      "favourite" : FieldValue.arrayUnion([name])
+      "favourite" : FieldValue.arrayUnion([values])
     });
   }
 }

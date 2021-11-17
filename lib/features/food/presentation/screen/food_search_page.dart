@@ -175,7 +175,7 @@ class _SearchState extends State<Search> {
                                             spread: 5,
                                             depth: 10,
                                             borderRadius: 20,
-                                            child: Container(
+                                            child: SizedBox(
                                               height: 12.h,
                                               width: double.infinity,
                                               child: Row(

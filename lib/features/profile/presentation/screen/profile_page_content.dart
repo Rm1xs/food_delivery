@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:food_delivery/core/default/curve_painter.dart';
-import 'package:food_delivery/features/profile/data/models/delivery_profile.dart';
+import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
+import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:food_delivery/screens/profile_photo/profile_image.dart';
-import 'package:food_delivery/screens/profile_photo/profile_image_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../injection.dart';
@@ -25,9 +25,13 @@ class ProfilePageContent extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePageContent> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late CameraDescription camera;
+  late int favouriteElements;
+  late String favouriteText;
 
   @override
   void initState() {
+    favouriteElements = 2;
+    favouriteText = 'Show all favourites';
     _getCamera();
     super.initState();
   }
@@ -42,20 +46,22 @@ class _ProfilePageState extends State<ProfilePageContent> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CircularProgressIndicator(color: Color.fromRGBO(218, 99, 23, 1),),
+              const CircularProgressIndicator(
+                color: Color.fromRGBO(218, 99, 23, 1),
+              ),
               Center(
                 child: Padding(
                   padding: EdgeInsets.all(5.0),
-                  child: Text('Loading...', style:
-                  GoogleFonts.ptSans(
-                    textStyle: TextStyle(
-                        color: const Color.fromRGBO(218, 99, 23, 1)
-                            .withOpacity(0.5),
-                        fontSize: 13.sp,
-                        fontWeight:
-                        FontWeight
-                            .bold),
-                  ),),
+                  child: Text(
+                    'Loading...',
+                    style: GoogleFonts.ptSans(
+                      textStyle: TextStyle(
+                          color: const Color.fromRGBO(218, 99, 23, 1)
+                              .withOpacity(0.5),
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -168,6 +174,18 @@ class _ProfilePageState extends State<ProfilePageContent> {
                                   size: 20,
                                   color: Colors.green,
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
+                                  child: InkWell(
+                                    onTap: () => sl<AuthenticationBloc>()
+                                        .add(AppLogoutRequested()),
+                                    child: const Icon(
+                                      Icons.logout,
+                                      size: 20,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -217,20 +235,49 @@ class _ProfilePageState extends State<ProfilePageContent> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-                            child: Text(
-                              'My Favorite',
-                              style: GoogleFonts.ptSans(
-                                textStyle: TextStyle(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                                child: Text(
+                                  'My Favorite',
+                                  style: GoogleFonts.ptSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 2.h, 6.w, 0),
+                                child: InkWell(
+                                  onTap: () => setState(() {
+                                    if (favouriteElements == 2) {
+                                      favouriteElements = 10;
+                                      favouriteText = 'Hide favourites';
+                                    } else {
+                                      favouriteElements = 2;
+                                      favouriteText = 'Show all favourites';
+                                    }
+                                  }),
+                                  child: Text(
+                                    favouriteText,
+                                    style: GoogleFonts.ptSans(
+                                      textStyle: TextStyle(
+                                        fontSize: 10.sp,
+                                        color: const Color.fromRGBO(
+                                            218, 99, 23, 1),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           favourite(snapshotData),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                            padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 12.h),
                             child: Text(
                               'My Orders',
                               style: GoogleFonts.ptSans(
@@ -260,15 +307,22 @@ class _ProfilePageState extends State<ProfilePageContent> {
 
   Widget favourite(Map<dynamic, dynamic> snapshotData) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 12.h),
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 3.h),
       child: Flex(
         direction: Axis.horizontal,
         children: [
           Expanded(
             child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: snapshotData['favourite'].length,
+              itemCount: snapshotData['favourite'].length == null
+                  ? 0
+                  : (snapshotData['favourite'].length > favouriteElements
+                      ? favouriteElements
+                      : snapshotData['favourite'].length),
               itemBuilder: (BuildContext context, int index) {
+                final map = snapshotData['favourite'][index];
+                //print(map['value'].toString());
                 return Padding(
                   padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
                   child: ClayContainer(
@@ -281,26 +335,32 @@ class _ProfilePageState extends State<ProfilePageContent> {
                     child: Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(5.w, 0, 3.w, 0),
+                          padding: EdgeInsets.fromLTRB(5.w, 1.h, 3.w, 1.h),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset(
-                              'assets/images/PhotoMenu.png',
-                              fit: BoxFit.fill,
+                            child: Image.network(
+                              map.values.elementAt(0),
+                              fit: BoxFit.scaleDown,
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(3.w, 2.h, 6.w, 0),
+                          padding: EdgeInsets.fromLTRB(3.w, 2.h, 0.w, 0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                snapshotData['favourite'][index],
-                                style: GoogleFonts.ptSans(
-                                  textStyle: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.bold),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.35,
+                                child: Text(
+                                  map.keys.elementAt(0),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                  style: GoogleFonts.ptSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                               Text(
@@ -326,13 +386,13 @@ class _ProfilePageState extends State<ProfilePageContent> {
                         Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: ElevatedButton(
-                            child: const Text('Buy Again'),
+                            child: const Text('Buy'),
                             onPressed: () => print("it's pressed"),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.green,
                               onPrimary: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                           ),
@@ -346,6 +406,32 @@ class _ProfilePageState extends State<ProfilePageContent> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<bool?> _showConfirmationDialog(BuildContext context, String action) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Do you want to $action this item?'),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                Navigator.pop(context, true); // showDialog() returns true
+              },
+            ),
+            FlatButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.pop(context, false); // showDialog() returns false
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -11,6 +11,7 @@ import 'package:food_delivery/screens/appbar/appbar_with_text.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
 import 'package:food_delivery/screens/appbar/without_appbar.dart';
 import 'package:food_delivery/screens/notification/notification_page.dart';
+import 'package:food_delivery/screens/slider/slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,7 +33,8 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
     const Search(),
     const ProfilePageContent(),
     const OrderPage(),
-    const AllChatPage(),
+    ImageSliderScreen(recipeStepsList: ['fdg','dfg','s'],)
+    //const AllChatPage(),
   ];
 
   int _selectedIndex = 0;
