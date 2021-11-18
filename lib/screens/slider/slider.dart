@@ -23,21 +23,20 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> {
   }
 
   Widget _buildItems(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        CarouselSlider(
-          options: CarouselOptions(
-            enlargeCenterPage: true,
-            enableInfiniteScroll: false,
-            autoPlay: false,
-          ),
-          items: widget.recipeStepsList!
-              .map(
-                (e) => Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.w, 2.h, 0.w, 0),
-                  child: Row(
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          CarouselSlider(
+            options: CarouselOptions(
+              enlargeCenterPage: true,
+              enableInfiniteScroll: false,
+              autoPlay: false,
+            ),
+            items: widget.recipeStepsList!
+                .map(
+                  (e) => Column(
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ClayContainer(
@@ -128,12 +127,12 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> {
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ).toList(),
-        ),
-      ],
+                ],
+              ),
+            ).toList(),
+          ),
+        ],
+      ),
     );
   }
 }

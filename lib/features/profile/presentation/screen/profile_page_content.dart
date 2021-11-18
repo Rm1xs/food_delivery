@@ -3,6 +3,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
@@ -300,11 +301,6 @@ class _ProfilePageState extends State<ProfilePageContent> {
     );
   }
 
-  //Methods
-  void _getCamera() async {
-    await availableCameras().then((value) => camera = value.first);
-  }
-
   Widget favourite(Map<dynamic, dynamic> snapshotData) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 3.h),
@@ -313,7 +309,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
         children: [
           Expanded(
             child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: snapshotData['favourite'].length == null
                   ? 0
@@ -322,82 +318,132 @@ class _ProfilePageState extends State<ProfilePageContent> {
                       : snapshotData['favourite'].length),
               itemBuilder: (BuildContext context, int index) {
                 final map = snapshotData['favourite'][index];
-                //print(map['value'].toString());
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
-                  child: ClayContainer(
-                    color: Colors.white,
-                    spread: 5,
-                    depth: 10,
-                    borderRadius: 20,
-                    height: 12.h,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(5.w, 1.h, 3.w, 1.h),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.network(
-                              map.values.elementAt(0),
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(3.w, 2.h, 0.w, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.35,
-                                child: Text(
-                                  map.keys.elementAt(0),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  softWrap: false,
-                                  style: GoogleFonts.ptSans(
-                                    textStyle: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                'Waroenk kita',
-                                style: GoogleFonts.ptSans(
-                                  textStyle: TextStyle(
-                                      fontSize: 10.sp, color: Colors.grey),
-                                ),
-                              ),
-                              Text(
-                                '35',
-                                style: GoogleFonts.ptSans(
-                                  textStyle: TextStyle(
-                                      fontSize: 13.sp,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
+                return Dismissible(
+                  dragStartBehavior: DragStartBehavior.start,
+                  key: Key(map.keys.elementAt(0)),
+                  direction: DismissDirection.endToStart,
+                  background: Padding(
+                    padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: Container(
+                        color: Colors.deepOrange,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const <Widget>[
+                              Icon(Icons.delete, color: Colors.white),
                             ],
                           ),
                         ),
-                        const Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ElevatedButton(
-                            child: const Text('Buy'),
-                            onPressed: () => print("it's pressed"),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
-                              onPrimary: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                  confirmDismiss: (DismissDirection direction) async {
+                    return await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Delete Confirmation"),
+                          content: const Text(
+                              "Are you sure you want to delete this item?"),
+                          actions: <Widget>[
+                            FlatButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                                child: const Text("Delete")),
+                            FlatButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text("Cancel"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  onDismissed: (DismissDirection direction) {
+                    if (direction == DismissDirection.endToStart) {
+                      print('removed');
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+                    child: ClayContainer(
+                      color: Colors.white,
+                      spread: 5,
+                      depth: 10,
+                      borderRadius: 20,
+                      height: 12.h,
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(5.w, 1.h, 3.w, 1.h),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.network(
+                                map.values.elementAt(0),
+                                fit: BoxFit.scaleDown,
                               ),
                             ),
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(3.w, 2.h, 0.w, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.35,
+                                  child: Text(
+                                    map.keys.elementAt(0),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: false,
+                                    style: GoogleFonts.ptSans(
+                                      textStyle: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'Waroenk kita',
+                                  style: GoogleFonts.ptSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 10.sp, color: Colors.grey),
+                                  ),
+                                ),
+                                Text(
+                                  '35',
+                                  style: GoogleFonts.ptSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 13.sp,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: ElevatedButton(
+                              child: const Text('Buy'),
+                              onPressed: () => print("it's pressed"),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.green,
+                                onPrimary: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -409,29 +455,8 @@ class _ProfilePageState extends State<ProfilePageContent> {
     );
   }
 
-  Future<bool?> _showConfirmationDialog(BuildContext context, String action) {
-    return showDialog<bool>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Do you want to $action this item?'),
-          actions: <Widget>[
-            FlatButton(
-              child: const Text('Yes'),
-              onPressed: () {
-                Navigator.pop(context, true); // showDialog() returns true
-              },
-            ),
-            FlatButton(
-              child: const Text('No'),
-              onPressed: () {
-                Navigator.pop(context, false); // showDialog() returns false
-              },
-            ),
-          ],
-        );
-      },
-    );
+  //Methods
+  void _getCamera() async {
+    await availableCameras().then((value) => camera = value.first);
   }
 }

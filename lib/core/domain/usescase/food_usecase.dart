@@ -7,4 +7,6 @@ abstract class FoodUseCase {
   Future<FoodModel> searchFood(String name);
 
   Future<void> addToFavourite(String name, String imageUrl);
+
+  Future<void> addToOrder(String food);
 }

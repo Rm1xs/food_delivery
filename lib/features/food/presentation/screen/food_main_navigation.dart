@@ -1,18 +1,14 @@
-import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/default/bottom_bar.dart';
-import 'package:food_delivery/core/default/red_dot.dart';
 import 'package:food_delivery/features/food/domain/usecases/food_usecase_implementation.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:food_delivery/features/orders/presentation/screen/order_page.dart';
+import 'package:food_delivery/features/orders/presentation/screen/orders_page_main.dart';
 import 'package:food_delivery/features/profile/presentation/screen/profile_page_content.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_text.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
 import 'package:food_delivery/screens/appbar/without_appbar.dart';
-import 'package:food_delivery/screens/notification/notification_page.dart';
-import 'package:food_delivery/screens/slider/slider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../injection.dart';
@@ -32,8 +28,8 @@ class _FoodMainNavigationState extends State<FoodMainNavigation> {
     const FoodMainPage(),
     const Search(),
     const ProfilePageContent(),
-    const OrderPage(),
-    ImageSliderScreen(recipeStepsList: ['fdg','dfg','s'],)
+    const OrdersPageMain(),
+    const AllChatPage()
     //const AllChatPage(),
   ];
 

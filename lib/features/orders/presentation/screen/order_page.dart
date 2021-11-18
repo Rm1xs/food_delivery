@@ -2,8 +2,11 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:food_delivery/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../injection.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({Key? key}) : super(key: key);
@@ -221,6 +224,12 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
             });
           },
           child: const Text('Show order'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            sl<OrdersCubit>().addToOrders('food');
+          },
+          child: const Text('add order'),
         )
       ],
     );

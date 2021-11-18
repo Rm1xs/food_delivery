@@ -5,8 +5,10 @@ import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/domain/repositories/food_repository.dart';
 import 'package:food_delivery/features/profile/data/models/delivery_profile.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodRepositoryImplementation implements FoodRepository {
+
   @override
   Future<void> getRestaurants() {
     // TODO: implement getRestaurants
@@ -43,6 +45,20 @@ class FoodRepositoryImplementation implements FoodRepository {
     await profileData.doc(idToken.toString()).update({
       "favourite" : FieldValue.arrayUnion([values])
     });
+  }
+
+  @override
+  Future<void> addToOrder(String food) async {
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+
+    var itemList = prefs.get('orders').toString();
+    
+    var t = itemList.replaceAll(RegExp(r'[]'),'',);
+    print(t);
+    var items = <RecipeClassModel>[];
+
+    print(prefs.get('orders'));
   }
 }
 

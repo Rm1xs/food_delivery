@@ -10,6 +10,10 @@ import 'features/food/data/repositories/food_repository_implementation.dart';
 import 'features/food/domain/repositories/food_repository.dart';
 import 'features/food/domain/usecases/food_usecase_implementation.dart';
 import 'features/food/presentation/cubit/food_cubit.dart';
+import 'features/orders/data/repositories/orders_repository_imlementation.dart';
+import 'features/orders/domain/repositories/orders_repository.dart';
+import 'features/orders/domain/usecases/orders_usecase_implementation.dart';
+import 'features/orders/presentation/cubit/orders_cubit.dart';
 import 'features/payment/data/repositories/payment_repository_implementation.dart';
 import 'features/payment/domain/repositories/payment_repository.dart';
 import 'features/payment/domain/usecases/payment_usecase_implementation.dart';
@@ -40,12 +44,16 @@ Future<void> init() async {
   sl.registerFactory(
     () => FoodCubit(sl()),
   );
+  sl.registerFactory(
+        () => OrdersCubit(sl()),
+  );
 
   // Use cases
   sl.registerLazySingleton(() => AuthUseCaseImplementation(sl()));
   sl.registerLazySingleton(() => PaymentUseCaseImplementation(sl()));
   sl.registerLazySingleton(() => ProfileUseCaseImplementation(sl()));
   sl.registerLazySingleton(() => FoodUseCaseImplementation(sl()));
+  sl.registerLazySingleton(() => OrdersUseCaseImplementation(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
@@ -59,5 +67,8 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<FoodRepository>(
         () => FoodRepositoryImplementation(),
+  );
+  sl.registerLazySingleton<OrdersRepository>(
+        () => OrdersRepositoryImplementation(),
   );
 }
