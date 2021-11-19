@@ -37,6 +37,7 @@ dependencies:
   rounded_loading_button: ^2.0.8
   carousel_slider: ^4.0.0
   shared_preferences: ^2.0.8
+  lottie: ^1.2.1
   #flutter_neumorphic: ^3.1.0
   #flutter_credit_card: ^3.0.0
 
@@ -51,3 +52,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/animated_buttons/

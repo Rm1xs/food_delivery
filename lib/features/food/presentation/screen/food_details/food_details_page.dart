@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/food/domain/usecases/food_usecase_implementation.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
@@ -282,7 +279,13 @@ class FoodDetailsPage extends StatelessWidget {
                 bottom: 2.h,
                 left: 4.w,
                 right: 4.w,
-                child: ElevatedButton(onPressed: () => {sl<FoodCubit>().addToOrder(data!.label)}, child: Text('Tap'),)
+                child: ElevatedButton(onPressed: () => {sl<FoodCubit>().addToOrder(data!.label)}, child: Text('Add To Chart'), style: ElevatedButton.styleFrom(
+                  primary: Colors.green,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                ),),
               ),
             ],
           ),

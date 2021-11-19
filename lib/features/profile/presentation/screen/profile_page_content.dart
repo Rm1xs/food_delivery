@@ -46,23 +46,10 @@ class _ProfilePageState extends State<ProfilePageContent> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CircularProgressIndicator(
-                color: Color.fromRGBO(218, 99, 23, 1),
-              ),
+            children: const [
               Center(
-                child: Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Text(
-                    'Loading...',
-                    style: GoogleFonts.ptSans(
-                      textStyle: TextStyle(
-                          color: const Color.fromRGBO(218, 99, 23, 1)
-                              .withOpacity(0.5),
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                child: CircularProgressIndicator(
+                  color: Color.fromRGBO(218, 99, 23, 1),
                 ),
               ),
             ],

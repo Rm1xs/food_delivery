@@ -61,12 +61,12 @@ enum StatusOrder { ongoing, completed }
 
 extension CovertSubToString on Subscription {
   String toShortString() {
-    return this.toString().split('.').last;
+    return toString().split('.').last;
   }
 }
 
 extension ConvertOrdToString on StatusOrder {
   String toShortString() {
-    return this.toString().split('.').last;
+    return toString().split('.').last;
   }
 }

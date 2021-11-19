@@ -9,7 +9,6 @@ import 'package:flutter/widgets.dart';
 import 'package:food_delivery/features/food/presentation/screen/food_search_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-import 'package:filter_list/filter_list.dart';
 
 class FoodMainPage extends StatefulWidget {
   const FoodMainPage({Key? key}) : super(key: key);
@@ -205,16 +204,19 @@ class _FoodMainPageState extends State<FoodMainPage> {
                 children: <Widget>[
                   CarouselSlider(
                     options: CarouselOptions(
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
                       enlargeCenterPage: true,
                       enableInfiniteScroll: false,
-                      autoPlay: false,
                     ),
                     items: ['one', 'two', 'third']
                         .map(
                           (e) => Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ClayContainer(
                                 spread: 2,

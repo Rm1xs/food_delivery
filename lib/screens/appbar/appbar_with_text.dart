@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/default/red_dot.dart';
@@ -6,9 +8,28 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 PreferredSize appbarWithText(BuildContext context) {
+
+
   return PreferredSize(
     preferredSize: Size(double.infinity, 22.h),
-    child: Padding(
+    child: Stack(children: [
+      Positioned(
+        right: -30,
+        top: -30,
+        //left: 150,
+        child: Transform.rotate(
+          angle: 30* pi / 180 ,
+          child: Opacity(
+            opacity: 0.27,
+            child: Image.asset(
+              'assets/images/Pattern.png',
+              fit: BoxFit.fill,
+              color: Colors.green,
+            ),
+          ),
+        ),
+      ),
+      Padding(
       padding: EdgeInsets.fromLTRB(6.w, 8.h, 6.w, 0),
       child: Row(
         children: [
@@ -19,14 +40,14 @@ PreferredSize appbarWithText(BuildContext context) {
                 'Find Your',
                 style: GoogleFonts.ptSans(
                   textStyle:
-                      TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
+                  TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
                 ),
               ),
               Text(
                 'Favorite Food',
                 style: GoogleFonts.ptSans(
                   textStyle:
-                      TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
+                  TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -68,6 +89,6 @@ PreferredSize appbarWithText(BuildContext context) {
           ),
         ],
       ),
-    ),
+    ),],),
   );
 }

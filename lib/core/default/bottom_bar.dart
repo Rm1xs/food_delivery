@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
-class CustomAnimatedBottomBar extends StatelessWidget {
+class CustomAnimatedBottomBar extends StatefulWidget {
   const CustomAnimatedBottomBar({
     Key? key,
     this.selectedIndex = 0,
@@ -30,9 +31,16 @@ class CustomAnimatedBottomBar extends StatelessWidget {
   final double containerHeight;
   final Curve curve;
 
+
+  @override
+  State<CustomAnimatedBottomBar> createState() => _CustomAnimatedBottomBarState();
+}
+
+class _CustomAnimatedBottomBarState extends State<CustomAnimatedBottomBar> with TickerProviderStateMixin {
+
   @override
   Widget build(BuildContext context) {
-    final bgColor = backgroundColor ?? Theme.of(context).bottomAppBarColor;
+    final bgColor = widget.backgroundColor ?? Theme.of(context).bottomAppBarColor;
 
     return Container(
       margin: EdgeInsets.only(left: 3.w, right: 3.w, bottom: 2.h, top: 2.h),
@@ -40,7 +48,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
         borderRadius:  BorderRadius.circular(13),
         color: bgColor,
         boxShadow: [
-          if (showElevation)
+          if (widget.showElevation)
             const BoxShadow(
               color: Colors.black12,
               blurRadius: 2,
@@ -49,25 +57,31 @@ class CustomAnimatedBottomBar extends StatelessWidget {
       ),
       child: Container(
         width: double.infinity,
-        height: containerHeight,
+        height: widget.containerHeight,
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-        child: Row(
-          mainAxisAlignment: mainAxisAlignment,
-          children: items.map((item) {
-            var index = items.indexOf(item);
-            return GestureDetector(
-              onTap: () => onItemSelected(index),
-              child: _ItemWidget(
-                item: item,
-                iconSize: iconSize,
-                isSelected: index == selectedIndex,
-                backgroundColor: bgColor,
-                itemCornerRadius: itemCornerRadius,
-                animationDuration: animationDuration,
-                curve: curve,
-              ),
-            );
-          }).toList(),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: widget.mainAxisAlignment,
+              children: widget.items.map((item) {
+                var index = widget.items.indexOf(item);
+                return GestureDetector(
+                  onTap: () => {widget.onItemSelected(index), item.controller.forward()},
+                  child: _ItemWidget(
+                    controller: item.controller,
+                    item: item,
+                    iconSize: widget.iconSize,
+                    isSelected: index == widget.selectedIndex,
+                    backgroundColor: bgColor,
+                    itemCornerRadius: widget.itemCornerRadius,
+                    animationDuration: widget.animationDuration,
+                    curve: widget.curve,
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
         ),
       ),
     );
@@ -75,6 +89,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
 }
 
 class _ItemWidget extends StatelessWidget {
+
   final double iconSize;
   final bool isSelected;
   final BottomNavyBarItem item;
@@ -82,6 +97,7 @@ class _ItemWidget extends StatelessWidget {
   final double itemCornerRadius;
   final Duration animationDuration;
   final Curve curve;
+  final AnimationController controller;
 
   const _ItemWidget({
     Key? key,
@@ -91,7 +107,7 @@ class _ItemWidget extends StatelessWidget {
     required this.animationDuration,
     required this.itemCornerRadius,
     required this.iconSize,
-    this.curve = Curves.linear,
+    this.curve = Curves.linear, required this.controller,
   }) : super(key: key);
 
   @override
@@ -129,7 +145,20 @@ class _ItemWidget extends StatelessWidget {
                             ? item.activeColor
                             : item.inactiveColor,
                   ),
-                  child: item.icon,
+                  child: Container(
+                    height: 24,
+                    width: 24,
+                    child: Lottie.asset(
+                      item.icon,
+                      frameRate: FrameRate.max,
+                      repeat: false,
+                      controller: item.controller,
+                      onLoaded: (composition) {
+                        item.controller.duration = composition.duration;
+                        //_animationController.forward();
+                      },
+                    ),
+                  ),
                 ),
                 if (isSelected)
                   Expanded(
@@ -157,6 +186,7 @@ class _ItemWidget extends StatelessWidget {
 
 class BottomNavyBarItem {
   BottomNavyBarItem({
+    required this.controller,
     required this.icon,
     required this.title,
     this.activeColor = Colors.blue,
@@ -164,9 +194,10 @@ class BottomNavyBarItem {
     this.inactiveColor,
   });
 
-  final Widget icon;
+  final String icon;
   final Widget title;
   final Color activeColor;
   final Color? inactiveColor;
   final TextAlign? textAlign;
+  final AnimationController controller;
 }
