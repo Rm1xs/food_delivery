@@ -1,14 +1,18 @@
 import 'dart:ui';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
+import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:food_delivery/features/food/presentation/screen/food_search_page.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../injection.dart';
 
 class FoodMainPage extends StatefulWidget {
   const FoodMainPage({Key? key}) : super(key: key);
@@ -18,7 +22,12 @@ class FoodMainPage extends StatefulWidget {
 }
 
 class _FoodMainPageState extends State<FoodMainPage> {
-  final List<String> recipeStepsList = ['sdf'];
+  @override
+  void initState() {
+    getLocation();
+  }
+
+  //final List<String> recipeStepsList = ['sdf'];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -87,9 +96,9 @@ class _FoodMainPageState extends State<FoodMainPage> {
                       padding: EdgeInsets.zero,
                       icon: IconTheme(
                         data: IconThemeData(
-                            color:
-                                Color.fromRGBO(218, 99, 23, 1).withOpacity(1)),
-                        child: Icon(Icons.settings_input_composite_sharp),
+                            color: const Color.fromRGBO(218, 99, 23, 1)
+                                .withOpacity(1)),
+                        child: const Icon(Icons.settings_input_composite_sharp),
                       ),
                       color: const Color.fromRGBO(218, 99, 23, 1)
                           .withOpacity(0.08),
@@ -190,7 +199,8 @@ class _FoodMainPageState extends State<FoodMainPage> {
                       style: GoogleFonts.ptSans(
                         textStyle: TextStyle(
                           fontSize: 10.sp,
-                          color: const Color.fromRGBO(218, 99, 23, 1),
+                          color: Colors.grey
+                          //color: const Color.fromRGBO(218, 99, 23, 1),
                         ),
                       ),
                     ),
@@ -198,34 +208,38 @@ class _FoodMainPageState extends State<FoodMainPage> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-              child: Column(
-                children: <Widget>[
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 3),
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: false,
-                    ),
-                    items: ['one', 'two', 'third']
-                        .map(
-                          (e) => Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ClayContainer(
+            FutureBuilder<RestaurantModel>(
+              future: getLocation(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<RestaurantModel> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  default:
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    else {
+                      return Container(
+                        height: 25.h,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.results.length,
+                          itemBuilder: (context, i) {
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: ClayContainer(
                                 spread: 2,
                                 depth: 10,
                                 borderRadius: 20,
                                 color: Colors.white,
                                 child: Container(
                                   height: 23.h,
-                                  width: MediaQuery.of(context).size.width * 0.35,
+                                  width:
+                                      MediaQuery.of(context).size.width *
+                                          0.35,
                                   child: Column(
                                     children: [
                                       Image.asset(
@@ -235,24 +249,30 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                         width: 12.h,
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(0.w, 2.h, 0.w, 0),
+                                        padding: EdgeInsets.fromLTRB(
+                                            0.w, 2.h, 0.w, 0),
                                         child: Text(
-                                          'Vegan Resto',
+                                          snapshot
+                                              .data!.results[i].poi.name,
                                           style: GoogleFonts.ptSans(
                                             textStyle: TextStyle(
                                                 fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight:
+                                                    FontWeight.bold),
                                           ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(0, 0.5.h, 0, 0),
+                                        padding: EdgeInsets.fromLTRB(
+                                            0, 0.5.h, 0, 0),
                                         child: Text(
-                                          '12 Mins',
+                                          snapshot
+                                              .data!.results[i].dist.toInt().toString() + ' meter',
                                           style: GoogleFonts.ptSans(
                                             textStyle: TextStyle(
                                                 fontSize: 11.sp,
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight:
+                                                    FontWeight.bold,
                                                 color: Colors.grey),
                                           ),
                                         ),
@@ -261,57 +281,15 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                   ),
                                 ),
                               ),
-                              ClayContainer(
-                                spread: 2,
-                                depth: 10,
-                                borderRadius: 20,
-                                color: Colors.white,
-                                child: Container(
-                                  height: 23.h,
-                                  width: MediaQuery.of(context).size.width * 0.35,
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/RestaurantImage1.png',
-                                        fit: BoxFit.scaleDown,
-                                        height: 12.h,
-                                        width: 12.h,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(0.w, 2.h, 0.w, 0),
-                                        child: Text(
-                                          'Healthy Food',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(0, 0.5.h, 0, 0),
-                                        child: Text(
-                                          '8 Mins',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 11.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ).toList(),
-                  ),
-                ],
-              ),
+                            );
+                            //Text(snapshot.data!.results[i].poi.name);
+                            //child: Text(snapshot.data!.results[i].poi.name));
+                          },
+                        ),
+                      );
+                    }
+                }
+              },
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
@@ -539,5 +517,13 @@ class _FoodMainPageState extends State<FoodMainPage> {
         ),
       ),
     );
+  }
+
+  Future<RestaurantModel> getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    var data =
+        sl<FoodCubit>().getRestaurants(position.latitude, position.longitude);
+    return data;
   }
 }

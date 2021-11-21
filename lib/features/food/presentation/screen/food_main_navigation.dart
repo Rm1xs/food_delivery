@@ -9,9 +9,8 @@ import 'package:food_delivery/features/profile/presentation/screen/profile_page_
 import 'package:food_delivery/screens/appbar/appbar_with_text.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
 import 'package:food_delivery/screens/appbar/without_appbar.dart';
-import 'package:lottie/lottie.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../injection.dart';
 import 'chat/all_chat_page.dart';
 import 'food_main_content.dart';
@@ -26,6 +25,7 @@ class FoodMainNavigation extends StatefulWidget {
 
 class _FoodMainNavigationState extends State<FoodMainNavigation>
     with TickerProviderStateMixin {
+
   static final List<Widget> _pages = <Widget>[
     const FoodMainPage(),
     const Search(),
@@ -44,46 +44,49 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
   late AnimationController _chartController;
   late AnimationController _profileController;
 
+
   @override
   void initState() {
     super.initState();
+
     appbar = appbarWithText(context);
+
     _homeController = AnimationController(
         duration: const Duration(milliseconds: 950), vsync: this);
-    _homeController.addStatusListener((status){
-      if(status == AnimationStatus.completed){
+    _homeController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
         _homeController.reset();
       }
     });
 
     _searchController = AnimationController(
         duration: const Duration(milliseconds: 950), vsync: this);
-    _searchController.addStatusListener((status){
-      if(status == AnimationStatus.completed){
+    _searchController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
         _searchController.reset();
       }
     });
 
     _chatController = AnimationController(
         duration: const Duration(milliseconds: 950), vsync: this);
-    _chatController.addStatusListener((status){
-      if(status == AnimationStatus.completed){
+    _chatController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
         _chatController.reset();
       }
     });
 
     _chartController = AnimationController(
         duration: const Duration(milliseconds: 950), vsync: this);
-    _chartController.addStatusListener((status){
-      if(status == AnimationStatus.completed){
+    _chartController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
         _chartController.reset();
       }
     });
 
     _profileController = AnimationController(
         duration: const Duration(milliseconds: 950), vsync: this);
-    _profileController.addStatusListener((status){
-      if(status == AnimationStatus.completed){
+    _profileController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
         _profileController.reset();
       }
     });
@@ -175,7 +178,8 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
           title: Text('Profile'),
           activeColor: Colors.green,
           inactiveColor: Colors.green[200],
-          textAlign: TextAlign.center, controller: _profileController,
+          textAlign: TextAlign.center,
+          controller: _profileController,
         ),
         BottomNavyBarItem(
           icon: 'assets/animated_buttons/order.json',
@@ -184,14 +188,16 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
           ),
           activeColor: Colors.green,
           inactiveColor: Colors.green[200],
-          textAlign: TextAlign.center, controller: _chartController,
+          textAlign: TextAlign.center,
+          controller: _chartController,
         ),
         BottomNavyBarItem(
           icon: 'assets/animated_buttons/chat.json',
           title: Text('Chat'),
           activeColor: Colors.green,
           inactiveColor: Colors.green[200],
-          textAlign: TextAlign.center, controller: _chatController,
+          textAlign: TextAlign.center,
+          controller: _chatController,
         ),
       ],
     );

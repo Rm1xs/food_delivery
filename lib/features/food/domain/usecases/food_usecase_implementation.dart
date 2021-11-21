@@ -1,5 +1,6 @@
 import 'package:food_delivery/core/domain/usescase/food_usecase.dart';
 import 'package:food_delivery/features/food/data/models/food_model.dart';
+import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/domain/repositories/food_repository.dart';
 
 class FoodUseCaseImplementation extends FoodUseCase{
@@ -7,9 +8,8 @@ class FoodUseCaseImplementation extends FoodUseCase{
 
   FoodUseCaseImplementation(this.repository);
   @override
-  Future<void> getRestaurants() {
-    // TODO: implement getRestaurants
-    throw UnimplementedError();
+  Future<RestaurantModel> getRestaurants(double lat, double lon) {
+    return repository.getRestaurants(lat, lon);
   }
 
   @override

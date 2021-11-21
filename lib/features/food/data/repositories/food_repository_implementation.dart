@@ -2,18 +2,34 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/features/food/data/models/food_model.dart';
+import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/domain/repositories/food_repository.dart';
 import 'package:food_delivery/features/profile/data/models/delivery_profile.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodRepositoryImplementation implements FoodRepository {
 
   @override
-  Future<void> getRestaurants() {
-    // TODO: implement getRestaurants
-    throw UnimplementedError();
+  Future<RestaurantModel> getRestaurants(double lat, double lon) async {
+    String url = 'https://api.tomtom.com/search/2/nearbySearch/.json?lat=$lat&lon=$lon&categorySet=7315&key=GrUWtwXOKPVkDlAnD3R4lzKoKknlhvhH';
+    final http.Client client = http.Client();
+    final http.Response response = await client.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      final RestaurantModel data = RestaurantModel.fromJson(json.decode(response.body));
+      return data;
+    } else {
+      throw Exception();
+    }
   }
+
+
 
   @override
   Future<FoodModel> searchFood(String name) async {
