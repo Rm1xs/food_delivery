@@ -1,4 +1,5 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -21,24 +22,74 @@ class _OrderPageState extends State<OrderPage> {
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding:
-                    const EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
-                child: ClayContainer(
-                  color: Colors.white,
-                  spread: 5,
-                  depth: 10,
-                  borderRadius: 20,
-                  height: 9.h,
-                  width: double.infinity,
-                ),
-              );
+          child: FutureBuilder<DocumentSnapshot>(
+            future: sl<OrdersCubit>().getItemsInOrder(),
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                default:
+                  if (snapshot.hasError)
+                    return Text('Error: ${snapshot.error}');
+                  else {
+                    Map<dynamic, dynamic> snapshotData =
+                        snapshot.data!.data() as Map;
+                    return Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: snapshotData['orders'].length ?? 0,
+                            itemBuilder: (context, i) {
+                              final map = snapshotData['orders'][i];
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15.0, left: 12.0, right: 12.0),
+                                child: ClayContainer(
+                                  color: Colors.white,
+                                  spread: 5,
+                                  depth: 10,
+                                  borderRadius: 20,
+                                  height: 9.h,
+                                  width: double.infinity,
+                                  child: Center(child: Text(map.values.elementAt(0))),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    );
+                  }
+              }
             },
           ),
         ),
+        // Expanded(
+        //   child: ListView.builder(
+        //     itemCount: 5,
+        //     itemBuilder: (context, index) {
+        //       return Padding(
+        //         padding:
+        //             const EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
+        //         child: ClayContainer(
+        //           color: Colors.white,
+        //           spread: 5,
+        //           depth: 10,
+        //           borderRadius: 20,
+        //           height: 9.h,
+        //           width: double.infinity,
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ),
         Padding(
           padding: EdgeInsets.fromLTRB(6.w, 1.h, 6.w, 10.h),
           child: AnimatedContainerApp(),
@@ -60,6 +111,12 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
   double _height = 0;
   Color _color = Colors.green;
   BorderRadiusGeometry _borderRadius = BorderRadius.circular(8);
+
+  @override
+  void initState() {
+    super.initState();
+    animateOrder();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -214,34 +271,20 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
             ],
           ),
         ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              _width = MediaQuery.of(context).size.width;
-              _height = MediaQuery.of(context).size.height * 0.25;
-              _color = Colors.green;
-              _borderRadius = BorderRadius.circular(10);
-            });
-          },
-          child: const Text('Show order'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            sl<OrdersCubit>().addToOrders('food');
-          },
-          child: const Text('add order'),
-        )
       ],
     );
   }
 
   void animateOrder() {
-    setState(() {
-      _width = MediaQuery.of(context).size.width;
-      _height = MediaQuery.of(context).size.height * 0.25;
-      _color = Colors.green;
-      _borderRadius = BorderRadius.circular(10);
-    });
+    Future.delayed(
+      const Duration(milliseconds: 500),
+      () => setState(() {
+        _width = MediaQuery.of(context).size.width;
+        _height = MediaQuery.of(context).size.height * 0.25;
+        _color = Colors.green;
+        _borderRadius = BorderRadius.circular(10);
+      }),
+    );
   }
 }
 

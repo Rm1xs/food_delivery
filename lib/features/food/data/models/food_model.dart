@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class FoodModel {
   FoodModel({
     required this.hits,
@@ -54,6 +56,27 @@ class RecipeClassModel {
         'calories': calories,
         'dish': dish,
       };
+
+  static String encode(List<RecipeClassModel> musics) => json.encode(
+    musics
+        .map<Map<String, dynamic>>((music) => RecipeClassModel.toMap(music))
+        .toList(),
+  );
+
+  static List<RecipeClassModel> decode(String musics) =>
+      (json.decode(musics) as List<dynamic>)
+          .map<RecipeClassModel>((item) => RecipeClassModel.fromJson(item))
+          .toList();
+
+
+  static Map<String, dynamic> toMap(RecipeClassModel music) => {
+    'label': music.label,
+    'image': music.image,
+    'ingredientLines': music.ingredientLines,
+    'calories': music.calories,
+    'dish': music.dish,
+    'dietLabels': music.dietLabels,
+  };
 
   String label;
   String image;

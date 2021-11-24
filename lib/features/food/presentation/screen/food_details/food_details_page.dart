@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../../injection.dart';
 
 class FoodDetailsPage extends StatelessWidget {

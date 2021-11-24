@@ -7,13 +7,12 @@ import 'package:food_delivery/features/food/domain/repositories/food_repository.
 import 'package:food_delivery/features/profile/data/models/delivery_profile.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodRepositoryImplementation implements FoodRepository {
-
   @override
   Future<RestaurantModel> getRestaurants(double lat, double lon) async {
-    String url = 'https://api.tomtom.com/search/2/nearbySearch/.json?lat=$lat&lon=$lon&categorySet=7315&key=GrUWtwXOKPVkDlAnD3R4lzKoKknlhvhH';
+    String url =
+        'https://api.tomtom.com/search/2/nearbySearch/.json?lat=$lat&lon=$lon&categorySet=7315&key=GrUWtwXOKPVkDlAnD3R4lzKoKknlhvhH';
     final http.Client client = http.Client();
     final http.Response response = await client.get(
       Uri.parse(url),
@@ -22,14 +21,13 @@ class FoodRepositoryImplementation implements FoodRepository {
       },
     );
     if (response.statusCode == 200) {
-      final RestaurantModel data = RestaurantModel.fromJson(json.decode(response.body));
+      final RestaurantModel data =
+          RestaurantModel.fromJson(json.decode(response.body));
       return data;
     } else {
       throw Exception();
     }
   }
-
-
 
   @override
   Future<FoodModel> searchFood(String name) async {
@@ -52,30 +50,27 @@ class FoodRepositoryImplementation implements FoodRepository {
 
   @override
   Future<void> addToFavourite(String name, String imageUrl) async {
-    Map<String, dynamic> values = {name : imageUrl};
+    Map<String, dynamic> values = {name: imageUrl};
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference profileData =
         FirebaseFirestore.instance.collection('Delivery Profiles');
     //Favourite post = Favourite(name, imageUrl, 123.6);
     await profileData.doc(idToken.toString()).update({
-      "favourite" : FieldValue.arrayUnion([values])
+      "favourite": FieldValue.arrayUnion([values])
     });
   }
 
   @override
   Future<void> addToOrder(String food) async {
-    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    final SharedPreferences prefs = await _prefs;
-
-    var itemList = prefs.get('orders').toString();
-    
-    var t = itemList.replaceAll(RegExp(r'[]'),'',);
-    print(t);
-    var items = <RecipeClassModel>[];
-
-    print(prefs.get('orders'));
+    Map<String, dynamic> values = {'name': food};
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    final CollectionReference profileData =
+    FirebaseFirestore.instance.collection('Delivery Profiles');
+    //Favourite post = Favourite(name, imageUrl, 123.6);
+    await profileData.doc(idToken.toString()).update({
+      'orders': FieldValue.arrayUnion([values])
+    });
   }
 }
-
-

@@ -19,10 +19,11 @@ class _SearchState extends State<Search> {
   final TextEditingController controller = TextEditingController();
   late Future<FoodModel> data;
   bool isSearchAllowed = true;
+  late String text = 'May Interest';
 
   @override
   void initState() {
-    data = sl<FoodCubit>().getFood('pizza');
+    data = sl<FoodCubit>().getFood('cake');
     super.initState();
   }
 
@@ -36,79 +37,77 @@ class _SearchState extends State<Search> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Hero(
-                  tag: 'search',
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: controller,
-                            autofocus: false,
-                            decoration: InputDecoration(
-                              prefixIcon: IconTheme(
-                                data: IconThemeData(
-                                  color: const Color.fromRGBO(218, 99, 23, 1)
-                                      .withOpacity(1),
-                                ),
-                                child: const Icon(Icons.create_outlined),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: controller,
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            prefixIcon: IconTheme(
+                              data: IconThemeData(
+                                color: const Color.fromRGBO(218, 99, 23, 1)
+                                    .withOpacity(1),
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.transparent, width: 0.0),
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.transparent, width: 0.0),
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              filled: true,
-                              hintStyle: TextStyle(
-                                  color: const Color.fromRGBO(218, 99, 23, 1)
-                                      .withOpacity(0.4)),
-                              hintText: 'What do you want to order?',
-                              contentPadding: const EdgeInsets.all(10.0),
-                              fillColor: const Color.fromRGBO(218, 99, 23, 1)
-                                  .withOpacity(0.08),
+                              child: const Icon(Icons.search),
                             ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.transparent, width: 0.0),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.transparent, width: 0.0),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            filled: true,
+                            hintStyle: TextStyle(
+                                color: const Color.fromRGBO(218, 99, 23, 1)
+                                    .withOpacity(0.4)),
+                            hintText: 'What do you want to order?',
+                            contentPadding: const EdgeInsets.all(10.0),
+                            fillColor: const Color.fromRGBO(218, 99, 23, 1)
+                                .withOpacity(0.08),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(2.w, 0, 0, 0),
-                          child: Container(
-                            decoration: BoxDecoration(
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(2.w, 0, 0, 0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: const Color.fromRGBO(218, 99, 23, 1)
+                                  .withOpacity(0.08),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20))),
+                          child: IconButton(
+                              icon: Icon(
+                                Icons.search,
                                 color: const Color.fromRGBO(218, 99, 23, 1)
-                                    .withOpacity(0.08),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(20))),
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.search,
-                                  color: const Color.fromRGBO(218, 99, 23, 1)
-                                      .withOpacity(1),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    data = sl<FoodCubit>()
-                                        .getFood(controller.text);
-                                  });
-                                }),
-                          ),
-                        )
-                      ],
-                    ),
+                                    .withOpacity(1),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  text = 'Result';
+                                  data =
+                                      sl<FoodCubit>().getFood(controller.text);
+                                });
+                              }),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(7.w, 3.h, 0.w, 0),
                   child: Text(
-                    'Popular Menu',
+                    text,
                     style: GoogleFonts.ptSans(
                       textStyle: TextStyle(
                           fontSize: 13.sp, fontWeight: FontWeight.bold),
@@ -124,26 +123,11 @@ class _SearchState extends State<Search> {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                           return Center(
-                            child: Column(
-                              children: [
-                                const CircularProgressIndicator(
-                                  color: Color.fromRGBO(218, 99, 23, 1),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                                  child: Text(
-                                    'Loading...',
-                                    style: GoogleFonts.ptSans(
-                                      textStyle: TextStyle(
-                                          color: const Color.fromRGBO(
-                                                  218, 99, 23, 1)
-                                              .withOpacity(0.5),
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                              child: const Center(
+                                  child: CircularProgressIndicator()),
                             ),
                           );
                         default:
@@ -164,7 +148,10 @@ class _SearchState extends State<Search> {
                                         onTap: () => Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (_) => FoodDetailsPage(data: snapshot.data!.hits[index].recipe,),
+                                            builder: (_) => FoodDetailsPage(
+                                              data: snapshot
+                                                  .data!.hits[index].recipe,
+                                            ),
                                           ),
                                         ),
                                         child: Padding(
@@ -294,7 +281,7 @@ class _SearchState extends State<Search> {
 
   Future<void> _pullRefresh() async {
     setState(() {
-      if(controller.text.isNotEmpty) {
+      if (controller.text.isNotEmpty) {
         data = sl<FoodCubit>().getFood(controller.text);
       }
     });

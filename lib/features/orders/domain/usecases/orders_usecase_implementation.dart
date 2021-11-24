@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_delivery/core/domain/usescase/order_usecase.dart';
 import 'package:food_delivery/features/orders/domain/repositories/orders_repository.dart';
 
@@ -28,5 +29,10 @@ class OrdersUseCaseImplementation extends OrderUseCase {
   Future<void> saveOrder() {
     // TODO: implement saveOrder
     throw UnimplementedError();
+  }
+
+  @override
+  Future<DocumentSnapshot> getItemsInOrder() {
+    return repository.getItemsInOrder();
   }
 }

@@ -1,14 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/features/orders/domain/repositories/orders_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OrdersRepositoryImplementation implements OrdersRepository {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   Future<void> addToOrder(String food) async {
-    final SharedPreferences prefs = await _prefs;
-    prefs.setString('orders', food);
-    print(prefs.get('orders'));
+    // TODO: implement getStatusOrder
+    throw UnimplementedError();
   }
 
   @override
@@ -29,4 +28,13 @@ class OrdersRepositoryImplementation implements OrdersRepository {
     throw UnimplementedError();
   }
 
+  @override
+  Future<DocumentSnapshot> getItemsInOrder() async {
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    var document = await FirebaseFirestore.instance
+        .collection('Delivery Profiles')
+        .doc(idToken).get();
+    return document;
+  }
 }

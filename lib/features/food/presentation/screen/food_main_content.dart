@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:food_delivery/features/food/presentation/screen/food_search_page.dart';
@@ -13,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../injection.dart';
+import 'food_details/food_details_page.dart';
 
 class FoodMainPage extends StatefulWidget {
   const FoodMainPage({Key? key}) : super(key: key);
@@ -22,9 +24,15 @@ class FoodMainPage extends StatefulWidget {
 }
 
 class _FoodMainPageState extends State<FoodMainPage> {
+  String menu = 'Popular menu';
+  late Future<FoodModel> data;
+  late Future<RestaurantModel> rest;
+  final dataKey = GlobalKey();
+
   @override
   void initState() {
-    getLocation();
+    rest = getLocation();
+    data = sl<FoodCubit>().getFood('pizza');
   }
 
   //final List<String> recipeStepsList = ['sdf'];
@@ -32,7 +40,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 10.h),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 11.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -47,10 +55,16 @@ class _FoodMainPageState extends State<FoodMainPage> {
                     child: Hero(
                       tag: 'search',
                       child: TextField(
+                        onSubmitted: (text) => Scrollable.ensureVisible(dataKey.currentContext!),
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Search()));
+                          setState(() {
+                            menu = 'Search Result';
+                          });
                         },
+                        onChanged: (text) =>  {
+                          setState(() {
+                          data = sl<FoodCubit>().getFood(text);
+                        })},
                         decoration: InputDecoration(
                           prefixIcon: IconTheme(
                             data: IconThemeData(
@@ -94,11 +108,12 @@ class _FoodMainPageState extends State<FoodMainPage> {
                     ),
                     child: IconButton(
                       padding: EdgeInsets.zero,
-                      icon: IconTheme(
+                      icon: const IconTheme(
                         data: IconThemeData(
-                            color: const Color.fromRGBO(218, 99, 23, 1)
-                                .withOpacity(1)),
-                        child: const Icon(Icons.settings_input_composite_sharp),
+                            color: Colors.grey,),
+                            // const Color.fromRGBO(218, 99, 23, 1)
+                            //     .withOpacity(1)),
+                        child: Icon(Icons.settings_input_composite_sharp),
                       ),
                       color: const Color.fromRGBO(218, 99, 23, 1)
                           .withOpacity(0.08),
@@ -122,6 +137,14 @@ class _FoodMainPageState extends State<FoodMainPage> {
                   children: [
                     Container(
                       decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                            colors: [
+                              Colors.blue,
+                              Colors.red,
+                            ],
+                          ),
                           color: Color.fromRGBO(29, 233, 182, 1),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20.0),
@@ -197,11 +220,9 @@ class _FoodMainPageState extends State<FoodMainPage> {
                     child: Text(
                       'View More',
                       style: GoogleFonts.ptSans(
-                        textStyle: TextStyle(
-                          fontSize: 10.sp,
-                          color: Colors.grey
-                          //color: const Color.fromRGBO(218, 99, 23, 1),
-                        ),
+                        textStyle: TextStyle(fontSize: 10.sp, color: Colors.grey
+                            //color: const Color.fromRGBO(218, 99, 23, 1),
+                            ),
                       ),
                     ),
                   ),
@@ -209,13 +230,13 @@ class _FoodMainPageState extends State<FoodMainPage> {
               ),
             ),
             FutureBuilder<RestaurantModel>(
-              future: getLocation(),
+              future: rest,
               builder: (BuildContext context,
                   AsyncSnapshot<RestaurantModel> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                     return Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
                       child: Center(child: CircularProgressIndicator()),
                     );
                   default:
@@ -238,8 +259,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                 child: Container(
                                   height: 23.h,
                                   width:
-                                      MediaQuery.of(context).size.width *
-                                          0.35,
+                                      MediaQuery.of(context).size.width * 0.35,
                                   child: Column(
                                     children: [
                                       Image.asset(
@@ -252,27 +272,26 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                         padding: EdgeInsets.fromLTRB(
                                             0.w, 2.h, 0.w, 0),
                                         child: Text(
-                                          snapshot
-                                              .data!.results[i].poi.name,
+                                          snapshot.data!.results[i].poi.name,
                                           style: GoogleFonts.ptSans(
                                             textStyle: TextStyle(
                                                 fontSize: 12.sp,
-                                                fontWeight:
-                                                    FontWeight.bold),
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            0, 0.5.h, 0, 0),
+                                        padding:
+                                            EdgeInsets.fromLTRB(0, 0.5.h, 0, 0),
                                         child: Text(
-                                          snapshot
-                                              .data!.results[i].dist.toInt().toString() + ' meter',
+                                          snapshot.data!.results[i].dist
+                                                  .toInt()
+                                                  .toString() +
+                                              ' meters',
                                           style: GoogleFonts.ptSans(
                                             textStyle: TextStyle(
                                                 fontSize: 11.sp,
-                                                fontWeight:
-                                                    FontWeight.bold,
+                                                fontWeight: FontWeight.bold,
                                                 color: Colors.grey),
                                           ),
                                         ),
@@ -296,7 +315,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
               child: Row(
                 children: [
                   Text(
-                    'Popular Menu',
+                    menu,
                     style: GoogleFonts.ptSans(
                       textStyle: TextStyle(
                           fontSize: 12.sp, fontWeight: FontWeight.bold),
@@ -318,201 +337,209 @@ class _FoodMainPageState extends State<FoodMainPage> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-              child: ClayContainer(
-                color: Colors.white,
-                spread: 5,
-                depth: 10,
-                borderRadius: 20,
-                child: Container(
-                  height: 12.h,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Image.asset(
-                            'assets/images/MenuPhoto.png',
-                            // width: 17.w,
-                            // height: 9.h,
-                            fit: BoxFit.fill,
+            FutureBuilder<FoodModel>(
+              key: dataKey,
+              future: data,
+              builder:
+                  (BuildContext context, AsyncSnapshot<FoodModel> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                            child: Center(child: CircularProgressIndicator()),
                           ),
-                        ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(6.w, 3.h, 0.w, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Herbal Pancake',
-                              style: GoogleFonts.ptSans(
-                                textStyle: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              'Warung Herbal',
-                              style: GoogleFonts.ptSans(
-                                textStyle: TextStyle(
-                                    fontSize: 11.sp, color: Colors.grey),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0),
-                        child: Text(
-                          '7€',
-                          style: GoogleFonts.ptSans(
-                            textStyle: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromRGBO(218, 99, 23, 1),
+                    );
+                  default:
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Expanded(
+                            child: ListView.builder(
+                              physics: const ScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.hits.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return InkWell(
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => FoodDetailsPage(
+                                        data: snapshot.data!.hits[index].recipe,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                                    child: ClayContainer(
+                                      color: Colors.white,
+                                      spread: 5,
+                                      depth: 10,
+                                      borderRadius: 20,
+                                      child: SizedBox(
+                                        height: 12.h,
+                                        width: double.infinity,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  5.w, 1.h, 0, 1.h),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                child: Image.network(
+                                                  snapshot.data!.hits[index]
+                                                      .recipe.image,
+                                                  // width: 17.w,
+                                                  // height: 9.h,
+                                                  fit: BoxFit.scaleDown,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  6.w, 3.h, 0.w, 0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.5,
+                                                    child: Text(
+                                                      snapshot.data!.hits[index]
+                                                          .recipe.label,
+                                                      style: GoogleFonts.ptSans(
+                                                        textStyle: TextStyle(
+                                                            fontSize: 12.sp,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    snapshot.data!.hits[index]
+                                                        .recipe.dish[0],
+                                                    style: GoogleFonts.ptSans(
+                                                      textStyle: TextStyle(
+                                                          fontSize: 11.sp,
+                                                          color: Colors.grey),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            // Padding(
+                                            //   padding: EdgeInsets.fromLTRB(
+                                            //       0.w, 0.h, 0.w, 0),
+                                            //   child: Text(
+                                            //     '7€',
+                                            //     style: GoogleFonts.ptSans(
+                                            //       textStyle: TextStyle(
+                                            //         fontSize: 18.sp,
+                                            //         fontWeight: FontWeight.bold,
+                                            //         color: const Color.fromRGBO(
+                                            //             218, 99, 23, 1),
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                        ],
+                      );
+                    }
+                }
+              },
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-              child: ClayContainer(
-                color: Colors.white,
-                spread: 5,
-                depth: 10,
-                borderRadius: 20,
-                child: Container(
-                  height: 12.h,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Image.asset(
-                            'assets/images/MenuPhoto.png',
-                            // width: 17.w,
-                            // height: 9.h,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(6.w, 3.h, 0.w, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Herbal Pancake',
-                              style: GoogleFonts.ptSans(
-                                textStyle: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              'Warung Herbal',
-                              style: GoogleFonts.ptSans(
-                                textStyle: TextStyle(
-                                    fontSize: 11.sp, color: Colors.grey),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0),
-                        child: Text(
-                          '7€',
-                          style: GoogleFonts.ptSans(
-                            textStyle: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromRGBO(218, 99, 23, 1),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 1.h),
-              child: ClayContainer(
-                color: Colors.white,
-                spread: 5,
-                depth: 10,
-                borderRadius: 20,
-                child: Container(
-                  height: 12.h,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Image.asset(
-                            'assets/images/MenuPhoto.png',
-                            // width: 17.w,
-                            // height: 9.h,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(6.w, 3.h, 0.w, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Herbal Pancake',
-                              style: GoogleFonts.ptSans(
-                                textStyle: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              'Warung Herbal',
-                              style: GoogleFonts.ptSans(
-                                textStyle: TextStyle(
-                                    fontSize: 11.sp, color: Colors.grey),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0),
-                        child: Text(
-                          '7€',
-                          style: GoogleFonts.ptSans(
-                            textStyle: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromRGBO(218, 99, 23, 1),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+
+            // Padding(
+            //   padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+            //   child: ClayContainer(
+            //     color: Colors.white,
+            //     spread: 5,
+            //     depth: 10,
+            //     borderRadius: 20,
+            //     child: Container(
+            //       height: 12.h,
+            //       width: double.infinity,
+            //       child: Row(
+            //         children: [
+            //           Padding(
+            //             padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
+            //             child: ClipRRect(
+            //               borderRadius: BorderRadius.circular(15.0),
+            //               child: Image.asset(
+            //                 'assets/images/MenuPhoto.png',
+            //                 // width: 17.w,
+            //                 // height: 9.h,
+            //                 fit: BoxFit.fill,
+            //               ),
+            //             ),
+            //           ),
+            //           Padding(
+            //             padding: EdgeInsets.fromLTRB(6.w, 3.h, 0.w, 0),
+            //             child: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Text(
+            //                   'Herbal Pancake',
+            //                   style: GoogleFonts.ptSans(
+            //                     textStyle: TextStyle(
+            //                         fontSize: 12.sp,
+            //                         fontWeight: FontWeight.bold),
+            //                   ),
+            //                 ),
+            //                 Text(
+            //                   'Warung Herbal',
+            //                   style: GoogleFonts.ptSans(
+            //                     textStyle: TextStyle(
+            //                         fontSize: 11.sp, color: Colors.grey),
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //           Padding(
+            //             padding: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0),
+            //             child: Text(
+            //               '7€',
+            //               style: GoogleFonts.ptSans(
+            //                 textStyle: TextStyle(
+            //                   fontSize: 18.sp,
+            //                   fontWeight: FontWeight.bold,
+            //                   color: const Color.fromRGBO(218, 99, 23, 1),
+            //                 ),
+            //               ),
+            //             ),
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
