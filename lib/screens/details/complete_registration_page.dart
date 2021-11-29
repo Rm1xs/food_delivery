@@ -53,10 +53,11 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       if (_auth.currentUser!.phoneNumber != null) {
         showSmsEnterField = false;
         size = 28;
-        Future(() {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const FoodMainNavigation()));
-        });
+
+        Future.delayed(const Duration(seconds: 0),
+                () => Navigator.push(context,
+              MaterialPageRoute(builder: (_) => const FoodMainNavigation())));
+
       } else {
         showSmsEnterField = true;
         size = 22;

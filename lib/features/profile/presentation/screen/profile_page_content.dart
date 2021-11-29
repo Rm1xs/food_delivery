@@ -56,6 +56,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
           );
         }
         Map<dynamic, dynamic> snapshotData = snapshot.data!.data() as Map;
+        final withoutSign = snapshotData['subscription'].replaceAll(RegExp('_'), ' ');
         return Stack(
           children: [
             Positioned(
@@ -133,7 +134,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
                                 padding:
                                     EdgeInsets.fromLTRB(4.w, 1.h, 4.w, 1.h),
                                 child: Text(
-                                  snapshotData['subscription'],
+                                  withoutSign,
                                   style: GoogleFonts.ptSans(
                                     color: const Color.fromRGBO(218, 99, 23, 1),
                                     textStyle: TextStyle(

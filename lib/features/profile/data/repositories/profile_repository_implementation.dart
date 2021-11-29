@@ -23,7 +23,7 @@ class ProfileRepositoryImplementation implements ProfileRepository {
     String email = tokenResult.email ?? 'Unknown';
 
     DeliveryProfile post =
-        DeliveryProfile(name, Subscription.Iron.toShortString(), 0, email);
+        DeliveryProfile(name, Subscription.Iron_Profile.toShortString(), 0, email);
 
     Map<String, dynamic> postData = post.toJson();
     await deliveryProfile.doc(idToken.toString()).set(postData);

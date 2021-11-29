@@ -8,11 +8,10 @@ import 'package:flutter/widgets.dart';
 import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
-import 'package:food_delivery/features/food/presentation/screen/food_search_page.dart';
+import 'package:food_delivery/features/food/presentation/screen/restaurant_routes/test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../injection.dart';
 import 'food_details/food_details_page.dart';
 
@@ -249,54 +248,63 @@ class _FoodMainPageState extends State<FoodMainPage> {
                           scrollDirection: Axis.horizontal,
                           itemCount: snapshot.data!.results.length,
                           itemBuilder: (context, i) {
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: ClayContainer(
-                                spread: 2,
-                                depth: 10,
-                                borderRadius: 20,
-                                color: Colors.white,
-                                child: Container(
-                                  height: 23.h,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/RestaurantImage2.png',
-                                        fit: BoxFit.scaleDown,
-                                        height: 12.h,
-                                        width: 12.h,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            0.w, 2.h, 0.w, 0),
-                                        child: Text(
-                                          snapshot.data!.results[i].poi.name,
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold),
+                            return GestureDetector(
+                                onTap: () => {Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => MapSample(),
+                                  ),
+                                ),},
+                              child: Padding(
+                                padding:  EdgeInsets.all(10.0),
+                                child: ClayContainer(
+                                  spread: 2,
+                                  depth: 10,
+                                  borderRadius: 20,
+                                  color: Colors.white,
+                                  child: Container(
+                                    height: 23.h,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.35,
+                                    child: Column(
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/RestaurantImage2.png',
+                                          fit: BoxFit.scaleDown,
+                                          height: 11.h,
+                                          width: 11.h,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              2.w, 2.h, 2.w, 0),
+                                          child: Text(
+                                            snapshot.data!.results[i].poi.name,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.ptSans(
+                                              textStyle: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 0.5.h, 0, 0),
-                                        child: Text(
-                                          snapshot.data!.results[i].dist
-                                                  .toInt()
-                                                  .toString() +
-                                              ' meters',
-                                          style: GoogleFonts.ptSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 11.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.grey),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                                          child: Text(
+                                            snapshot.data!.results[i].dist
+                                                    .toInt()
+                                                    .toString() +
+                                                ' meters',
+                                            style: GoogleFonts.ptSans(
+                                              textStyle: TextStyle(
+                                                  fontSize: 11.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -323,7 +331,12 @@ class _FoodMainPageState extends State<FoodMainPage> {
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () => {},
+                    onTap: () => {Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MapSample(),
+                      ),
+                    ),},
                     child: Text(
                       'View More',
                       style: GoogleFonts.ptSans(
@@ -475,71 +488,6 @@ class _FoodMainPageState extends State<FoodMainPage> {
               },
             ),
 
-            // Padding(
-            //   padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-            //   child: ClayContainer(
-            //     color: Colors.white,
-            //     spread: 5,
-            //     depth: 10,
-            //     borderRadius: 20,
-            //     child: Container(
-            //       height: 12.h,
-            //       width: double.infinity,
-            //       child: Row(
-            //         children: [
-            //           Padding(
-            //             padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
-            //             child: ClipRRect(
-            //               borderRadius: BorderRadius.circular(15.0),
-            //               child: Image.asset(
-            //                 'assets/images/MenuPhoto.png',
-            //                 // width: 17.w,
-            //                 // height: 9.h,
-            //                 fit: BoxFit.fill,
-            //               ),
-            //             ),
-            //           ),
-            //           Padding(
-            //             padding: EdgeInsets.fromLTRB(6.w, 3.h, 0.w, 0),
-            //             child: Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 Text(
-            //                   'Herbal Pancake',
-            //                   style: GoogleFonts.ptSans(
-            //                     textStyle: TextStyle(
-            //                         fontSize: 12.sp,
-            //                         fontWeight: FontWeight.bold),
-            //                   ),
-            //                 ),
-            //                 Text(
-            //                   'Warung Herbal',
-            //                   style: GoogleFonts.ptSans(
-            //                     textStyle: TextStyle(
-            //                         fontSize: 11.sp, color: Colors.grey),
-            //                   ),
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //           Padding(
-            //             padding: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0),
-            //             child: Text(
-            //               '7€',
-            //               style: GoogleFonts.ptSans(
-            //                 textStyle: TextStyle(
-            //                   fontSize: 18.sp,
-            //                   fontWeight: FontWeight.bold,
-            //                   color: const Color.fromRGBO(218, 99, 23, 1),
-            //                 ),
-            //               ),
-            //             ),
-            //           )
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

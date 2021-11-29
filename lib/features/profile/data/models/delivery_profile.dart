@@ -56,7 +56,7 @@ class Favourite {
   };
 }
 
-enum Subscription { Iron, Bronse, Gold, Diamond }
+enum Subscription { Iron_Profile, Bronse_Profile, Gold_Profile, Diamond_Profile }
 enum StatusOrder { ongoing, completed }
 
 extension CovertSubToString on Subscription {
