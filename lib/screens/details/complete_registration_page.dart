@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
-import 'package:food_delivery/features/food/presentation/screen/food_main_content.dart';
 import 'package:food_delivery/features/food/presentation/screen/food_main_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -18,7 +17,8 @@ class CompleteRegistration extends StatefulWidget {
   static Page page() => const MaterialPage<void>(child: CompleteRegistration());
 
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => CompleteRegistration());
+    return MaterialPageRoute<void>(
+        builder: (_) => const CompleteRegistration());
   }
 
   @override
@@ -27,17 +27,17 @@ class CompleteRegistration extends StatefulWidget {
 
 class _CompleteRegistrationState extends State<CompleteRegistration> {
   //Get current user and Firebase instance
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //Phone number refactor mask
-  var maskFormatter = MaskTextInputFormatter(
-      mask: '+# (###) ###-##-###', filter: {"#": RegExp(r'[0-9]')});
+  MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
+      mask: '+# (###) ###-##-###', filter: {'#': RegExp(r'[0-9]')});
 
   //Controllers
-  final phoneController = TextEditingController();
-  final otpController = TextEditingController();
-  final nameController = TextEditingController();
-  final surnameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController surnameController = TextEditingController();
 
   //Variables
   String verificationId = '';
@@ -54,10 +54,10 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
         showSmsEnterField = false;
         size = 28;
 
-        Future.delayed(const Duration(seconds: 0),
-                () => Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const FoodMainNavigation())));
-
+        Future.delayed(
+            const Duration(seconds: 0),
+            () => Navigator.push<void>(context,
+                MaterialPageRoute(builder: (_) => const FoodMainNavigation())));
       } else {
         showSmsEnterField = true;
         size = 22;
@@ -293,10 +293,10 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                                     ' ' +
                                     surnameController.text.trim());
                           }
-                          Navigator.push(
+                          Navigator.push<void>(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => CompletePaymentPage()));
+                                  builder: (_) => const CompletePaymentPage()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -347,21 +347,22 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       },
       codeSent: (String verificationId, int? resendToken) async {
         String smsCode;
-        showDialog(
+        showDialog<void>(
           context: context,
           barrierDismissible: false,
-          builder: (context) => AlertDialog(
-            title: const Text("Enter 6-digit\nVerification code"),
-            content: InputFields(),
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('Enter 6-digit\nVerification code'),
+            content: const InputFields(),
             actions: <Widget>[
               FlatButton(
-                child: const Text("Done"),
+                child: const Text('Done'),
                 textColor: Colors.white,
                 color: Colors.redAccent,
                 onPressed: () async {
                   smsCode = codeNumber.trim();
-                  PhoneAuthCredential credential = PhoneAuthProvider.credential(
-                      verificationId: verificationId, smsCode: smsCode);
+                  final PhoneAuthCredential credential =
+                      PhoneAuthProvider.credential(
+                          verificationId: verificationId, smsCode: smsCode);
 
                   //await _auth.signInWithCredential(credential);
                   await _auth.currentUser?.updatePhoneNumber(credential);
@@ -371,7 +372,8 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
                       size = 30;
                       SnackBar(
                           content: const Text('Phone verified'),
-                          action: SnackBarAction(label: 'Dismiss', onPressed: () {}));
+                          action: SnackBarAction(
+                              label: 'Dismiss', onPressed: () {}));
                     });
                   } else {
                     setState(() {
@@ -411,7 +413,6 @@ class _InputFieldsState extends State<InputFields> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _focusDigit1.dispose();
     _focusDigit2.dispose();
@@ -502,20 +503,21 @@ class CodeInput extends StatelessWidget {
             focusNode: focusNode1,
             textAlign: TextAlign.center,
             maxLength: 1,
-            onChanged: (str) {
+            onChanged: (String str) {
               if (str.length == 1) {
                 codeNumber += str;
                 FocusScope.of(context).requestFocus(focusNode2);
               } else if (str.isEmpty) {
-                var res = codeNumber.substring(0, codeNumber.length - 2);
+                final String res =
+                    codeNumber.substring(0, codeNumber.length - 2);
                 codeNumber = res;
                 FocusScope.of(context).requestFocus(focusNode0);
               }
             },
             decoration: const InputDecoration(
-              hintText: "*",
+              hintText: '*',
               hintStyle: TextStyle(color: Colors.grey),
-              counterText: "",
+              counterText: '',
             ),
           ),
         ),

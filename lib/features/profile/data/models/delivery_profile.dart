@@ -1,4 +1,6 @@
 class DeliveryProfile {
+  DeliveryProfile(this.name, this.subscription, this.vouchers, this.email);
+
   final String name;
   final String subscription;
   final int vouchers;
@@ -7,9 +9,7 @@ class DeliveryProfile {
   List<FinishedOrders>? history = [];
   List<Favourite>? favourite = [];
 
-  DeliveryProfile(this.name, this.subscription, this.vouchers, this.email);
-
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'name': name,
         'subscription': subscription,
         'vouchers': vouchers,
@@ -21,42 +21,47 @@ class DeliveryProfile {
 }
 
 class Orders {
+  Orders(this.orderNumber, this.meal, this.orderDate, this.totalValue,
+      this.status);
+
   final int orderNumber;
   final List<String> meal;
   final DateTime orderDate;
   final String totalValue;
   final StatusOrder status;
-
-  Orders(this.orderNumber, this.meal, this.orderDate, this.totalValue,
-      this.status);
 }
 
 class FinishedOrders {
+  FinishedOrders(this.orderNumber, this.meal, this.orderDate, this.totalValue,
+      this.status);
+
   final int orderNumber;
   final List<String> meal;
   final DateTime orderDate;
   final String totalValue;
   final StatusOrder status;
-
-  FinishedOrders(this.orderNumber, this.meal, this.orderDate, this.totalValue,
-      this.status);
 }
 
 class Favourite {
+  Favourite(this.name, this.description, this.price);
+
   final String name;
   final String description;
   final double price;
 
-  Favourite(this.name, this.description, this.price);
-
-  Map<String, dynamic> toJson() => {
-    'name': name,
-    'description': description,
-    'price': price,
-  };
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'name': name,
+        'description': description,
+        'price': price,
+      };
 }
 
-enum Subscription { Iron_Profile, Bronse_Profile, Gold_Profile, Diamond_Profile }
+enum Subscription {
+  Iron_Profile,
+  Bronze_Profile,
+  Gold_Profile,
+  Diamond_Profile
+}
 enum StatusOrder { ongoing, completed }
 
 extension CovertSubToString on Subscription {

@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
-
 import '../../injection.dart';
 
 class ProfileImagePage extends StatefulWidget {
@@ -45,7 +43,7 @@ class TakePictureScreenState extends State<ProfileImagePage> {
       appBar: AppBar(title: const Text('Take a picture')),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
-        builder: (context, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return CameraPreview(_controller);
           } else {
@@ -57,10 +55,10 @@ class TakePictureScreenState extends State<ProfileImagePage> {
         onPressed: () async {
           try {
             await _initializeControllerFuture;
-            final image = await _controller.takePicture();
-            await Navigator.of(context).push(
+            final XFile image = await _controller.takePicture();
+            await Navigator.of(context).push<void>(
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
+                builder: (BuildContext context) => DisplayPictureScreen(
                   imagePath: image.path,
                 ),
               ),
@@ -76,10 +74,10 @@ class TakePictureScreenState extends State<ProfileImagePage> {
 }
 
 class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
-
   const DisplayPictureScreen({Key? key, required this.imagePath})
       : super(key: key);
+
+  final String imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +90,7 @@ class DisplayPictureScreen extends StatelessWidget {
             onPressed: () => {
               sl<ProfileCubit>().updateProfileImage(File(imagePath)),
             },
-            child: Text('Save'),
+            child: const Text('Save'),
           ),
         ],
       ),

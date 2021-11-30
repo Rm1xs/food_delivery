@@ -9,7 +9,6 @@ import 'package:food_delivery/features/auth/presentation/widgets/top_view_widget
 import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
 import 'cubit/sign_up_cubit.dart';
 import 'cubit/sign_up_state.dart';
 
@@ -19,8 +18,7 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<SignUpCubit, SignUpState>(
-      listener: (context, state) {
-
+      listener: (BuildContext context, SignUpState state) {
         if (state.status.isSubmissionSuccess) {
           Navigator.of(context).pop();
         } else if (state.status.isSubmissionFailure) {
@@ -88,18 +86,20 @@ class SignUp extends StatelessWidget {
                   height: 7.h,
                   child: Center(
                     child: InkWell(
-                      child: Text(
-                        'Already have account ?',
-                        style: GoogleFonts.ptSans(
-                          textStyle: const TextStyle(
-                            decoration: TextDecoration.underline,
-                            decorationThickness: 0.3,
-                            color: Color.fromRGBO(83, 232, 139, 1),
+                        child: Text(
+                          'Already have account ?',
+                          style: GoogleFonts.ptSans(
+                            textStyle: const TextStyle(
+                              decoration: TextDecoration.underline,
+                              decorationThickness: 0.3,
+                              color: Color.fromRGBO(83, 232, 139, 1),
+                            ),
                           ),
                         ),
-                      ),
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginPage()))
-                    ),
+                        onTap: () => Navigator.push<void>(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const LoginPage()))),
                   ),
                 ), //5
               ],

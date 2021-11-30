@@ -9,7 +9,6 @@ import 'package:food_delivery/features/payment/presentation/cubit/payment_cubit.
 import 'package:food_delivery/features/payment/presentation/widgets/bottom_card_decoration_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../injection.dart';
 
 class AddPaymentPage extends StatefulWidget {
@@ -22,10 +21,10 @@ class AddPaymentPage extends StatefulWidget {
 class _AddPaymentPageState extends State<AddPaymentPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final numberController = TextEditingController();
-  final holderController = TextEditingController();
-  final dateController = TextEditingController();
-  final cvvController = TextEditingController();
+  final TextEditingController numberController = TextEditingController();
+  final TextEditingController holderController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController cvvController = TextEditingController();
 
   String number = '';
   String holder = '';
@@ -92,7 +91,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                       Icons.logout,
                     ),
                     color: const Color.fromRGBO(218, 99, 23, 1),
-                    onPressed: () => {}
+                    onPressed: () => {print('tap')}
                     // sl<AuthenticationBloc>().add(AppLogoutRequested()),
                     ),
               ),
@@ -183,7 +182,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                     //maxLength: 19,
                     controller: numberController,
                     keyboardType: TextInputType.number,
-                    onChanged: (text) {
+                    onChanged: (String text) {
                       setState(() {
                         number = numberController.text;
                       });
@@ -218,11 +217,11 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                   child: TextField(
                     controller: dateController,
                     readOnly: true,
-                    onTap: () => showDialog(
+                    onTap: () => showDialog<void>(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Select Year"),
+                          title: const Text('Select Year'),
                           content: Container(
                             // Need to use container to add size constraint.
                             width: 300,
@@ -273,7 +272,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                   height: 8.h,
                   child: TextField(
                     controller: holderController,
-                    onChanged: (text) {
+                    onChanged: (String text) {
                       setState(() {
                         holder = holderController.text;
                       });
@@ -378,7 +377,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                             dateController.text,
                             holderController.text,
                             cvvController.text),
-                        Navigator.push(
+                        Navigator.push<void>(
                             context,
                             MaterialPageRoute(
                                 builder: (_) => const FoodMainNavigation())),
@@ -409,8 +408,8 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
     );
   }
 
-  void handleReadOnlyInputClick(context) {
-    showBottomSheet(
+  void handleReadOnlyInputClick(BuildContext context) {
+    showBottomSheet<void>(
       context: context,
       builder: (_) => Scaffold(
         body: SizedBox(
@@ -419,8 +418,8 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
             selectedDate: DateTime(1997),
             firstDate: DateTime(1995),
             lastDate: DateTime.now(),
-            onChanged: (val) {
-              print(val);
+            onChanged: (DateTime value) {
+              print(value);
               Navigator.pop(context);
             },
           ),

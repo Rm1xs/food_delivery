@@ -4,7 +4,6 @@ import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../injection.dart';
 import 'food_details/food_details_page.dart';
 
@@ -124,8 +123,7 @@ class _SearchState extends State<Search> {
                         case ConnectionState.waiting:
                           return Center(
                             child: Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
+                              padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
                               child: const Center(
                                   child: CircularProgressIndicator()),
                             ),
@@ -145,7 +143,7 @@ class _SearchState extends State<Search> {
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return InkWell(
-                                        onTap: () => Navigator.push(
+                                        onTap: () => Navigator.push<void>(
                                           context,
                                           MaterialPageRoute(
                                             builder: (_) => FoodDetailsPage(

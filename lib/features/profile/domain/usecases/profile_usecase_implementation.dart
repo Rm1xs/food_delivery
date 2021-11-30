@@ -51,4 +51,10 @@ class ProfileUseCaseImplementation extends ProfileUseCase {
   Future<DocumentSnapshot> getDeliveryProfile() {
     return repository.getDeliveryProfile();
   }
+
+  @override
+  Future<void> getImageProfile() {
+    // TODO: implement getImageProfile
+    throw UnimplementedError();
+  }
 }

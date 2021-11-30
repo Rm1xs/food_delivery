@@ -11,7 +11,7 @@ import '../../features/payment/presentation/screen/add_payment_page.dart';
 import '../../injection.dart';
 
 class CompletePaymentPage extends StatefulWidget {
-  CompletePaymentPage({Key? key}) : super(key: key);
+  const CompletePaymentPage({Key? key}) : super(key: key);
 
   @override
   State<CompletePaymentPage> createState() => _CompletePaymentPageState();
@@ -143,10 +143,10 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                                 ),
                                 ElevatedButton(
                                   onPressed: () => {
-                                    Navigator.push(
+                                    Navigator.push<void>(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => FoodMainNavigation(),
+                                        builder: (_) => const FoodMainNavigation(),
                                       ),
                                     ),
                                   },
@@ -160,7 +160,7 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                             padding: EdgeInsets.fromLTRB(0, 5.h, 0, 0),
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
+                                Navigator.push<void>(
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => AddPaymentPage()));

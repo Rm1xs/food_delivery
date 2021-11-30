@@ -9,6 +9,7 @@ import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:food_delivery/features/food/presentation/screen/restaurant_routes/test.dart';
+import 'package:food_delivery/features/notification/presentation/screen/test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -26,7 +27,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
   String menu = 'Popular menu';
   late Future<FoodModel> data;
   late Future<RestaurantModel> rest;
-  final dataKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> dataKey = GlobalKey();
 
   @override
   void initState() {
@@ -54,16 +55,18 @@ class _FoodMainPageState extends State<FoodMainPage> {
                     child: Hero(
                       tag: 'search',
                       child: TextField(
-                        onSubmitted: (text) => Scrollable.ensureVisible(dataKey.currentContext!),
+                        onSubmitted: (String text) =>
+                            Scrollable.ensureVisible(dataKey.currentContext!),
                         onTap: () {
                           setState(() {
                             menu = 'Search Result';
                           });
                         },
-                        onChanged: (text) =>  {
+                        onChanged: (String text) => {
                           setState(() {
-                          data = sl<FoodCubit>().getFood(text);
-                        })},
+                            data = sl<FoodCubit>().getFood(text);
+                          })
+                        },
                         decoration: InputDecoration(
                           prefixIcon: IconTheme(
                             data: IconThemeData(
@@ -90,7 +93,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                               color: const Color.fromRGBO(218, 99, 23, 1)
                                   .withOpacity(0.4)),
                           hintText: 'What do you want to order?',
-                          contentPadding: EdgeInsets.all(10.0),
+                          contentPadding: const EdgeInsets.all(10.0),
                           fillColor: const Color.fromRGBO(218, 99, 23, 1)
                               .withOpacity(0.08),
                         ),
@@ -109,14 +112,15 @@ class _FoodMainPageState extends State<FoodMainPage> {
                       padding: EdgeInsets.zero,
                       icon: const IconTheme(
                         data: IconThemeData(
-                            color: Colors.grey,),
-                            // const Color.fromRGBO(218, 99, 23, 1)
-                            //     .withOpacity(1)),
+                          color: Colors.grey,
+                        ),
+                        // const Color.fromRGBO(218, 99, 23, 1)
+                        //     .withOpacity(1)),
                         child: Icon(Icons.settings_input_composite_sharp),
                       ),
                       color: const Color.fromRGBO(218, 99, 23, 1)
                           .withOpacity(0.08),
-                      onPressed: () => {},
+                      onPressed: () => {print('tap')},
                     ),
                   ),
                 ],
@@ -179,7 +183,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                         child: ElevatedButton(
                           onPressed: () {},
                           child: Text(
-                            "Buy Now",
+                            'Buy Now',
                             style: GoogleFonts.ptSans(
                               textStyle: TextStyle(
                                 fontSize: 10.sp,
@@ -215,7 +219,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () => {},
+                    onTap: () => {print('tap')},
                     child: Text(
                       'View More',
                       style: GoogleFonts.ptSans(
@@ -236,7 +240,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                   case ConnectionState.waiting:
                     return Padding(
                       padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-                      child: Center(child: CircularProgressIndicator()),
+                      child: const Center(child: CircularProgressIndicator()),
                     );
                   default:
                     if (snapshot.hasError)
@@ -247,16 +251,18 @@ class _FoodMainPageState extends State<FoodMainPage> {
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: snapshot.data!.results.length,
-                          itemBuilder: (context, i) {
+                          itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
-                                onTap: () => {Navigator.push(
+                              onTap: () => {
+                                Navigator.push<void>(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => MapSample(),
+                                    builder: (_) => const MapSample(),
                                   ),
-                                ),},
+                                ),
+                              },
                               child: Padding(
-                                padding:  EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: ClayContainer(
                                   spread: 2,
                                   depth: 10,
@@ -264,8 +270,8 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                   color: Colors.white,
                                   child: Container(
                                     height: 23.h,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.35,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.35,
                                     child: Column(
                                       children: [
                                         Image.asset(
@@ -278,7 +284,8 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                           padding: EdgeInsets.fromLTRB(
                                               2.w, 2.h, 2.w, 0),
                                           child: Text(
-                                            snapshot.data!.results[i].poi.name,
+                                            snapshot
+                                                .data!.results[index].poi.name,
                                             overflow: TextOverflow.ellipsis,
                                             style: GoogleFonts.ptSans(
                                               textStyle: TextStyle(
@@ -291,7 +298,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                           padding:
                                               EdgeInsets.fromLTRB(0, 2.h, 0, 0),
                                           child: Text(
-                                            snapshot.data!.results[i].dist
+                                            snapshot.data!.results[index].dist
                                                     .toInt()
                                                     .toString() +
                                                 ' meters',
@@ -331,12 +338,14 @@ class _FoodMainPageState extends State<FoodMainPage> {
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () => {Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => MapSample(),
+                    onTap: () => {
+                      Navigator.push<void>(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => TestPage(),
+                        ),
                       ),
-                    ),},
+                    },
                     child: Text(
                       'View More',
                       style: GoogleFonts.ptSans(
@@ -362,7 +371,8 @@ class _FoodMainPageState extends State<FoodMainPage> {
                         children: [
                           Padding(
                             padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-                            child: Center(child: CircularProgressIndicator()),
+                            child: const Center(
+                                child: CircularProgressIndicator()),
                           ),
                         ],
                       ),
@@ -381,7 +391,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                               itemCount: snapshot.data!.hits.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return InkWell(
-                                  onTap: () => Navigator.push(
+                                  onTap: () => Navigator.push<void>(
                                     context,
                                     MaterialPageRoute(
                                       builder: (_) => FoodDetailsPage(
@@ -487,7 +497,6 @@ class _FoodMainPageState extends State<FoodMainPage> {
                 }
               },
             ),
-
           ],
         ),
       ),
@@ -495,9 +504,9 @@ class _FoodMainPageState extends State<FoodMainPage> {
   }
 
   Future<RestaurantModel> getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
+    final Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    var data =
+    final Future<RestaurantModel> data =
         sl<FoodCubit>().getRestaurants(position.latitude, position.longitude);
     return data;
   }

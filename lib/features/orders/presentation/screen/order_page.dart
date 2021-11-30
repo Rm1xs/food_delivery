@@ -6,7 +6,6 @@ import 'package:flutter/painting.dart';
 import 'package:food_delivery/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../injection.dart';
 
 class OrderPage extends StatefulWidget {
@@ -30,13 +29,13 @@ class _OrderPageState extends State<OrderPage> {
                 case ConnectionState.waiting:
                   return Padding(
                     padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: const Center(child: CircularProgressIndicator()),
                   );
                 default:
                   if (snapshot.hasError)
                     return Text('Error: ${snapshot.error}');
                   else {
-                    Map<dynamic, dynamic> snapshotData =
+                    final Map<dynamic, dynamic> snapshotData =
                         snapshot.data!.data() as Map;
                     return Flex(
                       direction: Axis.horizontal,
@@ -46,8 +45,8 @@ class _OrderPageState extends State<OrderPage> {
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: snapshotData['orders'].length ?? 0,
-                            itemBuilder: (context, i) {
-                              final map = snapshotData['orders'][i];
+                            itemBuilder: (BuildContext context, int i) {
+                              final Map<dynamic, dynamic> map = snapshotData['orders'][i];
                               return Padding(
                                 padding: const EdgeInsets.only(
                                     top: 15.0, left: 12.0, right: 12.0),
@@ -92,7 +91,7 @@ class _OrderPageState extends State<OrderPage> {
         // ),
         Padding(
           padding: EdgeInsets.fromLTRB(6.w, 1.h, 6.w, 10.h),
-          child: AnimatedContainerApp(),
+          child: const AnimatedContainerApp(),
         )
       ],
     );
@@ -258,7 +257,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                   height: 6.h,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.white),
-                    onPressed: () => {},
+                    onPressed: () => {print('tap')},
                     child: const Text(
                       'Place My Order',
                       style: TextStyle(

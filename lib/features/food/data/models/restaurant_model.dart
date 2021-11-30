@@ -8,7 +8,7 @@ class RestaurantModel {
   factory RestaurantModel.fromJson(Map<String, dynamic> json) {
     return RestaurantModel(
       results: List<RestaurantInfo>.from(
-          json['results'].map((x) => RestaurantInfo.fromJson(x))),
+          json['results'].map((dynamic x) => RestaurantInfo.fromJson(x))),
     );
   }
 }

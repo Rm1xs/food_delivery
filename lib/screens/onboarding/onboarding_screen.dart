@@ -19,7 +19,7 @@ class _OnboardingState extends State<Onboarding> {
         body: Stack(
           children: [
             ShaderMask(
-              shaderCallback: (rect) {
+              shaderCallback: (Rect rect) {
                 return const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.center,
@@ -51,8 +51,8 @@ class _OnboardingState extends State<Onboarding> {
     );
   }
 
-  void timerRedirect() async {
-    await Future.delayed(const Duration(seconds: 2));
+  Future<void> timerRedirect() async {
+    return await Future.delayed(const Duration(seconds: 2));
     Navigator.pushNamed(context, entery1Route);
   }
 }

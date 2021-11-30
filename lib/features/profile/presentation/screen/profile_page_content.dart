@@ -41,7 +41,8 @@ class _ProfilePageState extends State<ProfilePageContent> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: sl<ProfileCubit>().getProfile(),
-      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +57,8 @@ class _ProfilePageState extends State<ProfilePageContent> {
           );
         }
         Map<dynamic, dynamic> snapshotData = snapshot.data!.data() as Map;
-        final withoutSign = snapshotData['subscription'].replaceAll(RegExp('_'), ' ');
+        final String withoutSign =
+            snapshotData['subscription'].replaceAll(RegExp('_'), ' ');
         return Stack(
           children: [
             Positioned(
@@ -77,7 +79,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
               left: 360,
               right: 5,
               child: InkWell(
-                onTap: () => Navigator.push(
+                onTap: () => Navigator.push<void>(
                   context,
                   MaterialPageRoute(
                     builder: (_) => ProfileImage(
@@ -117,7 +119,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
                             padding: EdgeInsets.fromLTRB(0.w, 2.h, 0.w, 0),
                             child: Center(
                               child: CustomPaint(
-                                size: Size(120, 4),
+                                size: const Size(120, 4),
                                 painter: CurvePainter(),
                               ),
                             ),
@@ -305,7 +307,8 @@ class _ProfilePageState extends State<ProfilePageContent> {
                       ? favouriteElements
                       : snapshotData['favourite'].length),
               itemBuilder: (BuildContext context, int index) {
-                final map = snapshotData['favourite'][index];
+                final Map<dynamic, dynamic> map =
+                    snapshotData['favourite'][index];
                 return Dismissible(
                   dragStartBehavior: DragStartBehavior.start,
                   key: Key(map.keys.elementAt(0)),
@@ -333,17 +336,17 @@ class _ProfilePageState extends State<ProfilePageContent> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text("Delete Confirmation"),
+                          title: const Text('Delete Confirmation'),
                           content: const Text(
-                              "Are you sure you want to delete this item?"),
+                              'Are you sure you want to delete this item?'),
                           actions: <Widget>[
                             FlatButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(true),
-                                child: const Text("Delete")),
+                                child: const Text('Delete')),
                             FlatButton(
                               onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text("Cancel"),
+                              child: const Text('Cancel'),
                             ),
                           ],
                         );
@@ -444,7 +447,6 @@ class _ProfilePageState extends State<ProfilePageContent> {
   }
 
   //Methods
-  void _getCamera() async {
-    await availableCameras().then((value) => camera = value.first);
-  }
+  void _getCamera() async => await availableCameras()
+      .then((List<CameraDescription> value) => camera = value.first);
 }

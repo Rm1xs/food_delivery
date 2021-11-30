@@ -10,6 +10,8 @@ abstract class ProfileUseCase {
 
   Future<void> saveImageProfile(File path);
 
+  Future<void> getImageProfile();
+
   Future<void> updateImageProfile();
 
   Future<void> getMembership();

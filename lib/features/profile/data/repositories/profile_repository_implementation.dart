@@ -6,11 +6,11 @@ import 'package:food_delivery/features/profile/data/models/delivery_profile.dart
 import 'package:food_delivery/features/profile/domain/repositories/profile_repository.dart';
 
 class ProfileRepositoryImplementation implements ProfileRepository {
-  final FirebaseAuth _firebaseAuth;
-
   ProfileRepositoryImplementation({
     FirebaseAuth? firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+
+  final FirebaseAuth _firebaseAuth;
 
   @override
   Future<void> crateDeliveryProfile() async {
@@ -19,13 +19,13 @@ class ProfileRepositoryImplementation implements ProfileRepository {
     final CollectionReference deliveryProfile =
         FirebaseFirestore.instance.collection('Delivery Profiles');
 
-    String name = tokenResult.displayName ?? 'Unknown';
-    String email = tokenResult.email ?? 'Unknown';
+    final String name = tokenResult.displayName ?? 'Unknown';
+    final String email = tokenResult.email ?? 'Unknown';
 
-    DeliveryProfile post =
-        DeliveryProfile(name, Subscription.Iron_Profile.toShortString(), 0, email);
+    final DeliveryProfile post = DeliveryProfile(
+        name, Subscription.Iron_Profile.toShortString(), 0, email);
 
-    Map<String, dynamic> postData = post.toJson();
+    final Map<String, dynamic> postData = post.toJson();
     await deliveryProfile.doc(idToken.toString()).set(postData);
   }
 
@@ -51,11 +51,11 @@ class ProfileRepositoryImplementation implements ProfileRepository {
   Future<void> saveImageProfile(File path) async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
-    FirebaseStorage storage = FirebaseStorage.instance;
-    Reference ref =
+    final FirebaseStorage storage = FirebaseStorage.instance;
+    final Reference ref =
         storage.ref().child('profile_images').child('profile_image_$idToken');
-    UploadTask uploadTask = ref.putFile(path);
-    uploadTask.then((res) {
+    final UploadTask uploadTask = ref.putFile(path);
+    uploadTask.then((TaskSnapshot res) {
       res.ref.getDownloadURL();
     });
   }
@@ -71,11 +71,12 @@ class ProfileRepositoryImplementation implements ProfileRepository {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
 
-    var result = FirebaseFirestore.instance
-        .collection('Delivery Profiles')
-        .doc(idToken)
-        .get()
-        .then((value) => value);
+    final Future<DocumentSnapshot<Map<String, dynamic>>> result =
+        FirebaseFirestore.instance
+            .collection('Delivery Profiles')
+            .doc(idToken)
+            .get()
+            .then((DocumentSnapshot<Map<String, dynamic>> value) => value);
     return result;
   }
 
@@ -83,10 +84,17 @@ class ProfileRepositoryImplementation implements ProfileRepository {
   Future<DocumentSnapshot> getDeliveryProfile() async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
-    var document = await FirebaseFirestore.instance
-        .collection('Delivery Profiles')
-        .doc(idToken)
-        .get();
+    final DocumentSnapshot<Map<String, dynamic>> document =
+        await FirebaseFirestore.instance
+            .collection('Delivery Profiles')
+            .doc(idToken)
+            .get();
     return document;
+  }
+
+  @override
+  Future<void> getImageProfile() {
+    // TODO: implement getImageProfile
+    throw UnimplementedError();
   }
 }
