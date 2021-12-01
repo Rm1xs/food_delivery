@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
+  print('Handling a background message: ${message.messageId}');
 }
 
 class TestPage extends StatefulWidget {
@@ -15,7 +15,7 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   late final FirebaseMessaging _messaging;
   late int _totalNotifications;
-  PushNotification? _notificationInfo;
+  late PushNotification _notificationInfo;
 
   void registerNotification() async {
     await Firebase.initializeApp();
@@ -115,47 +115,43 @@ class _TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Notify'),
-        brightness: Brightness.dark,
-      ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'App for capturing Firebase Push Notifications',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'App for capturing Firebase Push Notifications',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+              ),
             ),
-          ),
-          SizedBox(height: 16.0),
-          NotificationBadge(totalNotifications: _totalNotifications),
-          SizedBox(height: 16.0),
-          _notificationInfo != null
-              ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'TITLE: ${_notificationInfo!.dataTitle ?? _notificationInfo!.title}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+            SizedBox(height: 16.0),
+            NotificationBadge(totalNotifications: _totalNotifications),
+            SizedBox(height: 16.0),
+            _notificationInfo != null
+                ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'TITLE: ${_notificationInfo!.dataTitle ?? _notificationInfo!.title}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8.0),
-              Text(
-                'BODY: ${_notificationInfo!.dataBody ?? _notificationInfo!.body}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+                SizedBox(height: 8.0),
+                Text(
+                  'BODY: ${_notificationInfo!.dataBody ?? _notificationInfo!.body}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
                 ),
-              ),
-            ],
-          )
-              : Container(),
-        ],
+              ],
+            )
+                : Container(),
+          ],
       ),
     );
   }

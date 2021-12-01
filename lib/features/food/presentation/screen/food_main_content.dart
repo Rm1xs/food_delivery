@@ -338,13 +338,13 @@ class _FoodMainPageState extends State<FoodMainPage> {
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () => {
-                      Navigator.push<void>(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => TestPage(),
-                        ),
-                      ),
+                    onTap: () {
+                      // Navigator.push<void>(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (_) => TestPage(),
+                      //   ),
+                      // ),
                     },
                     child: Text(
                       'View More',
