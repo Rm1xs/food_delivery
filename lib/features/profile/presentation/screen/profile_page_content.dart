@@ -167,6 +167,14 @@ class _ProfilePageState extends State<ProfilePageContent> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
+                                  child: const Icon(
+                                    Icons.settings,
+                                    size: 20,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
                                   child: InkWell(
                                     onTap: () => sl<AuthenticationBloc>()
                                         .add(AppLogoutRequested()),
@@ -420,7 +428,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
                           ),
                           const Spacer(),
                           Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: EdgeInsets.fromLTRB(0.w, 0.h, 5.w, 0.h),
                             child: ElevatedButton(
                               child: const Text('Buy'),
                               onPressed: () => print("it's pressed"),

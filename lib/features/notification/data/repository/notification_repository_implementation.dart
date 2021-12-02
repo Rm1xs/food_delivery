@@ -11,9 +11,13 @@ class NotificationRepositoryImplementation implements NotificationRepository {
   }
 
   @override
-  Future<void> getAllNewNotifications() {
-    // TODO: implement getAllNewNotifications
-    throw UnimplementedError();
+  Future<DocumentSnapshot> getAllNewNotifications() async {
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    final DocumentSnapshot<Map<String, dynamic>> document = await FirebaseFirestore.instance
+        .collection('Notifications')
+        .doc(idToken).get();
+    return document;
   }
 
   @override
@@ -22,8 +26,20 @@ class NotificationRepositoryImplementation implements NotificationRepository {
     final String idToken = tokenResult.uid;
     final CollectionReference card =
     FirebaseFirestore.instance.collection('Notifications');
-    NotificationModel post = NotificationModel(title, body);
-    Map<String, dynamic> postData = post.toJson();
-    await card.doc(idToken.toString()).set(postData);
+    final NotificationModel post = NotificationModel(title, body);
+    final Map<String, dynamic> postData = post.toJson();
+
+    final DocumentSnapshot<Map<String, dynamic>> snapShot = await FirebaseFirestore.instance.collection('Notifications').doc(idToken).get();
+
+    if (snapShot.exists){
+      await card.doc(idToken.toString()).update(<String, dynamic>{
+        'history': FieldValue.arrayUnion(<dynamic>[postData])
+      });
+    }
+    else{
+      await card.doc(idToken.toString()).set(<String, dynamic>{
+        'history': FieldValue.arrayUnion(<dynamic>[postData])
+      });
+    }
   }
 }

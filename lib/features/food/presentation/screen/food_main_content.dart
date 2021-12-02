@@ -9,7 +9,6 @@ import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:food_delivery/features/food/presentation/screen/restaurant_routes/test.dart';
-import 'package:food_delivery/features/notification/presentation/screen/test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -263,54 +262,61 @@ class _FoodMainPageState extends State<FoodMainPage> {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: ClayContainer(
-                                  spread: 2,
-                                  depth: 10,
-                                  borderRadius: 20,
-                                  color: Colors.white,
-                                  child: Container(
-                                    height: 23.h,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.35,
-                                    child: Column(
-                                      children: [
-                                        Image.asset(
-                                          'assets/images/RestaurantImage2.png',
-                                          fit: BoxFit.scaleDown,
-                                          height: 11.h,
-                                          width: 11.h,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              2.w, 2.h, 2.w, 0),
-                                          child: Text(
-                                            snapshot
-                                                .data!.results[index].poi.name,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.ptSans(
-                                              textStyle: TextStyle(
-                                                  fontSize: 12.sp,
-                                                  fontWeight: FontWeight.bold),
+                                child: ClipRect(
+                                  child: Banner(
+                                    message: 'HOT',
+                                    location: BannerLocation.topEnd,
+                                    color: Colors.orange,
+                                    child: ClayContainer(
+                                      spread: 2,
+                                      depth: 10,
+                                      borderRadius: 20,
+                                      color: Colors.white,
+                                      child: Container(
+                                        height: 23.h,
+                                        width: MediaQuery.of(context).size.width *
+                                            0.35,
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              'assets/images/RestaurantImage2.png',
+                                              fit: BoxFit.scaleDown,
+                                              height: 11.h,
+                                              width: 11.h,
                                             ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                                          child: Text(
-                                            snapshot.data!.results[index].dist
-                                                    .toInt()
-                                                    .toString() +
-                                                ' meters',
-                                            style: GoogleFonts.ptSans(
-                                              textStyle: TextStyle(
-                                                  fontSize: 11.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.grey),
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  2.w, 2.h, 2.w, 0),
+                                              child: Text(
+                                                snapshot
+                                                    .data!.results[index].poi.name,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.ptSans(
+                                                  textStyle: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                                              child: Text(
+                                                snapshot.data!.results[index].dist
+                                                        .toInt()
+                                                        .toString() +
+                                                    ' meters',
+                                                style: GoogleFonts.ptSans(
+                                                  textStyle: TextStyle(
+                                                      fontSize: 11.sp,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.grey),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -429,7 +435,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                             ),
                                             Padding(
                                               padding: EdgeInsets.fromLTRB(
-                                                  6.w, 3.h, 0.w, 0),
+                                                  5.w, 3.h, 0.w, 0),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -439,7 +445,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.5,
+                                                            0.4,
                                                     child: Text(
                                                       snapshot.data!.hits[index]
                                                           .recipe.label,
@@ -467,21 +473,21 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                                 ],
                                               ),
                                             ),
-                                            // Padding(
-                                            //   padding: EdgeInsets.fromLTRB(
-                                            //       0.w, 0.h, 0.w, 0),
-                                            //   child: Text(
-                                            //     '7€',
-                                            //     style: GoogleFonts.ptSans(
-                                            //       textStyle: TextStyle(
-                                            //         fontSize: 18.sp,
-                                            //         fontWeight: FontWeight.bold,
-                                            //         color: const Color.fromRGBO(
-                                            //             218, 99, 23, 1),
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // )
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  5.w, 0.h, 2.w, 0),
+                                              child: Text(
+                                                '7€',
+                                                style: GoogleFonts.ptSans(
+                                                  textStyle: TextStyle(
+                                                    fontSize: 15.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: const Color.fromRGBO(
+                                                        218, 99, 23, 1),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
                                           ],
                                         ),
                                       ),
@@ -497,6 +503,25 @@ class _FoodMainPageState extends State<FoodMainPage> {
                 }
               },
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(20.0),
+            //   child: ClipRect(
+            //     child: Banner(
+            //       message: "hello",
+            //       location: BannerLocation.topEnd,
+            //       color: Colors.red,
+            //       child: Container(
+            //         color: Colors.yellow,
+            //         height: 100,
+            //         child: Center(
+            //           child: Text("Hello, banner!"),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
+
           ],
         ),
       ),

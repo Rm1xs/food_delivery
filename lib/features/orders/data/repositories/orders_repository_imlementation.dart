@@ -32,7 +32,7 @@ class OrdersRepositoryImplementation implements OrdersRepository {
   Future<DocumentSnapshot> getItemsInOrder() async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
-    var document = await FirebaseFirestore.instance
+    final DocumentSnapshot<Map<String, dynamic>> document = await FirebaseFirestore.instance
         .collection('Delivery Profiles')
         .doc(idToken).get();
     return document;
