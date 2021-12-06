@@ -9,6 +9,6 @@ abstract class FoodUseCase {
 
   Future<void> addToFavourite(String name, String imageUrl);
 
-  Future<void> addToOrder(String food);
+  Future<void> addToOrder(String name, String image, String price);
 
 }

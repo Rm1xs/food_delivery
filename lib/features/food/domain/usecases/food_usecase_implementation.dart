@@ -23,7 +23,7 @@ class FoodUseCaseImplementation extends FoodUseCase{
   }
 
   @override
-  Future<void> addToOrder(String food) {
-    return repository.addToOrder(food);
+  Future<void> addToOrder(String name, String image, String price) {
+    return repository.addToOrder(name, image, price);
   }
 }

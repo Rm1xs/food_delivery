@@ -54,8 +54,8 @@ class FoodDetailsPage extends StatelessWidget {
                       ),
                       color: Colors.green,
                       onPressed: () => {Navigator.of(context).pop()}
-                    // sl<AuthenticationBloc>().add(AppLogoutRequested()),
-                  ),
+                      // sl<AuthenticationBloc>().add(AppLogoutRequested()),
+                      ),
                 ),
               ),
               SizedBox.expand(
@@ -63,8 +63,8 @@ class FoodDetailsPage extends StatelessWidget {
                   initialChildSize: 0.6,
                   minChildSize: 0.6,
                   maxChildSize: 0.9,
-                  builder:
-                      (BuildContext context, ScrollController scrollController) {
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
                     return Container(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -81,16 +81,18 @@ class FoodDetailsPage extends StatelessWidget {
                             Row(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.fromLTRB(6.w, 6.h, 6.w, 0),
+                                  padding:
+                                      EdgeInsets.fromLTRB(6.w, 6.h, 6.w, 0),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(83, 232, 139, 1)
-                                          .withOpacity(0.2),
+                                      color:
+                                          const Color.fromRGBO(83, 232, 139, 1)
+                                              .withOpacity(0.2),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(4.w, 1.h, 4.w, 1.h),
+                                      padding: EdgeInsets.fromLTRB(
+                                          4.w, 1.h, 4.w, 1.h),
                                       child: Text(
                                         'Popular',
                                         style: GoogleFonts.ptSans(
@@ -112,9 +114,10 @@ class FoodDetailsPage extends StatelessWidget {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(
-                                                Radius.circular(20)),
-                                            color: Colors.greenAccent
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(20)),
+                                            color: Colors.grey
                                                 .withOpacity(0.2)),
                                         child: const IconButton(
                                           icon: Icon(
@@ -135,16 +138,32 @@ class FoodDetailsPage extends StatelessWidget {
                                                       Radius.circular(20)),
                                               color: Colors.greenAccent
                                                   .withOpacity(0.2)),
-                                          child: IconButton(
-                                            icon: const Icon(
-                                              Icons
-                                                  .local_fire_department_outlined,
-                                              size: 25,
-                                              color: Colors.red,
+                                          child: PhysicalModel(
+                                            color: Colors.greenAccent
+                                                .withOpacity(0.2),
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                            child: MaterialButton(
+                                              child: const Icon(
+                                                Icons
+                                                    .local_fire_department_outlined,
+                                                size: 25,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: () =>
+                                                  _addToFavourite(context),
                                             ),
-                                            onPressed: () =>
-                                                _addToFavourite(context),
                                           ),
+                                          // IconButton(
+                                          //   icon: const Icon(
+                                          //     Icons
+                                          //         .local_fire_department_outlined,
+                                          //     size: 25,
+                                          //     color: Colors.red,
+                                          //   ),
+                                          //   onPressed: () =>
+                                          //       _addToFavourite(context),
+                                          // ),
                                         ),
                                       ),
                                     ],
@@ -179,7 +198,8 @@ class FoodDetailsPage extends StatelessWidget {
                                       '4,8 Rating',
                                       style: GoogleFonts.ptSans(
                                         textStyle: TextStyle(
-                                            fontSize: 11.sp, color: Colors.grey),
+                                            fontSize: 11.sp,
+                                            color: Colors.grey),
                                       ),
                                     ),
                                   ),
@@ -197,7 +217,8 @@ class FoodDetailsPage extends StatelessWidget {
                                       '2000+ Order',
                                       style: GoogleFonts.ptSans(
                                         textStyle: TextStyle(
-                                            fontSize: 11.sp, color: Colors.grey),
+                                            fontSize: 11.sp,
+                                            color: Colors.grey),
                                       ),
                                     ),
                                   ),
@@ -216,7 +237,8 @@ class FoodDetailsPage extends StatelessWidget {
                                           ' Calories',
                                       style: GoogleFonts.ptSans(
                                         textStyle: TextStyle(
-                                            fontSize: 11.sp, color: Colors.grey),
+                                            fontSize: 11.sp,
+                                            color: Colors.grey),
                                       ),
                                     ),
                                   ),
@@ -240,8 +262,8 @@ class FoodDetailsPage extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 10.h),
+                                    padding: EdgeInsets.fromLTRB(
+                                        6.w, 3.h, 6.w, 10.h),
                                     child: ListView.builder(
                                       physics: const ScrollPhysics(),
                                       shrinkWrap: true,
@@ -278,13 +300,13 @@ class FoodDetailsPage extends StatelessWidget {
                 bottom: 2.h,
                 left: 4.w,
                 right: 4.w,
-                child: ElevatedButton(onPressed: () => {sl<FoodCubit>().addToOrder(data!.label)}, child: Text('Add To Chart'), style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                ),),
+                child: RoundedLoadingButton(
+                  color: Colors.green,
+                  child: Text('Add To Chart',
+                      style: TextStyle(color: Colors.white)),
+                  controller: _btnController,
+                  onPressed: _doSomething,
+                ),
               ),
             ],
           ),
@@ -293,13 +315,19 @@ class FoodDetailsPage extends StatelessWidget {
     );
   }
 
+  void _doSomething() async {
+    sl<FoodCubit>()
+        .addToOrder(data!.label, data!.image, '20')
+        .whenComplete(() => _btnController.success());
+  }
+
   void _addToFavourite(BuildContext context) async {
     sl<FoodCubit>()
         .addToFavourite(data!.label, data!.image)
         .whenComplete(() => {
               //_btnController.success(),
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('Added to your favourite')))
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Added to your favourite')))
             });
   }
 }

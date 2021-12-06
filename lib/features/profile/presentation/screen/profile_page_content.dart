@@ -163,14 +163,14 @@ class _ProfilePageState extends State<ProfilePageContent> {
                                 const Icon(
                                   Icons.edit,
                                   size: 20,
-                                  color: Colors.green,
+                                  color: Colors.grey,
                                 ),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
                                   child: const Icon(
                                     Icons.settings,
                                     size: 20,
-                                    color: Colors.green,
+                                    color: Colors.grey,
                                   ),
                                 ),
                                 Padding(

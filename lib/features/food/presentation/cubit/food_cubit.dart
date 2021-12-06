@@ -11,7 +11,7 @@ class FoodCubit extends Cubit<void> {
 
   Future<void> addToFavourite(String name, String imageUrl) async => await _foodRepository.addToFavourite(name, imageUrl);
 
-  Future<void> addToOrder(String food) async => await _foodRepository.addToOrder(food);
+  Future<void> addToOrder(String name, String image, String price) async => await _foodRepository.addToOrder(name, image, price);
 
   Future<RestaurantModel> getRestaurants(double lat, double lon) async => await _foodRepository.getRestaurants(lat, lon);
 }

@@ -20,9 +20,9 @@ class OrdersUseCaseImplementation extends OrderUseCase {
   }
 
   @override
-  Future<void> removeFromOrder() {
-    // TODO: implement removeFromOrder
-    throw UnimplementedError();
+  Future<void> removeFromOrder(String id) {
+
+    return repository.removeFromOrder(id);
   }
 
   @override
@@ -34,5 +34,10 @@ class OrdersUseCaseImplementation extends OrderUseCase {
   @override
   Future<DocumentSnapshot> getItemsInOrder() {
     return repository.getItemsInOrder();
+  }
+
+  @override
+  Future<int> getOrderPrice() {
+    return repository.getOrderPrice();
   }
 }
