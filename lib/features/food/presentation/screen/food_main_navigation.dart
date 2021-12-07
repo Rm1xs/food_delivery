@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/default/bottom_bar.dart';
+import 'package:food_delivery/features/delivery/presentation/delivey_man_page.dart';
 import 'package:food_delivery/features/food/domain/usecases/food_usecase_implementation.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:food_delivery/features/orders/presentation/screen/orders_page_main.dart';
@@ -29,7 +30,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
     const Search(),
     const ProfilePageContent(),
     const OrdersPageMain(),
-    const AllChatPage()
+    const DeliveryMainPage()
     //const AllChatPage(),
   ];
 

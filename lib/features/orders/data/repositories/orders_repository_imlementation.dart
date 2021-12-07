@@ -21,8 +21,17 @@ class OrdersRepositoryImplementation implements OrdersRepository {
   Future<void> removeFromOrder(String id) async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
-    var a = await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken);
-    a.collection('orders').where(id, isEqualTo : id).delete();
+    //var a = FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken);
+
+
+    var coll = FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken).collection('orders').doc(id).delete();
+    //var d = coll.then((value) => print(value.data()!.isEmpty));
+    //print(coll);
+    // var querySnapshots = await collection.get();
+    // for (var doc in querySnapshots.docs) {
+    //   await doc.reference.delete();
+    // }
+    //a.collection('orders').where(id, isEqualTo : id).get();
   }
 
   @override

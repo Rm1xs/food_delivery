@@ -230,7 +230,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                 top: 3.h,
                 right: 5.w,
                 child: Text(
-                  '120 €',
+                  '0 €',
                   style: GoogleFonts.ptSans(
                     textStyle: TextStyle(
                       color: Colors.white,
@@ -258,7 +258,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                 top: 6.h,
                 right: 5.w,
                 child: Text(
-                  '10 €',
+                  '0 €',
                   style: GoogleFonts.ptSans(
                     textStyle: TextStyle(
                       color: Colors.white,
@@ -286,7 +286,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                 top: 9.h,
                 right: 5.w,
                 child: Text(
-                  '20 €',
+                  '0 €',
                   style: GoogleFonts.ptSans(
                     textStyle: TextStyle(
                       color: Colors.white,
