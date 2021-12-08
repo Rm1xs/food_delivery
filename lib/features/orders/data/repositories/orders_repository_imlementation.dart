@@ -23,8 +23,12 @@ class OrdersRepositoryImplementation implements OrdersRepository {
     final String idToken = tokenResult.uid;
     //var a = FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken);
 
-
-    var coll = FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken).collection('orders').doc(id).delete();
+    var coll = FirebaseFirestore.instance
+        .collection('Delivery Profiles')
+        .doc(idToken)
+        .collection('orders')
+        .doc(id)
+        .delete();
     //var d = coll.then((value) => print(value.data()!.isEmpty));
     //print(coll);
     // var querySnapshots = await collection.get();
@@ -44,10 +48,11 @@ class OrdersRepositoryImplementation implements OrdersRepository {
   Future<DocumentSnapshot> getItemsInOrder() async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
-    final DocumentSnapshot<Map<String, dynamic>> document = await FirebaseFirestore.instance
-        .collection('Delivery Profiles')
-        .doc(idToken)
-        .get();
+    final DocumentSnapshot<Map<String, dynamic>> document =
+        await FirebaseFirestore.instance
+            .collection('Delivery Profiles')
+            .doc(idToken)
+            .get();
     return document;
   }
 
@@ -56,12 +61,16 @@ class OrdersRepositoryImplementation implements OrdersRepository {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     int price = 0;
-    final DocumentSnapshot<Map<String, dynamic>> document = await FirebaseFirestore.instance
-        .collection('Delivery Profiles')
-        .doc(idToken)
-        .get();
-    document.data()!['orders'].forEach((element) => {
-          element.values.forEach((value) => {price += int.parse(value.keys.elementAt(0))}),
+    final DocumentSnapshot<Map<String, dynamic>> document =
+        await FirebaseFirestore.instance
+            .collection('Delivery Profiles')
+            .doc(idToken)
+            .get();
+    document.data()!['orders'].forEach((dynamic element) => {
+          element.values.forEach(
+              (value) => {
+                price += int.parse(value.keys.elementAt(0))
+              }),
         });
     return price;
   }

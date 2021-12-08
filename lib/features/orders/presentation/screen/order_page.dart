@@ -49,8 +49,8 @@ class _OrderPageState extends State<OrderPage> {
                               shrinkWrap: true,
                               itemCount: snapshotData['orders'].length ?? 0,
                               itemBuilder: (context, i) {
-                                final map = snapshotData['orders'][i];
-                                final data = map.values.elementAt(0);
+                                final dynamic map = snapshotData['orders'][i];
+                                final dynamic data = map.values.elementAt(0);
                                 //priceResult += int.parse(data.keys.elementAt(0));
                                 return Padding(
                                   padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
@@ -367,7 +367,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                   height: 6.h,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.white),
-                    onPressed: () => {},
+                    onPressed: () => {print('tap')},
                     child: const Text(
                       'Place My Order',
                       style: TextStyle(

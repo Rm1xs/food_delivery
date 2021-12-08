@@ -27,9 +27,22 @@ class PaymentRepositoryImplementation implements PaymentRepository {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     try {
-      var collectionRef = FirebaseFirestore.instance.collection('Cards');
-      var doc = await collectionRef.doc(idToken).get();
+      final CollectionReference<Map<String, dynamic>> collectionRef = FirebaseFirestore.instance.collection('Cards');
+      final DocumentSnapshot<Map<String, dynamic>> doc = await collectionRef.doc(idToken).get();
       return doc.exists;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> getCard() async {
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    try {
+      final CollectionReference<Map<String, dynamic>> collectionRef = FirebaseFirestore.instance.collection('Cards');
+      final DocumentSnapshot<Map<String, dynamic>> doc = await collectionRef.doc(idToken).get();
+      return doc.data()!.values.elementAt(1);
     } catch (e) {
       rethrow;
     }

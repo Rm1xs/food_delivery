@@ -102,10 +102,10 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
           child: Column(
             children: [
               SizedBox(
-                height: 33.h,
+                height: 30.h,
                 width: double.infinity,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(4.h, 2.h, 4.h, 4.h),
+                  padding: EdgeInsets.fromLTRB(4.h, 3.h, 4.h, 4.h),
                   child: ClayContainer(
                     color: Colors.grey[700],
                     borderRadius: 20,
@@ -125,14 +125,14 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(2.h, 4.h, 2.h, 0),
+                          padding: EdgeInsets.fromLTRB(2.h, 2.h, 2.h, 0),
                           child: Container(
                             alignment: Alignment.bottomLeft,
                             child: Text(
                               number,
                               style: GoogleFonts.inconsolata(
                                 textStyle: TextStyle(
-                                    fontSize: 18.sp,
+                                    fontSize: 17.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
@@ -141,7 +141,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                         ),
                         const BottomCardDecoration(),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(2.h, 1.h, 2.h, 0),
+                          padding: EdgeInsets.fromLTRB(2.h, 0.5.h, 2.h, 0),
                           child: Row(
                             children: [
                               Container(

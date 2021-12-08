@@ -8,6 +8,7 @@ class DeliveryProfile {
   List<Orders>? orders = [];
   List<FinishedOrders>? history = [];
   List<Favourite>? favourite = [];
+  List<Delivery>? delivery = [];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'name': name,
@@ -17,6 +18,7 @@ class DeliveryProfile {
         'orders': orders,
         'history': history,
         'favourite': favourite,
+        'delivery': delivery,
       };
 }
 
@@ -53,6 +55,22 @@ class Favourite {
         'name': name,
         'description': description,
         'price': price,
+      };
+}
+
+class Delivery {
+  Delivery(this.id, this.items, this.price, this.adress);
+
+  final String id;
+  final List<String> items;
+  final String price;
+  final String adress;
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'id': id,
+        'items': items,
+        'price': price,
+        'adress': adress,
       };
 }
 

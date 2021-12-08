@@ -50,25 +50,25 @@ class FoodRepositoryImplementation implements FoodRepository {
 
   @override
   Future<void> addToFavourite(String name, String imageUrl) async {
-    Map<String, dynamic> values = {name: imageUrl};
+    Map<String, dynamic> values = <String, dynamic> {name: imageUrl};
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference profileData =
         FirebaseFirestore.instance.collection('Delivery Profiles');
     //Favourite post = Favourite(name, imageUrl, 123.6);
     await profileData.doc(idToken.toString()).update({
-      "favourite": FieldValue.arrayUnion([values])
+      'favourite': FieldValue.arrayUnion([values])
     });
   }
 
   @override
   Future<void> addToOrder(String name, String image, String price) async {
-    Map<String, dynamic> data = {price: image};
-    Map<String, dynamic> values = {name: data};
+    Map<String, dynamic> data = <String, dynamic> {price: image};
+    Map<String, dynamic> values = <String, dynamic> {name: data};
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference profileData =
-    FirebaseFirestore.instance.collection('Delivery Profiles');
+        FirebaseFirestore.instance.collection('Delivery Profiles');
     //Favourite post = Favourite(name, imageUrl, 123.6);
     await profileData.doc(idToken.toString()).update({
       'orders': FieldValue.arrayUnion([values])

@@ -22,4 +22,9 @@ class PaymentUseCaseImplementation extends PaymentUseCase {
   Future<bool> checkCard() async {
     return await repository.checkCard();
   }
+
+  @override
+  Future<String> getCard() async {
+    return await repository.getCard();
+  }
 }
