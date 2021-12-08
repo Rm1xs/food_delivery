@@ -30,7 +30,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
     const Search(),
     const ProfilePageContent(),
     const OrdersPageMain(),
-    const DeliveryMainPage()
+    const AllChatPage()
     //const AllChatPage(),
   ];
 

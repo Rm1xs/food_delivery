@@ -53,8 +53,7 @@ class ProfileUseCaseImplementation extends ProfileUseCase {
   }
 
   @override
-  Future<void> getImageProfile() {
-    // TODO: implement getImageProfile
-    throw UnimplementedError();
+  Future<String> getImageProfile() {
+    return repository.getImageProfile();
   }
 }

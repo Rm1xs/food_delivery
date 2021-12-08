@@ -22,13 +22,11 @@ class OrdersRepositoryImplementation implements OrdersRepository {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     //var a = FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken);
-
-    var coll = FirebaseFirestore.instance
+    var t = await FirebaseFirestore.instance
         .collection('Delivery Profiles')
-        .doc(idToken)
-        .collection('orders')
-        .doc(id)
-        .delete();
+        .doc(idToken).get();
+    print(t.data()!.values.elementAt(3));
+
     //var d = coll.then((value) => print(value.data()!.isEmpty));
     //print(coll);
     // var querySnapshots = await collection.get();

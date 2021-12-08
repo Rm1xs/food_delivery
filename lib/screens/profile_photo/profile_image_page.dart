@@ -85,7 +85,7 @@ class DisplayPictureScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Display the Picture')),
       body: Column(
         children: [
-          Image.file(File(imagePath)),
+          Expanded(child: Image.file(File(imagePath))),
           ElevatedButton(
             onPressed: () => {
               sl<ProfileCubit>().updateProfileImage(File(imagePath)),

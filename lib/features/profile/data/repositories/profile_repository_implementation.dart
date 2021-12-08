@@ -93,8 +93,10 @@ class ProfileRepositoryImplementation implements ProfileRepository {
   }
 
   @override
-  Future<void> getImageProfile() {
-    // TODO: implement getImageProfile
-    throw UnimplementedError();
+  Future<String> getImageProfile() async {
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    var reference = FirebaseStorage.instance.ref().child('profile_images/profile_image_$idToken');
+    return await reference.getDownloadURL();
   }
 }

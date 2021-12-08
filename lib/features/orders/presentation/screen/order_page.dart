@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:food_delivery/features/delivery/presentation/delivey_man_page.dart';
 import 'package:food_delivery/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -367,7 +368,10 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                   height: 6.h,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.white),
-                    onPressed: () => {print('tap')},
+                    onPressed: () => Navigator.push<void>(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const DeliveryMainPage())),
                     child: const Text(
                       'Place My Order',
                       style: TextStyle(

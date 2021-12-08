@@ -32,4 +32,8 @@ class ProfileCubit extends Cubit<void> {
     final String res = fav.get('favourite');
     return res;
   }
+
+  Future<String> getProofileImage(){
+    return _authenticationRepository.getImageProfile();
+  }
 }
