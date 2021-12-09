@@ -55,9 +55,8 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
         size = 28;
         Future.delayed(
             const Duration(seconds: 0),
-                () => Navigator.push<void>(context,
+            () => Navigator.push<void>(context,
                 MaterialPageRoute(builder: (_) => const FoodMainNavigation())));
-
       } else {
         showSmsEnterField = true;
         size = 22;
@@ -68,7 +67,6 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
     }
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {

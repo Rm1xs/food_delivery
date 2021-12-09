@@ -18,8 +18,7 @@ class ButtonLoginGoogle extends StatelessWidget {
             width: 40.w,
             height: 7.5.h,
             child: ElevatedButton(
-              onPressed: () =>
-              {
+              onPressed: () => {
                 context.read<LoginCubit>().logInWithGoogle(),
               },
               style: ButtonStyle(

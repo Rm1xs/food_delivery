@@ -27,21 +27,19 @@ class SignIn extends StatelessWidget {
         if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(
-                SnackBar(
-                  content: const Text('Authentication Failure!'),
-                  action: SnackBarAction(
-                    label: 'Hide',
-                    textColor: Colors.white,
-                    onPressed: () {},
-                  ),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  backgroundColor: Colors.deepOrangeAccent,
-                )
-            );
+            ..showSnackBar(SnackBar(
+              content: const Text('Authentication Failure!'),
+              action: SnackBarAction(
+                label: 'Hide',
+                textColor: Colors.white,
+                onPressed: () {},
+              ),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              backgroundColor: Colors.deepOrangeAccent,
+            ));
         }
         // if(state.status.isSubmissionSuccess){
         //   ScaffoldMessenger.of(context)

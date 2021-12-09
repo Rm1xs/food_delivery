@@ -20,8 +20,7 @@ class PaymentCubit extends Cubit<CardModel> {
     return cardExist;
   }
 
-
-  Future<String> getCard(){
+  Future<String> getCard() {
     return _authenticationRepository.repository.getCard();
   }
 }

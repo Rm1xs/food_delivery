@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 
 class DateFormatter extends TextInputFormatter {
-
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue prevText, TextEditingValue currText) {

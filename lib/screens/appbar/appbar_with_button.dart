@@ -6,7 +6,7 @@ import 'package:food_delivery/features/notification/presentation/screen/notifica
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
-PreferredSize appbarWithButton(String line, bool button,BuildContext context) {
+PreferredSize appbarWithButton(String line, bool button, BuildContext context) {
   return PreferredSize(
     preferredSize: Size(double.infinity, 22.h),
     child: Stack(

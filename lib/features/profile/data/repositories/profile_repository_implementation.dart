@@ -96,7 +96,9 @@ class ProfileRepositoryImplementation implements ProfileRepository {
   Future<String> getImageProfile() async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
-    var reference = FirebaseStorage.instance.ref().child('profile_images/profile_image_$idToken');
+    var reference = FirebaseStorage.instance
+        .ref()
+        .child('profile_images/profile_image_$idToken');
     return await reference.getDownloadURL();
   }
 }

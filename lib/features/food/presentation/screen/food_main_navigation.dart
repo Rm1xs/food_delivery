@@ -24,7 +24,6 @@ class FoodMainNavigation extends StatefulWidget {
 
 class _FoodMainNavigationState extends State<FoodMainNavigation>
     with TickerProviderStateMixin {
-
   static final List<Widget> _pages = <Widget>[
     const FoodMainPage(),
     const Search(),
@@ -42,7 +41,6 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
   late AnimationController _chatController;
   late AnimationController _chartController;
   late AnimationController _profileController;
-
 
   @override
   void initState() {

@@ -14,8 +14,10 @@ class NotificationUseCaseImplementation extends NotificationUseCase {
   }
 
   @override
-  Future<DocumentSnapshot> getAllNewNotifications() => repository.getAllNewNotifications();
+  Future<DocumentSnapshot> getAllNewNotifications() =>
+      repository.getAllNewNotifications();
 
   @override
-  Future<void> saveNotification(String title, String body) async => repository.saveNotification(title, body);
+  Future<void> saveNotification(String title, String body) async =>
+      repository.saveNotification(title, body);
 }

@@ -6,12 +6,11 @@ class OrdersCubit extends Cubit<void> {
   OrdersCubit(this._ordersRepository) : super(null);
   final OrdersUseCaseImplementation _ordersRepository;
 
-  void addToOrders(String food){
+  void addToOrders(String food) {
     _ordersRepository.repository.addToOrder(food);
   }
 
-
-  Future<DocumentSnapshot> getItemsInOrder(){
+  Future<DocumentSnapshot> getItemsInOrder() {
     return _ordersRepository.getItemsInOrder();
   }
 
@@ -19,8 +18,7 @@ class OrdersCubit extends Cubit<void> {
     return _ordersRepository.getOrderPrice();
   }
 
-  Future<void> removeFromOrder(String id){
-
+  Future<void> removeFromOrder(String id) {
     return _ordersRepository.removeFromOrder(id);
   }
 }

@@ -19,9 +19,7 @@ class ConfirmPasswordInput extends StatelessWidget {
           obscureText: true,
           decoration: InputDecoration(
               errorStyle: TextStyle(height: 0),
-              errorText: state.confirmedPassword.invalid
-                  ? ''
-                  : null,
+              errorText: state.confirmedPassword.invalid ? '' : null,
               focusedErrorBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.redAccent, width: 1),
                 borderRadius: BorderRadius.all(

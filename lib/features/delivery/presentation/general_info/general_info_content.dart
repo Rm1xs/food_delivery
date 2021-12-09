@@ -100,7 +100,7 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
                   'Address',
                   style: GoogleFonts.ptSans(
                     textStyle:
-                    TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

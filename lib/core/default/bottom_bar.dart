@@ -31,21 +31,22 @@ class CustomAnimatedBottomBar extends StatefulWidget {
   final double containerHeight;
   final Curve curve;
 
-
   @override
-  State<CustomAnimatedBottomBar> createState() => _CustomAnimatedBottomBarState();
+  State<CustomAnimatedBottomBar> createState() =>
+      _CustomAnimatedBottomBarState();
 }
 
-class _CustomAnimatedBottomBarState extends State<CustomAnimatedBottomBar> with TickerProviderStateMixin {
-
+class _CustomAnimatedBottomBarState extends State<CustomAnimatedBottomBar>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final bgColor = widget.backgroundColor ?? Theme.of(context).bottomAppBarColor;
+    final bgColor =
+        widget.backgroundColor ?? Theme.of(context).bottomAppBarColor;
 
     return Container(
       margin: EdgeInsets.only(left: 3.w, right: 3.w, bottom: 2.h, top: 2.h),
       decoration: BoxDecoration(
-        borderRadius:  BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(13),
         color: bgColor,
         boxShadow: [
           if (widget.showElevation)
@@ -67,7 +68,8 @@ class _CustomAnimatedBottomBarState extends State<CustomAnimatedBottomBar> with 
               children: widget.items.map((item) {
                 var index = widget.items.indexOf(item);
                 return GestureDetector(
-                  onTap: () => {widget.onItemSelected(index), item.controller.forward()},
+                  onTap: () =>
+                      {widget.onItemSelected(index), item.controller.forward()},
                   child: _ItemWidget(
                     controller: item.controller,
                     item: item,
@@ -89,7 +91,6 @@ class _CustomAnimatedBottomBarState extends State<CustomAnimatedBottomBar> with 
 }
 
 class _ItemWidget extends StatelessWidget {
-
   final double iconSize;
   final bool isSelected;
   final BottomNavyBarItem item;
@@ -107,7 +108,8 @@ class _ItemWidget extends StatelessWidget {
     required this.animationDuration,
     required this.itemCornerRadius,
     required this.iconSize,
-    this.curve = Curves.linear, required this.controller,
+    this.curve = Curves.linear,
+    required this.controller,
   }) : super(key: key);
 
   @override

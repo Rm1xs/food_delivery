@@ -5,7 +5,6 @@ import 'package:overlay_support/overlay_support.dart';
 import 'features/notification/presentation/cubit/notification_cubit.dart';
 import 'injection.dart';
 
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message: ${message.messageId}');
 }
@@ -40,7 +39,8 @@ Future<void> init() async {
         background: Colors.cyan.shade700,
         duration: const Duration(seconds: 2),
       );
-      await sl<NotificationCubit>().saveNotification(notification.title!, notification.body!);
+      await sl<NotificationCubit>()
+          .saveNotification(notification.title!, notification.body!);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -61,7 +61,6 @@ Future<void> init() async {
         dataBody: message.data['body'],
       );
     });
-
   }
 }
 
@@ -78,4 +77,3 @@ class PushNotification {
   String? dataTitle;
   String? dataBody;
 }
-

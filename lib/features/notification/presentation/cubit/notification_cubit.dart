@@ -9,5 +9,6 @@ class NotificationCubit extends Cubit<void> {
   Future<void> saveNotification(String title, String body) async =>
       _notifyRepository.saveNotification(title, body);
 
-  Future<DocumentSnapshot> getNotifications() => _notifyRepository.getAllNewNotifications();
+  Future<DocumentSnapshot> getNotifications() =>
+      _notifyRepository.getAllNewNotifications();
 }

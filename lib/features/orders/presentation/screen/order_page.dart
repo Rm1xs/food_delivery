@@ -54,7 +54,8 @@ class _OrderPageState extends State<OrderPage> {
                                 final dynamic data = map.values.elementAt(0);
                                 //priceResult += int.parse(data.keys.elementAt(0));
                                 return Padding(
-                                  padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+                                  padding:
+                                      EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
                                   child: ClayContainer(
                                     color: Colors.white,
                                     spread: 5,
@@ -65,9 +66,11 @@ class _OrderPageState extends State<OrderPage> {
                                     child: Row(
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.fromLTRB(5.w, 1.h, 3.w, 1.h),
+                                          padding: EdgeInsets.fromLTRB(
+                                              5.w, 1.h, 3.w, 1.h),
                                           child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(15.0),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
                                             child: Image.network(
                                               data.values.elementAt(0),
                                               fit: BoxFit.scaleDown,
@@ -75,22 +78,28 @@ class _OrderPageState extends State<OrderPage> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.fromLTRB(3.w, 2.h, 0.w, 0),
+                                          padding: EdgeInsets.fromLTRB(
+                                              3.w, 2.h, 0.w, 0),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(
-                                                width:
-                                                MediaQuery.of(context).size.width * 0.35,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.35,
                                                 child: Text(
                                                   map.keys.elementAt(0),
                                                   maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   softWrap: false,
                                                   style: GoogleFonts.ptSans(
                                                     textStyle: TextStyle(
                                                         fontSize: 12.sp,
-                                                        fontWeight: FontWeight.bold),
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                 ),
                                               ),
@@ -98,7 +107,8 @@ class _OrderPageState extends State<OrderPage> {
                                                 'Waroenk kita',
                                                 style: GoogleFonts.ptSans(
                                                   textStyle: TextStyle(
-                                                      fontSize: 10.sp, color: Colors.grey),
+                                                      fontSize: 10.sp,
+                                                      color: Colors.grey),
                                                 ),
                                               ),
                                               Text(
@@ -107,7 +117,8 @@ class _OrderPageState extends State<OrderPage> {
                                                   textStyle: TextStyle(
                                                       fontSize: 13.sp,
                                                       color: Colors.green,
-                                                      fontWeight: FontWeight.bold),
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                               ),
                                             ],
@@ -122,12 +133,15 @@ class _OrderPageState extends State<OrderPage> {
                                               size: 20,
                                               color: Colors.white,
                                             ),
-                                            onPressed: () => sl<OrdersCubit>().removeFromOrder(map.keys.elementAt(0)),
+                                            onPressed: () => sl<OrdersCubit>()
+                                                .removeFromOrder(
+                                                    map.keys.elementAt(0)),
                                             style: ElevatedButton.styleFrom(
                                               primary: Colors.green,
                                               onPrimary: Colors.white,
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(10.0),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
                                               ),
                                             ),
                                           ),
@@ -168,7 +182,7 @@ class _OrderPageState extends State<OrderPage> {
         // ),
         Padding(
           padding: EdgeInsets.fromLTRB(6.w, 1.h, 6.w, 10.h),
-          child: AnimatedContainerApp(),//price: priceResult,),
+          child: AnimatedContainerApp(), //price: priceResult,),
         )
       ],
     );
@@ -313,8 +327,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
               ),
               FutureBuilder<int>(
                 future: sl<OrdersCubit>().getOrderPrice(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<int> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                       return Padding(

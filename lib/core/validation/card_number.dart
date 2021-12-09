@@ -11,13 +11,16 @@ class CardNumberFormatter extends TextInputFormatter {
   });
 
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    if(newValue.text.length > 0) {
-      if(newValue.text.length > oldValue.text.length) {
-        if(newValue.text.length > mask.length) return oldValue;
-        if(newValue.text.length < mask.length && mask[newValue.text.length - 1] == separator) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.length > 0) {
+      if (newValue.text.length > oldValue.text.length) {
+        if (newValue.text.length > mask.length) return oldValue;
+        if (newValue.text.length < mask.length &&
+            mask[newValue.text.length - 1] == separator) {
           return TextEditingValue(
-            text: '${oldValue.text}$separator${newValue.text.substring(newValue.text.length-1)}',
+            text:
+                '${oldValue.text}$separator${newValue.text.substring(newValue.text.length - 1)}',
             selection: TextSelection.collapsed(
               offset: newValue.selection.end + 1,
             ),

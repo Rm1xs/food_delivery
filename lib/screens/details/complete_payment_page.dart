@@ -146,7 +146,8 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                                     Navigator.push<void>(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => const FoodMainNavigation(),
+                                        builder: (_) =>
+                                            const FoodMainNavigation(),
                                       ),
                                     ),
                                   },
@@ -180,6 +181,15 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                         }
                     }
                   },
+                ),
+                ElevatedButton(
+                  onPressed: () => {
+                    Navigator.push<void>(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const FoodMainNavigation()))
+                  },
+                  child: Text('Skip'),
                 ),
               ],
             ),

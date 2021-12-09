@@ -4,8 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/domain/repositories/food_repository.dart';
-import 'package:food_delivery/features/profile/data/models/delivery_profile.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
 class FoodRepositoryImplementation implements FoodRepository {
@@ -50,7 +48,7 @@ class FoodRepositoryImplementation implements FoodRepository {
 
   @override
   Future<void> addToFavourite(String name, String imageUrl) async {
-    Map<String, dynamic> values = <String, dynamic> {name: imageUrl};
+    Map<String, dynamic> values = <String, dynamic>{name: imageUrl};
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference profileData =
@@ -63,8 +61,8 @@ class FoodRepositoryImplementation implements FoodRepository {
 
   @override
   Future<void> addToOrder(String name, String image, String price) async {
-    Map<String, dynamic> data = <String, dynamic> {price: image};
-    Map<String, dynamic> values = <String, dynamic> {name: data};
+    Map<String, dynamic> data = <String, dynamic>{price: image};
+    Map<String, dynamic> values = <String, dynamic>{name: data};
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference profileData =

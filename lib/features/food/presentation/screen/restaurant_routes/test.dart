@@ -14,7 +14,6 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-
   @override
   void initState() {
     super.initState();
@@ -27,7 +26,6 @@ class MapSampleState extends State<MapSample> {
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
-
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,6 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-
   Future<void> _getLocation() async {
     Position getPositionData = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
@@ -73,14 +70,12 @@ class MapSampleState extends State<MapSample> {
     final Marker marker = Marker(
         markerId: markerId,
         position: LatLng(
-        getPositionData.latitude,
-        getPositionData.longitude,
-    ));
+          getPositionData.latitude,
+          getPositionData.longitude,
+        ));
     setState(() {
       // adding a new marker to map
       markers[markerId] = marker;
     });
   }
-
 }
-

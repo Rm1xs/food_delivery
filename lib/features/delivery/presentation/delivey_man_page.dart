@@ -2,6 +2,7 @@ import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/delivery/presentation/payment/payment_delivery_main_page.dart';
+import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
 import 'package:sizer/sizer.dart';
 
 import 'general_info/general_info_main_page.dart';
@@ -16,10 +17,15 @@ class DeliveryMainPage extends StatefulWidget {
 class _DeliveryMainPageState extends State<DeliveryMainPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(child: _buildStepper(StepperType.horizontal)),
-      ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: appbarWithButton('Delivery', true, context),
+        body: Column(
+          children: [
+            Expanded(child: _buildStepper(StepperType.horizontal)),
+          ],
+        ),
+      ),
     );
   }
 
@@ -64,9 +70,7 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
         isActive: isActive,
         content: LimitedBox(
             maxWidth: double.infinity,
-            maxHeight: MediaQuery.of(context).size.height * 0.4
-
-            ,
+            maxHeight: MediaQuery.of(context).size.height * 0.5,
             child: GeneralInfoMainPage()),
       );
     }
@@ -77,7 +81,9 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
         state: state,
         isActive: isActive,
         content: LimitedBox(
-            maxWidth: double.infinity, maxHeight: MediaQuery.of(context).size.height * 0.4, child: PaymentDeliveryMainPage()),
+            maxWidth: double.infinity,
+            maxHeight: MediaQuery.of(context).size.height * 0.5,
+            child: PaymentDeliveryMainPage()),
       );
     }
     if (index == 2) {
@@ -86,8 +92,10 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
         subtitle: const Text('Track delivery'),
         state: state,
         isActive: isActive,
-        content:
-            LimitedBox(maxWidth: 300, maxHeight: 300, child: deliveryStatus()),
+        content: LimitedBox(
+            maxWidth: double.infinity,
+            maxHeight: MediaQuery.of(context).size.height * 0.5,
+            child: deliveryStatus()),
       );
     } else {
       return Step(
@@ -106,18 +114,9 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
     }
   }
 
-  Widget paymentMethod() {
-    return Column(
-      children: [
-        Text('payment'),
-        TextField(),
-      ],
-    );
-  }
-
   Widget deliveryStatus() {
     return Column(
-      children: [CircularProgressIndicator()],
+      children: [Text('Curently not saving order. ')],
     );
   }
 }

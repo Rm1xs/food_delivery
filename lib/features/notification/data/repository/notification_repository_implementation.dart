@@ -14,10 +14,29 @@ class NotificationRepositoryImplementation implements NotificationRepository {
   Future<DocumentSnapshot> getAllNewNotifications() async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
-    final DocumentSnapshot<Map<String, dynamic>> document = await FirebaseFirestore.instance
-        .collection('Notifications')
-        .doc(idToken).get();
-    return document;
+    final DocumentSnapshot<Map<String, dynamic>> document =
+        await FirebaseFirestore.instance
+            .collection('Notifications')
+            .doc(idToken)
+            .get();
+    final CollectionReference card =
+        FirebaseFirestore.instance.collection('Notifications');
+    final NotificationModel post = NotificationModel('Login',
+        'First login ${DateTime.now().day}/ ${DateTime.now().month}/ ${DateTime.now().year}');
+    final Map<String, dynamic> postData = post.toJson();
+    if (document.exists) {
+      return document;
+    } else {
+      await card.doc(idToken.toString()).set(<String, dynamic>{
+        'history': FieldValue.arrayUnion(<dynamic>[postData])
+      });
+      final DocumentSnapshot<Map<String, dynamic>> document =
+          await FirebaseFirestore.instance
+              .collection('Notifications')
+              .doc(idToken)
+              .get();
+      return document;
+    }
   }
 
   @override
@@ -25,18 +44,21 @@ class NotificationRepositoryImplementation implements NotificationRepository {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference card =
-    FirebaseFirestore.instance.collection('Notifications');
+        FirebaseFirestore.instance.collection('Notifications');
     final NotificationModel post = NotificationModel(title, body);
     final Map<String, dynamic> postData = post.toJson();
 
-    final DocumentSnapshot<Map<String, dynamic>> snapShot = await FirebaseFirestore.instance.collection('Notifications').doc(idToken).get();
+    final DocumentSnapshot<Map<String, dynamic>> snapShot =
+        await FirebaseFirestore.instance
+            .collection('Notifications')
+            .doc(idToken)
+            .get();
 
-    if (snapShot.exists){
+    if (snapShot.exists) {
       await card.doc(idToken.toString()).update(<String, dynamic>{
         'history': FieldValue.arrayUnion(<dynamic>[postData])
       });
-    }
-    else{
+    } else {
       await card.doc(idToken.toString()).set(<String, dynamic>{
         'history': FieldValue.arrayUnion(<dynamic>[postData])
       });

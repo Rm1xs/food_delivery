@@ -274,8 +274,9 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                       color: Colors.white,
                                       child: Container(
                                         height: 23.h,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.35,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.35,
                                         child: Column(
                                           children: [
                                             Image.asset(
@@ -288,28 +289,31 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                               padding: EdgeInsets.fromLTRB(
                                                   2.w, 2.h, 2.w, 0),
                                               child: Text(
-                                                snapshot
-                                                    .data!.results[index].poi.name,
+                                                snapshot.data!.results[index]
+                                                    .poi.name,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.ptSans(
                                                   textStyle: TextStyle(
                                                       fontSize: 12.sp,
-                                                      fontWeight: FontWeight.bold),
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                               ),
                                             ),
                                             Padding(
-                                              padding:
-                                                  EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 2.h, 0, 0),
                                               child: Text(
-                                                snapshot.data!.results[index].dist
+                                                snapshot.data!.results[index]
+                                                        .dist
                                                         .toInt()
                                                         .toString() +
                                                     ' meters',
                                                 style: GoogleFonts.ptSans(
                                                   textStyle: TextStyle(
                                                       fontSize: 11.sp,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.grey),
                                                 ),
                                               ),
@@ -520,8 +524,6 @@ class _FoodMainPageState extends State<FoodMainPage> {
             //     ),
             //   ),
             // ),
-
-
           ],
         ),
       ),

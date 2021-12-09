@@ -28,12 +28,15 @@ class _ProfilePageState extends State<ProfilePageContent> {
   late CameraDescription camera;
   late int favouriteElements;
   late String favouriteText;
+  final GlobalKey<State<StatefulWidget>> dataKey = GlobalKey();
+  late Future<String> data;
 
   @override
   void initState() {
     favouriteElements = 2;
     favouriteText = 'Show all favourites';
     _getCamera();
+    data = sl<ProfileCubit>().getProofileImage();
     super.initState();
   }
 
@@ -67,28 +70,30 @@ class _ProfilePageState extends State<ProfilePageContent> {
               left: 0,
               right: 0,
               child: Container(
-                color: const Color.fromARGB(100, 100, 100, 100),
-                child: FutureBuilder<String>(
-                  future: sl<ProfileCubit>().getProofileImage(), // async work
-                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting: return Text('Loading....');
-                      default:
-                        if (snapshot.hasError)
-                          return Image.network(
-                            'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-                            fit: BoxFit.fill,
-                          );
-                        else
-                          return  Image.network(
-                            snapshot.data ?? 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-                            fit: BoxFit.fill,
-                          );
-                    }
-                  },
-                )
-
-              ),
+                  color: const Color.fromARGB(100, 100, 100, 100),
+                  child: FutureBuilder<String>(
+                    key: dataKey,
+                    future: data, // async work
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Text('Loading....');
+                        default:
+                          if (snapshot.hasError)
+                            return Image.network(
+                              'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+                              fit: BoxFit.fill,
+                            );
+                          else
+                            return Image.network(
+                              snapshot.data ??
+                                  'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+                              fit: BoxFit.fill,
+                            );
+                      }
+                    },
+                  )),
             ),
             Positioned(
               top: 15,

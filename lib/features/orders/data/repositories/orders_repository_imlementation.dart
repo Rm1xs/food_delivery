@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/features/orders/domain/repositories/orders_repository.dart';
@@ -24,7 +22,8 @@ class OrdersRepositoryImplementation implements OrdersRepository {
     //var a = FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken);
     var t = await FirebaseFirestore.instance
         .collection('Delivery Profiles')
-        .doc(idToken).get();
+        .doc(idToken)
+        .get();
     print(t.data()!.values.elementAt(3));
 
     //var d = coll.then((value) => print(value.data()!.isEmpty));
@@ -66,9 +65,7 @@ class OrdersRepositoryImplementation implements OrdersRepository {
             .get();
     document.data()!['orders'].forEach((dynamic element) => {
           element.values.forEach(
-              (value) => {
-                price += int.parse(value.keys.elementAt(0))
-              }),
+              (value) => {price += int.parse(value.keys.elementAt(0))}),
         });
     return price;
   }

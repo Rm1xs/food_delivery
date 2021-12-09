@@ -117,8 +117,8 @@ class FoodDetailsPage extends StatelessWidget {
                                             borderRadius:
                                                 const BorderRadius.all(
                                                     Radius.circular(20)),
-                                            color: Colors.grey
-                                                .withOpacity(0.2)),
+                                            color:
+                                                Colors.grey.withOpacity(0.2)),
                                         child: const IconButton(
                                           icon: Icon(
                                             Icons.location_on_outlined,

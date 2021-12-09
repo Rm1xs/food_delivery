@@ -49,10 +49,10 @@ Future<void> init() async {
     () => FoodCubit(sl()),
   );
   sl.registerFactory(
-        () => OrdersCubit(sl()),
+    () => OrdersCubit(sl()),
   );
   sl.registerFactory(
-        () => NotificationCubit(sl()),
+    () => NotificationCubit(sl()),
   );
 
   // Use cases
@@ -74,12 +74,12 @@ Future<void> init() async {
     () => ProfileRepositoryImplementation(),
   );
   sl.registerLazySingleton<FoodRepository>(
-        () => FoodRepositoryImplementation(),
+    () => FoodRepositoryImplementation(),
   );
   sl.registerLazySingleton<OrdersRepository>(
-        () => OrdersRepositoryImplementation(),
+    () => OrdersRepositoryImplementation(),
   );
   sl.registerLazySingleton<NotificationRepository>(
-        () => NotificationRepositoryImplementation(),
+    () => NotificationRepositoryImplementation(),
   );
 }

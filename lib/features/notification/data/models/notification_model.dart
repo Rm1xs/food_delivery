@@ -5,7 +5,7 @@ class NotificationModel {
   final String body;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'title': title,
-    'body': body,
-  };
+        'title': title,
+        'body': body,
+      };
 }

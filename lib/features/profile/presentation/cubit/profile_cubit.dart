@@ -23,17 +23,20 @@ class ProfileCubit extends Cubit<void> {
     return await _authenticationRepository.getDeliveryProfile();
   }
 
-  void createProfile() async => await _authenticationRepository.crateDeliveryProfile();
+  void createProfile() async =>
+      await _authenticationRepository.crateDeliveryProfile();
 
-  void updateProfileImage(File path) async => await _authenticationRepository.saveImageProfile(path);
-  
+  void updateProfileImage(File path) async =>
+      await _authenticationRepository.saveImageProfile(path);
+
   Future<String> getFavourite() async {
-    final DocumentSnapshot<Object?> fav = await _authenticationRepository.getDeliveryProfile();
+    final DocumentSnapshot<Object?> fav =
+        await _authenticationRepository.getDeliveryProfile();
     final String res = fav.get('favourite');
     return res;
   }
 
-  Future<String> getProofileImage(){
+  Future<String> getProofileImage() {
     return _authenticationRepository.getImageProfile();
   }
 }

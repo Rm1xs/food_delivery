@@ -6,13 +6,7 @@ import 'package:equatable/equatable.dart';
 /// [User.empty] represents an unauthenticated user.
 
 class User extends Equatable {
-  const User({
-    required this.id,
-    this.email,
-    this.name,
-    this.photo,
-    this.phone
-  });
+  const User({required this.id, this.email, this.name, this.photo, this.phone});
 
   /// The current user's email address.
   final String? email;

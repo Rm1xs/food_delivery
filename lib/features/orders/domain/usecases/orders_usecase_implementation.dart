@@ -21,7 +21,6 @@ class OrdersUseCaseImplementation extends OrderUseCase {
 
   @override
   Future<void> removeFromOrder(String id) {
-
     return repository.removeFromOrder(id);
   }
 
