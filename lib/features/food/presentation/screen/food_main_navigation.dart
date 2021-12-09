@@ -18,6 +18,8 @@ import 'food_search_page.dart';
 class FoodMainNavigation extends StatefulWidget {
   const FoodMainNavigation({Key? key}) : super(key: key);
 
+  static Page page() =>  MaterialPage<void>(child: FoodMainNavigation());
+
   @override
   State<FoodMainNavigation> createState() => _FoodMainNavigationState();
 }

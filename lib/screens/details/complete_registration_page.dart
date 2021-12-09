@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
 import 'package:food_delivery/features/food/presentation/screen/food_main_navigation.dart';
@@ -53,10 +56,10 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       if (_auth.currentUser!.phoneNumber != null) {
         showSmsEnterField = false;
         size = 28;
-        Future.delayed(
-            const Duration(seconds: 0),
-            () => Navigator.push<void>(context,
-                MaterialPageRoute(builder: (_) => const FoodMainNavigation())));
+        // Navigator.of(context).push(MaterialPageRoute<dynamic>(
+        //     builder: (BuildContext context) => const FoodMainNavigation()));
+        // scheduleMicrotask(() => Navigator.push<void>(context,
+        //     MaterialPageRoute(builder: (_) => const FoodMainNavigation())));
       } else {
         showSmsEnterField = true;
         size = 22;
@@ -109,6 +112,7 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
           child: Padding(
             padding: EdgeInsets.all(5.h),
             child: Column(
+
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

@@ -26,9 +26,22 @@ class AuthenticationBloc
   late final StreamSubscription<User> _userSubscription;
 
   void _onUserChanged(AppUserChanged event, Emitter<AuthenticationState> emit) {
-    emit(event.user.isNotEmpty
-        ? AuthenticationState.authenticated(event.user)
-        : const AuthenticationState.unauthenticated());
+    if(event.user.isNotEmpty && event.user.name != null && event.user.phone != null){
+      //emit(AuthenticationState.authenticated(event.user));
+      emit(AuthenticationState.completeInfo(event.user));
+    }
+    else if(event.user.isNotEmpty){
+      emit(AuthenticationState.needInfo(event.user));
+    }
+    else if(event.user.isEmpty){
+      emit(AuthenticationState.unauthenticated());
+    }
+    else{
+      emit(AuthenticationState.unauthenticated());
+    }
+    // emit(event.user.isNotEmpty
+    //     ? AuthenticationState.authenticated(event.user)
+    //     : const AuthenticationState.unauthenticated());
   }
 
   void _onLogoutRequested(

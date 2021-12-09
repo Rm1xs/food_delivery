@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 enum AuthenticationStatus {
   authenticated,
   unauthenticated,
+  needInfo,
+  completeInfo
 }
 
 class AuthenticationState extends Equatable {
@@ -17,6 +19,12 @@ class AuthenticationState extends Equatable {
 
   const AuthenticationState.unauthenticated()
       : this._(status: AuthenticationStatus.unauthenticated);
+
+  const AuthenticationState.needInfo(User user)
+      : this._(status: AuthenticationStatus.needInfo);
+
+  const AuthenticationState.completeInfo(User user)
+      : this._(status: AuthenticationStatus.completeInfo, user: user);
 
   final AuthenticationStatus status;
   final User user;
