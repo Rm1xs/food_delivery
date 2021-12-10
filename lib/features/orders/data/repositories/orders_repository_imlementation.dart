@@ -20,11 +20,18 @@ class OrdersRepositoryImplementation implements OrdersRepository {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     //var a = FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken);
-    var t = await FirebaseFirestore.instance
+    DocumentSnapshot<Map<String, dynamic>> t = await FirebaseFirestore.instance
         .collection('Delivery Profiles')
-        .doc(idToken)
-        .get();
-    print(t.data()!.values.elementAt(3));
+        .doc(idToken).get();
+
+
+    t.data()!.values.elementAt(2);
+
+
+
+    //print(d.firestore.app.name);
+        //.doc('0').update({id: FieldValue.delete()});
+    //.update({'orders': FieldValue.delete()});
 
     //var d = coll.then((value) => print(value.data()!.isEmpty));
     //print(coll);
