@@ -481,7 +481,7 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                               padding: EdgeInsets.fromLTRB(
                                                   5.w, 0.h, 2.w, 0),
                                               child: Text(
-                                                '7€',
+                                                '20€',
                                                 style: GoogleFonts.ptSans(
                                                   textStyle: TextStyle(
                                                     fontSize: 15.sp,

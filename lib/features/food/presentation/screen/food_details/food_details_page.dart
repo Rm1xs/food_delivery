@@ -44,15 +44,14 @@ class FoodDetailsPage extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: const Color.fromRGBO(249, 168, 77, 1)
-                        .withOpacity(0.4), //Colors.white.withOpacity(0.5),
+                    color: Colors.green.withOpacity(0.7), //Colors.white.withOpacity(0.5),
                   ),
                   child: IconButton(
                       padding: EdgeInsets.zero,
                       icon: const Icon(
                         Icons.arrow_back,
                       ),
-                      color: Colors.green,
+                      color: Colors.white,
                       onPressed: () => {Navigator.of(context).pop()}
                       // sl<AuthenticationBloc>().add(AppLogoutRequested()),
                       ),
@@ -119,13 +118,13 @@ class FoodDetailsPage extends StatelessWidget {
                                                     Radius.circular(20)),
                                             color:
                                                 Colors.grey.withOpacity(0.2)),
-                                        child: const IconButton(
-                                          icon: Icon(
+                                        child:  IconButton(
+                                          icon: const Icon(
                                             Icons.location_on_outlined,
                                             size: 25,
                                             color: Colors.green,
                                           ),
-                                          onPressed: null,
+                                          onPressed: () => print('sdf'),
                                         ),
                                       ),
                                       Padding(
@@ -300,7 +299,8 @@ class FoodDetailsPage extends StatelessWidget {
                 left: 4.w,
                 right: 4.w,
                 child: RoundedLoadingButton(
-                  color: Colors.green,
+                  elevation: 10,
+                  color: Colors.green[400],
                   child: Text('Add To Chart',
                       style: TextStyle(color: Colors.white)),
                   controller: _btnController,
