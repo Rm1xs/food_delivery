@@ -143,16 +143,15 @@ class FoodDetailsPage extends StatelessWidget {
                                                 .withOpacity(0.2),
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
-                                            child: MaterialButton(
-                                              child: const Icon(
-                                                Icons
-                                                    .local_fire_department_outlined,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.local_fire_department_outlined,
                                                 size: 25,
                                                 color: Colors.red,
                                               ),
-                                              onPressed: () =>
-                                                  _addToFavourite(context),
+                                              onPressed: () => _addToFavourite(context),
                                             ),
+
                                           ),
                                           // IconButton(
                                           //   icon: const Icon(

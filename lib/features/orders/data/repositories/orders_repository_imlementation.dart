@@ -19,18 +19,59 @@ class OrdersRepositoryImplementation implements OrdersRepository {
   Future<void> removeFromOrder(String id) async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
-    //var a = FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken);
-    DocumentSnapshot<Map<String, dynamic>> t = await FirebaseFirestore.instance
+    final Map<String, dynamic> myMap = <String, dynamic>{};
+
+    final DocumentSnapshot<Map<String, dynamic>> data = await FirebaseFirestore
+        .instance
         .collection('Delivery Profiles')
-        .doc(idToken).get();
+        .doc(idToken)
+        .get();
+    final List<dynamic> result = data.data()!.values.elementAt(2);
+    await FirebaseFirestore.instance
+        .collection('Delivery Profiles')
+        .doc(idToken.toString())
+        .update({'orders': []});
+    result.forEach((dynamic element) {
+      if (element.keys.elementAt(0) != id) {
+        //print(element.keys.elementAt(0));
+        myMap.addAll(element);
+        print(myMap.toString());
+        pushToDb(myMap);
+        myMap.clear();
+        //myMap.remove(element.keys.elementAt(0));
+        //var data = [myMap];
+        //myMap.remove(element.keys.elementAt(0));
+        //postData.add(myMap);
+        //myMap.clear();
+        //postData.add(data);
+      }
+      //myMap.clear();
+    });
 
+    //await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken.toString()).update({'orders' : FieldValue.delete()});
+    // await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken.toString()).update({
+    //   'orders': FieldValue.arrayUnion([myMap])
+    // });
 
-    t.data()!.values.elementAt(2);
+    // myMap.forEach((key, dynamic value) {
+    //   var data = [key, value];
+    //   postData.add(data);
+    // });
+    //
+    // print(postData.toString());
+    // await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken.toString()).update({
+    //   'orders': FieldValue.arrayUnion([postData])
+    // });
+    //postData.add(list);
+    // await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken.toString()).update({
+    //   'orders': FieldValue.arrayUnion([postData])
+    // });
+    //await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken).update({'orders': FieldValue.arrayUnion(postData)});
 
-
+    //print(t.data()!.values.elementAt(2));
 
     //print(d.firestore.app.name);
-        //.doc('0').update({id: FieldValue.delete()});
+    //.doc('0').update({id: FieldValue.delete()});
     //.update({'orders': FieldValue.delete()});
 
     //var d = coll.then((value) => print(value.data()!.isEmpty));
@@ -40,6 +81,17 @@ class OrdersRepositoryImplementation implements OrdersRepository {
     //   await doc.reference.delete();
     // }
     //a.collection('orders').where(id, isEqualTo : id).get();
+  }
+
+  Future<void> pushToDb(Map<String, dynamic> data) async {
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    await FirebaseFirestore.instance
+        .collection('Delivery Profiles')
+        .doc(idToken.toString())
+        .update({
+      'orders': FieldValue.arrayUnion([data])
+    }).whenComplete(() => print('compl'));
   }
 
   @override
