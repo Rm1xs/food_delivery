@@ -18,7 +18,7 @@ class OrdersCubit extends Cubit<void> {
     return _ordersRepository.getOrderPrice();
   }
 
-  Future<void> removeFromOrder(String id) {
-    return _ordersRepository.removeFromOrder(id);
+  Future<void> removeFromOrder(String id) async {
+    return await _ordersRepository.removeFromOrder(id);
   }
 }

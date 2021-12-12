@@ -18,6 +18,14 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  late Future<DocumentSnapshot<Object?>> loader;
+
+  @override
+  void initState() {
+    loader = sl<OrdersCubit>().getItemsInOrder();
+    super.initState();
+  }
+
   //num priceResult = 0;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,7 @@ class _OrderPageState extends State<OrderPage> {
       children: [
         Expanded(
           child: FutureBuilder<DocumentSnapshot>(
-            future: sl<OrdersCubit>().getItemsInOrder(),
+            future: loader,
             builder: (BuildContext context,
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               switch (snapshot.connectionState) {
@@ -133,9 +141,22 @@ class _OrderPageState extends State<OrderPage> {
                                               size: 20,
                                               color: Colors.white,
                                             ),
-                                            onPressed: () => sl<OrdersCubit>()
-                                                .removeFromOrder(
-                                                    map.keys.elementAt(0)),
+                                            onPressed: () => {
+                                              sl<OrdersCubit>()
+                                                  .removeFromOrder(
+                                                      map.keys.elementAt(0))
+                                                  .whenComplete(
+                                                    () => {
+                                                      setState(
+                                                        () {
+                                                          loader = sl<
+                                                                  OrdersCubit>()
+                                                              .getItemsInOrder();
+                                                        },
+                                                      ),
+                                                    },
+                                                  ),
+                                            },
                                             style: ElevatedButton.styleFrom(
                                               primary: Colors.green,
                                               onPrimary: Colors.white,
