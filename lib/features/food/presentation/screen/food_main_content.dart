@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
-import 'package:food_delivery/features/food/presentation/screen/restaurant_routes/test.dart';
+import 'package:food_delivery/features/food/presentation/screen/restaurant_routes/restourant_page_content.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -256,7 +256,9 @@ class _FoodMainPageState extends State<FoodMainPage> {
                                 Navigator.push<void>(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => const MapSample(),
+                                    builder: (_) => MapSample(
+                                        restaurantName: snapshot
+                                            .data!.results[index].poi.name),
                                   ),
                                 ),
                               },

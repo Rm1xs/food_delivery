@@ -4,14 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 class GreenButton extends StatelessWidget {
-  final String text;
-  final String redirectToRoute;
-
   const GreenButton({
     Key? key,
     required this.text,
     required this.redirectToRoute,
   }) : super(key: key);
+
+  final String text;
+  final String redirectToRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,6 @@ class GreenButton extends StatelessWidget {
             ),
           ),
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          // elevation: MaterialStateProperty.all(3),
           shadowColor: MaterialStateProperty.all(Colors.transparent),
         ),
         onPressed: () {

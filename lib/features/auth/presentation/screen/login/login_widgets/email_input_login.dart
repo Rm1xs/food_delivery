@@ -7,11 +7,13 @@ class EmailInputLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.email != current.email,
-      builder: (context, state) {
+      buildWhen: (LoginState previous, LoginState current) =>
+          previous.email != current.email,
+      builder: (BuildContext context, LoginState state) {
         return TextField(
           key: const Key('loginForm_emailInput_textField'),
-          onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
+          onChanged: (String email) =>
+              context.read<LoginCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               errorStyle: const TextStyle(height: 0),

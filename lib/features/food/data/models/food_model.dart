@@ -59,7 +59,8 @@ class RecipeClassModel {
 
   static String encode(List<RecipeClassModel> musics) => json.encode(
         musics
-            .map<Map<String, dynamic>>((music) => RecipeClassModel.toMap(music))
+            .map<Map<String, dynamic>>(
+                (RecipeClassModel music) => RecipeClassModel.toMap(music))
             .toList(),
       );
 

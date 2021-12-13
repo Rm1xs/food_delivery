@@ -11,7 +11,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   final AuthUseCaseImplementation _authenticationRepository;
 
   void emailChanged(String value) {
-    final email = Email.dirty(value);
+    final Email email = Email.dirty(value);
     emit(state.copyWith(
       email: email,
       status: Formz.validate([
@@ -23,8 +23,8 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   void passwordChanged(String value) {
-    final password = Password.dirty(value);
-    final confirmedPassword = ConfirmedPassword.dirty(
+    final Password password = Password.dirty(value);
+    final ConfirmedPassword confirmedPassword = ConfirmedPassword.dirty(
       //password: password.value,
       state.confirmedPassword.value,
     );
@@ -40,8 +40,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   void confirmedPasswordChanged(String value) {
-    final confirmedPassword = ConfirmedPassword.dirty(
-      //state.password.value,
+    final ConfirmedPassword confirmedPassword = ConfirmedPassword.dirty(
       value,
     );
     emit(state.copyWith(

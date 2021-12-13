@@ -12,7 +12,7 @@ import 'features/auth/domain/usecases/auth_usecase_implementation.dart';
 import 'features/auth/presentation/bloc/authentication_bloc.dart';
 import 'features/auth/presentation/bloc/authentication_state.dart';
 import 'injection.dart' as di;
-import 'notify.dart' as notify;
+import 'features/notification/service/notification.dart' as notify;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,8 +57,6 @@ class _AppViewState extends State<AppView> {
     return OverlaySupport(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        //onGenerateRoute: customRoutes.Router.generateRoute,
-        //initialRoute: onboardingRoute,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

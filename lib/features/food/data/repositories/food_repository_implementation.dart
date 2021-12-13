@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class FoodRepositoryImplementation implements FoodRepository {
   @override
   Future<RestaurantModel> getRestaurants(double lat, double lon) async {
-    String url =
+    final String url =
         'https://api.tomtom.com/search/2/nearbySearch/.json?lat=$lat&lon=$lon&categorySet=7315&key=GrUWtwXOKPVkDlAnD3R4lzKoKknlhvhH';
     final http.Client client = http.Client();
     final http.Response response = await client.get(
@@ -48,28 +48,28 @@ class FoodRepositoryImplementation implements FoodRepository {
 
   @override
   Future<void> addToFavourite(String name, String imageUrl) async {
-    Map<String, dynamic> values = <String, dynamic>{name: imageUrl};
+    final Map<String, dynamic> values = <String, dynamic>{name: imageUrl};
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference profileData =
         FirebaseFirestore.instance.collection('Delivery Profiles');
     //Favourite post = Favourite(name, imageUrl, 123.6);
     await profileData.doc(idToken.toString()).update({
-      'favourite': FieldValue.arrayUnion([values])
+      'favourite': FieldValue.arrayUnion(<dynamic>[values])
     });
   }
 
   @override
   Future<void> addToOrder(String name, String image, String price) async {
-    Map<String, dynamic> data = <String, dynamic>{price: image};
-    Map<String, dynamic> values = <String, dynamic>{name: data};
+    final Map<String, dynamic> data = <String, dynamic>{price: image};
+    final Map<String, dynamic> values = <String, dynamic>{name: data};
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference profileData =
         FirebaseFirestore.instance.collection('Delivery Profiles');
     //Favourite post = Favourite(name, imageUrl, 123.6);
     await profileData.doc(idToken.toString()).update({
-      'orders': FieldValue.arrayUnion([values])
+      'orders': FieldValue.arrayUnion(<dynamic>[values])
     });
   }
 }

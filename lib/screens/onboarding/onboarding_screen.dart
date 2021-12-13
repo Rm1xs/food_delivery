@@ -53,6 +53,5 @@ class _OnboardingState extends State<Onboarding> {
 
   Future<void> timerRedirect() async {
     return await Future.delayed(const Duration(seconds: 2));
-    Navigator.pushNamed(context, entery1Route);
   }
 }

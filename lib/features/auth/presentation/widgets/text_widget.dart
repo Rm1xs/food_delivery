@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class TextWidget extends StatelessWidget {
-  String text;
-
   TextWidget({required this.text});
+
+  String text;
 
   @override
   Widget build(BuildContext context) {

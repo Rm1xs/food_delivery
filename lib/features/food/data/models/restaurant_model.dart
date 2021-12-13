@@ -1,9 +1,9 @@
 class RestaurantModel {
-  final List<RestaurantInfo> results;
-
   RestaurantModel({
     required this.results,
   });
+
+  final List<RestaurantInfo> results;
 
   factory RestaurantModel.fromJson(Map<String, dynamic> json) {
     return RestaurantModel(
@@ -14,10 +14,10 @@ class RestaurantModel {
 }
 
 class RestaurantInfo {
+  RestaurantInfo({required this.poi, required this.dist});
+
   Poi poi;
   double dist;
-
-  RestaurantInfo({required this.poi, required this.dist});
 
   factory RestaurantInfo.fromJson(Map<String, dynamic> json) {
     return RestaurantInfo(
@@ -28,11 +28,11 @@ class RestaurantInfo {
 }
 
 class Poi {
-  String name;
-
   Poi({
     required this.name,
   });
+
+  String name;
 
   factory Poi.fromJson(Map<String, dynamic> json) {
     return Poi(name: json['name']);

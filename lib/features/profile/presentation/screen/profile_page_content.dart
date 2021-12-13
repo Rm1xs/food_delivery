@@ -7,7 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
-import 'package:food_delivery/core/default/curve_painter.dart';
+import 'package:food_delivery/core/default/ui_elements/curve_painter.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
     favouriteElements = 2;
     favouriteText = 'Show all favourites';
     _getCamera();
-    data = sl<ProfileCubit>().getProofileImage();
+    data = sl<ProfileCubit>().getProfileImage();
     super.initState();
   }
 
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
             ],
           );
         }
-        Map<dynamic, dynamic> snapshotData = snapshot.data!.data() as Map;
+        final Map<dynamic, dynamic> snapshotData = snapshot.data!.data() as Map;
         final String withoutSign =
             snapshotData['subscription'].replaceAll(RegExp('_'), ' ');
         return Stack(
@@ -78,7 +78,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
                         (BuildContext context, AsyncSnapshot<String> snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return Text('Loading....');
+                          return const Text('Loading....');
                         default:
                           if (snapshot.hasError)
                             return Image.network(
@@ -297,13 +297,24 @@ class _ProfilePageState extends State<ProfilePageContent> {
                           ),
                           favourite(snapshotData),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 12.h),
+                            padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0.h),
                             child: Text(
                               'My Orders',
                               style: GoogleFonts.ptSans(
                                 textStyle: TextStyle(
                                     fontSize: 13.sp,
                                     fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 12.h),
+                            child: Container(
+                              height: 15.h,
+                              width: double.infinity,
+                              child: const Image(
+                                image: AssetImage('assets/images/delivery.png'),
+                                fit: BoxFit.scaleDown,
                               ),
                             ),
                           ),
@@ -327,148 +338,168 @@ class _ProfilePageState extends State<ProfilePageContent> {
         direction: Axis.horizontal,
         children: [
           Expanded(
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: snapshotData['favourite'].length == null
-                  ? 0
-                  : (snapshotData['favourite'].length > favouriteElements
-                      ? favouriteElements
-                      : snapshotData['favourite'].length),
-              itemBuilder: (BuildContext context, int index) {
-                final Map<dynamic, dynamic> map =
-                    snapshotData['favourite'][index];
-                return Dismissible(
-                  dragStartBehavior: DragStartBehavior.start,
-                  key: Key(map.keys.elementAt(0)),
-                  direction: DismissDirection.endToStart,
-                  background: Padding(
-                    padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Container(
-                        color: Colors.deepOrange,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: const <Widget>[
-                              Icon(Icons.delete, color: Colors.white),
-                            ],
-                          ),
-                        ),
+            child: snapshotData['favourite'].isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      height: 15.h,
+                      width: double.infinity,
+                      child: const Image(
+                        image: AssetImage('assets/images/delivery.png'),
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
-                  ),
-                  confirmDismiss: (DismissDirection direction) async {
-                    return await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Delete Confirmation'),
-                          content: const Text(
-                              'Are you sure you want to delete this item?'),
-                          actions: <Widget>[
-                            FlatButton(
-                                onPressed: () =>
-                                    Navigator.of(context).pop(true),
-                                child: const Text('Delete')),
-                            FlatButton(
-                              onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text('Cancel'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  onDismissed: (DismissDirection direction) {
-                    if (direction == DismissDirection.endToStart) {
-                      print('removed');
-                    }
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
-                    child: ClayContainer(
-                      color: Colors.white,
-                      spread: 5,
-                      depth: 10,
-                      borderRadius: 20,
-                      height: 12.h,
-                      width: double.infinity,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(5.w, 1.h, 3.w, 1.h),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Image.network(
-                                map.values.elementAt(0),
-                                fit: BoxFit.scaleDown,
+                  )
+                : ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: snapshotData['favourite'].length == null
+                        ? 0
+                        : (snapshotData['favourite'].length > favouriteElements
+                            ? favouriteElements
+                            : snapshotData['favourite'].length),
+                    itemBuilder: (BuildContext context, int index) {
+                      final Map<dynamic, dynamic> map =
+                          snapshotData['favourite'][index];
+                      return Dismissible(
+                        dragStartBehavior: DragStartBehavior.start,
+                        key: Key(map.keys.elementAt(0)),
+                        direction: DismissDirection.endToStart,
+                        background: Padding(
+                          padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Container(
+                              color: Colors.deepOrange,
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: const <Widget>[
+                                    Icon(Icons.delete, color: Colors.white),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(3.w, 2.h, 0.w, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        confirmDismiss: (DismissDirection direction) async {
+                          return await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Delete Confirmation'),
+                                content: const Text(
+                                    'Are you sure you want to delete this item?'),
+                                actions: <Widget>[
+                                  FlatButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(true),
+                                      child: const Text('Delete')),
+                                  FlatButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                    child: const Text('Cancel'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        onDismissed: (DismissDirection direction) {
+                          if (direction == DismissDirection.endToStart) {
+                            print('removed');
+                          }
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+                          child: ClayContainer(
+                            color: Colors.white,
+                            spread: 5,
+                            depth: 10,
+                            borderRadius: 20,
+                            height: 12.h,
+                            width: double.infinity,
+                            child: Row(
                               children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                  child: Text(
-                                    map.keys.elementAt(0),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
-                                    style: GoogleFonts.ptSans(
-                                      textStyle: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.bold),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(5.w, 1.h, 3.w, 1.h),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      map.values.elementAt(0),
+                                      fit: BoxFit.scaleDown,
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  'Waroenk kita',
-                                  style: GoogleFonts.ptSans(
-                                    textStyle: TextStyle(
-                                        fontSize: 10.sp, color: Colors.grey),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(3.w, 2.h, 0.w, 0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.35,
+                                        child: Text(
+                                          map.keys.elementAt(0),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: false,
+                                          style: GoogleFonts.ptSans(
+                                            textStyle: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Waroenk kita',
+                                        style: GoogleFonts.ptSans(
+                                          textStyle: TextStyle(
+                                              fontSize: 10.sp,
+                                              color: Colors.grey),
+                                        ),
+                                      ),
+                                      Text(
+                                        '35',
+                                        style: GoogleFonts.ptSans(
+                                          textStyle: TextStyle(
+                                              fontSize: 13.sp,
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Text(
-                                  '35',
-                                  style: GoogleFonts.ptSans(
-                                    textStyle: TextStyle(
-                                        fontSize: 13.sp,
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.bold),
+                                const Spacer(),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(0.w, 0.h, 5.w, 0.h),
+                                  child: ElevatedButton(
+                                    child: const Text('Buy'),
+                                    onPressed: () => print("it's pressed"),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                      onPrimary: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                )
                               ],
                             ),
                           ),
-                          const Spacer(),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0.w, 0.h, 5.w, 0.h),
-                            child: ElevatedButton(
-                              child: const Text('Buy'),
-                              onPressed: () => print("it's pressed"),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.green,
-                                onPrimary: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),

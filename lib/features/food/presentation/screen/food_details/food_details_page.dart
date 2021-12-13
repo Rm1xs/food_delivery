@@ -44,7 +44,8 @@ class FoodDetailsPage extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.green.withOpacity(0.7), //Colors.white.withOpacity(0.5),
+                    color: Colors.green
+                        .withOpacity(0.7), //Colors.white.withOpacity(0.5),
                   ),
                   child: IconButton(
                       padding: EdgeInsets.zero,
@@ -118,7 +119,7 @@ class FoodDetailsPage extends StatelessWidget {
                                                     Radius.circular(20)),
                                             color:
                                                 Colors.grey.withOpacity(0.2)),
-                                        child:  IconButton(
+                                        child: IconButton(
                                           icon: const Icon(
                                             Icons.location_on_outlined,
                                             size: 25,
@@ -143,25 +144,16 @@ class FoodDetailsPage extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
                                             child: IconButton(
-                                              icon: Icon(
-                                                Icons.local_fire_department_outlined,
+                                              icon: const Icon(
+                                                Icons
+                                                    .local_fire_department_outlined,
                                                 size: 25,
                                                 color: Colors.red,
                                               ),
-                                              onPressed: () => _addToFavourite(context),
+                                              onPressed: () =>
+                                                  _addToFavourite(context),
                                             ),
-
                                           ),
-                                          // IconButton(
-                                          //   icon: const Icon(
-                                          //     Icons
-                                          //         .local_fire_department_outlined,
-                                          //     size: 25,
-                                          //     color: Colors.red,
-                                          //   ),
-                                          //   onPressed: () =>
-                                          //       _addToFavourite(context),
-                                          // ),
                                         ),
                                       ),
                                     ],
@@ -266,7 +258,8 @@ class FoodDetailsPage extends StatelessWidget {
                                       physics: const ScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: data!.ingredientLines.length,
-                                      itemBuilder: (context, index) {
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
                                         return Padding(
                                           padding:
                                               EdgeInsets.fromLTRB(0, 0, 0, 1.h),
@@ -301,7 +294,7 @@ class FoodDetailsPage extends StatelessWidget {
                 child: RoundedLoadingButton(
                   elevation: 10,
                   color: Colors.green[400],
-                  child: Text('Add To Chart',
+                  child: const Text('Add To Chart',
                       style: TextStyle(color: Colors.white)),
                   controller: _btnController,
                   onPressed: _doSomething,
@@ -314,19 +307,15 @@ class FoodDetailsPage extends StatelessWidget {
     );
   }
 
-  void _doSomething() async {
-    sl<FoodCubit>()
-        .addToOrder(data!.label, data!.image, '20')
-        .whenComplete(() => _btnController.success());
-  }
+  void _doSomething() async => sl<FoodCubit>()
+      .addToOrder(data!.label, data!.image, '20')
+      .whenComplete(() => _btnController.success());
 
-  void _addToFavourite(BuildContext context) async {
-    sl<FoodCubit>()
-        .addToFavourite(data!.label, data!.image)
-        .whenComplete(() => {
-              //_btnController.success(),
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Added to your favourite')))
-            });
-  }
+  void _addToFavourite(BuildContext context) async => sl<FoodCubit>()
+      .addToFavourite(data!.label, data!.image)
+      .whenComplete(() => {
+            //_btnController.success(),
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Added to your favourite')))
+          });
 }

@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../injection.dart';
 
 class AddPaymentPage extends StatefulWidget {
-  AddPaymentPage({Key? key}) : super(key: key);
+  const AddPaymentPage({Key? key}) : super(key: key);
 
   @override
   State<AddPaymentPage> createState() => _AddPaymentPageState();
@@ -154,7 +154,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                                   ),
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Text(
                                 date,
                                 style: GoogleFonts.inconsolata(

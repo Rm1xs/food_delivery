@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../injection.dart';
 
 class PaymentDeliveryContent extends StatelessWidget {
-  PaymentDeliveryContent({Key? key}) : super(key: key);
+  const PaymentDeliveryContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class PaymentDeliveryContent extends StatelessWidget {
                                 AsyncSnapshot<String> snapshot) {
                               switch (snapshot.connectionState) {
                                 case ConnectionState.waiting:
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 default:
                                   if (snapshot.hasError)
                                     return Text('Error: ${snapshot.error}');
@@ -111,7 +111,7 @@ class PaymentDeliveryContent extends StatelessWidget {
                                                     // ),
                                                   ],
                                                 ),
-                                                Icon(
+                                                const Icon(
                                                   Icons.check,
                                                   color: Colors.white,
                                                 )
@@ -174,15 +174,6 @@ class PaymentDeliveryContent extends StatelessWidget {
                                                               .ellipsis,
                                                         ),
                                                       ),
-                                                      // Text(
-                                                      //   snapshot.data!.hits[index]
-                                                      //       .recipe.dish[0],
-                                                      //   style: GoogleFonts.ptSans(
-                                                      //     textStyle: TextStyle(
-                                                      //         fontSize: 11.sp,
-                                                      //         color: Colors.grey),
-                                                      //   ),
-                                                      // ),
                                                     ],
                                                   ),
                                                   // Icon(Icons.check, color: Colors.white,)
@@ -196,16 +187,6 @@ class PaymentDeliveryContent extends StatelessWidget {
                               }
                             },
                           ),
-                          // Text(
-                          //   'Card already exist, add new ?',
-                          //   style: GoogleFonts.ptSans(
-                          //     textStyle: TextStyle(
-                          //       fontSize: 12.sp,
-                          //       color:
-                          //       const Color.fromRGBO(218, 99, 23, 1),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     );
@@ -263,15 +244,6 @@ class PaymentDeliveryContent extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      // Text(
-                                      //   snapshot.data!.hits[index]
-                                      //       .recipe.dish[0],
-                                      //   style: GoogleFonts.ptSans(
-                                      //     textStyle: TextStyle(
-                                      //         fontSize: 11.sp,
-                                      //         color: Colors.grey),
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                   // Icon(Icons.check, color: Colors.white,)

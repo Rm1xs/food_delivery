@@ -12,7 +12,7 @@ class PaymentPageMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<PaymentCubit>(
       create: (_) => PaymentCubit(sl<PaymentUseCaseImplementation>()),
-      child: AddPaymentPage(),
+      child: const AddPaymentPage(),
     );
   }
 }

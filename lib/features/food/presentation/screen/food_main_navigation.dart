@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/core/default/bottom_bar.dart';
-import 'package:food_delivery/features/delivery/presentation/delivey_man_page.dart';
+import 'package:food_delivery/core/default/ui_elements/bottom_bar.dart';
 import 'package:food_delivery/features/food/domain/usecases/food_usecase_implementation.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
-import 'package:food_delivery/features/orders/presentation/screen/orders_page_main.dart';
+import 'package:food_delivery/features/orders/domain/usecases/orders_usecase_implementation.dart';
+import 'package:food_delivery/features/orders/presentation/cubit/orders_cubit.dart';
+import 'package:food_delivery/features/orders/presentation/screen/order_page.dart';
+import 'package:food_delivery/features/profile/domain/usecases/profile_usecase_implementation.dart';
+import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:food_delivery/features/profile/presentation/screen/profile_page_content.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_text.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
@@ -18,7 +21,7 @@ import 'food_search_page.dart';
 class FoodMainNavigation extends StatefulWidget {
   const FoodMainNavigation({Key? key}) : super(key: key);
 
-  static Page page() =>  MaterialPage<void>(child: FoodMainNavigation());
+  static Page page() => MaterialPage<void>(child: FoodMainNavigation());
 
   @override
   State<FoodMainNavigation> createState() => _FoodMainNavigationState();
@@ -29,8 +32,14 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
   static final List<Widget> _pages = <Widget>[
     const FoodMainPage(),
     const Search(),
-    const ProfilePageContent(),
-    const OrdersPageMain(),
+    BlocProvider<ProfileCubit>(
+      create: (_) => ProfileCubit(sl<ProfileUseCaseImplementation>()),
+      child: const ProfilePageContent(),
+    ),
+    BlocProvider<OrdersCubit>(
+      create: (_) => OrdersCubit(sl<OrdersUseCaseImplementation>()),
+      child: const OrderPage(),
+    ),
     const AllChatPage()
     //const AllChatPage(),
   ];
@@ -50,50 +59,29 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
 
     appbar = appbarWithText(context);
 
-    _homeController = AnimationController(
-        duration: const Duration(milliseconds: 950), vsync: this);
-    _homeController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _homeController.reset();
-      }
-    });
+    _homeController = controllerInitializer();
+    addListener(_homeController);
 
-    _searchController = AnimationController(
-        duration: const Duration(milliseconds: 950), vsync: this);
-    _searchController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _searchController.reset();
-      }
-    });
+    _searchController = controllerInitializer();
+    addListener(_searchController);
 
-    _chatController = AnimationController(
-        duration: const Duration(milliseconds: 950), vsync: this);
-    _chatController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _chatController.reset();
-      }
-    });
+    _chatController = controllerInitializer();
+    addListener(_chatController);
 
-    _chartController = AnimationController(
-        duration: const Duration(milliseconds: 950), vsync: this);
-    _chartController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _chartController.reset();
-      }
-    });
+    _chartController = controllerInitializer();
+    addListener(_chartController);
 
-    _profileController = AnimationController(
-        duration: const Duration(milliseconds: 950), vsync: this);
-    _profileController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _profileController.reset();
-      }
-    });
+    _profileController = controllerInitializer();
+    addListener(_profileController);
   }
 
   @override
   void dispose() {
     _homeController.dispose();
+    _searchController.dispose();
+    _chatController.dispose();
+    _chartController.dispose();
+    _profileController.dispose();
     super.dispose();
   }
 
@@ -128,7 +116,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
       showElevation: true,
       itemCornerRadius: 12,
       curve: Curves.easeIn,
-      onItemSelected: (index) => setState(() => {
+      onItemSelected: (int index) => setState(() => {
             if (index == 4)
               {
                 setState(() {
@@ -159,7 +147,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
         BottomNavyBarItem(
           controller: _homeController,
           icon: 'assets/animated_buttons/home.json',
-          title: Text('Home'),
+          title: const Text('Home'),
           activeColor: Colors.green,
           inactiveColor: Colors.green[200],
           textAlign: TextAlign.center,
@@ -167,14 +155,14 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
         BottomNavyBarItem(
           controller: _searchController,
           icon: 'assets/animated_buttons/search.json',
-          title: Text('Search'),
+          title: const Text('Search'),
           activeColor: Colors.green,
           inactiveColor: Colors.green[200],
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
           icon: 'assets/animated_buttons/user.json',
-          title: Text('Profile'),
+          title: const Text('Profile'),
           activeColor: Colors.green,
           inactiveColor: Colors.green[200],
           textAlign: TextAlign.center,
@@ -182,9 +170,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
         ),
         BottomNavyBarItem(
           icon: 'assets/animated_buttons/order.json',
-          title: Text(
-            'Cart',
-          ),
+          title: const Text('Cart'),
           activeColor: Colors.green,
           inactiveColor: Colors.green[200],
           textAlign: TextAlign.center,
@@ -192,7 +178,7 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
         ),
         BottomNavyBarItem(
           icon: 'assets/animated_buttons/chat.json',
-          title: Text('Chat'),
+          title: const Text('Chat'),
           activeColor: Colors.green,
           inactiveColor: Colors.green[200],
           textAlign: TextAlign.center,
@@ -200,5 +186,18 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
         ),
       ],
     );
+  }
+
+  AnimationController controllerInitializer() {
+    return AnimationController(
+        duration: const Duration(milliseconds: 950), vsync: this);
+  }
+
+  void addListener(AnimationController controller) {
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _homeController.reset();
+      }
+    });
   }
 }

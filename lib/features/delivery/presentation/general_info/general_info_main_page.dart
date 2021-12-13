@@ -13,7 +13,7 @@ class GeneralInfoMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<ProfileCubit>(
       create: (_) => ProfileCubit(sl<ProfileUseCaseImplementation>()),
-      child: GeneralInfoContent(),
+      child: const GeneralInfoContent(),
     );
   }
 }

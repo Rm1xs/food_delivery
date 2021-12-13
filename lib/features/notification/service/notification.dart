@@ -1,9 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/notification/data/models/push_notification.dart';
 import 'package:overlay_support/overlay_support.dart';
-
-import 'features/notification/presentation/cubit/notification_cubit.dart';
-import 'injection.dart';
+import '../presentation/cubit/notification_cubit.dart';
+import '../../../injection.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message: ${message.messageId}');
@@ -25,8 +25,7 @@ Future<void> init() async {
       print(
           'Message title: ${message.notification?.title}, body: ${message.notification?.body}, data: ${message.data}');
 
-      // Parse the message received
-      PushNotification notification = PushNotification(
+      final PushNotification notification = PushNotification(
         title: message.notification?.title,
         body: message.notification?.body,
         dataTitle: message.data['title'],
@@ -64,16 +63,3 @@ Future<void> init() async {
   }
 }
 
-class PushNotification {
-  PushNotification({
-    this.title,
-    this.body,
-    this.dataTitle,
-    this.dataBody,
-  });
-
-  String? title;
-  String? body;
-  String? dataTitle;
-  String? dataBody;
-}

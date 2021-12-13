@@ -7,9 +7,8 @@ class ProfileCubit extends Cubit<void> {
   ProfileCubit(this._authenticationRepository) : super(null);
   final ProfileUseCaseImplementation _authenticationRepository;
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> checkProfile() async {
-    return await _authenticationRepository.checkDeliveryProfile();
-  }
+  Future<DocumentSnapshot<Map<String, dynamic>>> checkProfile() async =>
+      await _authenticationRepository.checkDeliveryProfile();
 
   Future<DocumentSnapshot> getProfile() async {
     await _authenticationRepository.checkDeliveryProfile().then(
@@ -36,7 +35,6 @@ class ProfileCubit extends Cubit<void> {
     return res;
   }
 
-  Future<String> getProofileImage() {
-    return _authenticationRepository.getImageProfile();
-  }
+  Future<String> getProfileImage() =>
+      _authenticationRepository.getImageProfile();
 }

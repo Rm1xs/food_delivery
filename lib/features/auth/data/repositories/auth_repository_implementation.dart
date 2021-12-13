@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart'
@@ -8,11 +7,10 @@ import 'package:food_delivery/features/auth/domain/repositories/auth_repository.
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
-  final FirebaseAuth _firebaseAuth;
-
   AuthRepositoryImplementation({
     FirebaseAuth? firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth;
 
   @override
   customUser.User get currentUser {
@@ -21,7 +19,7 @@ class AuthRepositoryImplementation implements AuthRepository {
       return customUser.User.empty;
     } else {
       customUser.User user = customUser.User.empty;
-      _firebaseAuth.authStateChanges().map((firebaseUser) {
+      _firebaseAuth.authStateChanges().map((User? firebaseUser) {
         user =
             firebaseUser == null ? customUser.User.empty : firebaseUser.toUser;
       });
@@ -47,7 +45,7 @@ class AuthRepositoryImplementation implements AuthRepository {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
-      final credential = GoogleAuthProvider.credential(
+      final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
@@ -80,8 +78,8 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   Stream<customUser.User> user() {
-    return _firebaseAuth.authStateChanges().map((firebaseUser) {
-      final user =
+    return _firebaseAuth.authStateChanges().map((User? firebaseUser) {
+      final customUser.User user =
           firebaseUser == null ? customUser.User.empty : firebaseUser.toUser;
       return user;
     });
@@ -89,14 +87,14 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   Future<void> uploadProfileImage(File _imageFile) async {
-    var uid = _firebaseAuth.currentUser!.uid;
-    String fileName = _imageFile.path;
-    var firebaseStorageRef =
+    final String uid = _firebaseAuth.currentUser!.uid;
+    final String fileName = _imageFile.path;
+    final Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('uploads-$uid/$fileName');
-    var uploadTask = firebaseStorageRef.putFile(_imageFile);
-    var taskSnapshot = await uploadTask;
+    final UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
+    final TaskSnapshot taskSnapshot = await uploadTask;
     taskSnapshot.ref.getDownloadURL().then(
-          (value) => print("Done: $value"),
+          (String value) => print('Done: $value'),
         );
   }
 }

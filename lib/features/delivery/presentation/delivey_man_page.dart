@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/delivery/presentation/payment/payment_delivery_main_page.dart';
 import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
-import 'package:sizer/sizer.dart';
 
 import 'general_info/general_info_main_page.dart';
 
@@ -37,7 +36,7 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
     return CupertinoStepper(
       type: type,
       currentStep: currentStep,
-      onStepTapped: (step) => setState(() => currentStep = step),
+      onStepTapped: (int step) => setState(() => currentStep = step),
       onStepCancel: canCancel ? () => setState(() => --currentStep) : null,
       onStepContinue: canContinue ? () => setState(() => ++currentStep) : null,
       steps: [
@@ -71,7 +70,7 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
         content: LimitedBox(
             maxWidth: double.infinity,
             maxHeight: MediaQuery.of(context).size.height * 0.5,
-            child: GeneralInfoMainPage()),
+            child: const GeneralInfoMainPage()),
       );
     }
     if (index == 1) {
@@ -83,7 +82,7 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
         content: LimitedBox(
             maxWidth: double.infinity,
             maxHeight: MediaQuery.of(context).size.height * 0.5,
-            child: PaymentDeliveryMainPage()),
+            child: const PaymentDeliveryMainPage()),
       );
     }
     if (index == 2) {
@@ -107,7 +106,7 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
           maxWidth: 300,
           maxHeight: 300,
           child: Container(
-            child: Text('not 1'),
+            child: const Text('not 1'),
           ),
         ),
       );
@@ -116,7 +115,7 @@ class _DeliveryMainPageState extends State<DeliveryMainPage> {
 
   Widget deliveryStatus() {
     return Column(
-      children: [Text('Curently not saving order. ')],
+      children: const [Text('Curently not saving order. ')],
     );
   }
 }

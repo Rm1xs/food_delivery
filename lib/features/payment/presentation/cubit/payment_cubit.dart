@@ -16,7 +16,8 @@ class PaymentCubit extends Cubit<CardModel> {
   }
 
   Future<bool> checkCard() async {
-    bool cardExist = await _authenticationRepository.repository.checkCard();
+    final bool cardExist =
+        await _authenticationRepository.repository.checkCard();
     return cardExist;
   }
 

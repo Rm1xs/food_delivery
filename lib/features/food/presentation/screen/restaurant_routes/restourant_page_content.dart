@@ -1,19 +1,23 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:food_delivery/screens/appbar/appbar_with_button.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 class MapSample extends StatefulWidget {
-  const MapSample({Key? key}) : super(key: key);
+  const MapSample({Key? key, required this.restaurantName}) : super(key: key);
+  final String restaurantName;
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<MapSample> createState() => MapSampleState(restaurantName);
 }
 
 class MapSampleState extends State<MapSample> {
+  MapSampleState(this.restaurantName);
+
+  final String restaurantName;
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +35,7 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: appbarWithButton(restaurantName, true, context),
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: double.maxFinite,
@@ -47,7 +52,7 @@ class MapSampleState extends State<MapSample> {
           padding: EdgeInsets.fromLTRB(0, 0, 10.w, 0),
           child: FloatingActionButton(
             onPressed: _getLocation,
-            child: Icon(Icons.location_searching),
+            child: const Icon(Icons.location_searching),
           ),
         ),
       ),
@@ -55,9 +60,9 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> _getLocation() async {
-    Position getPositionData = await Geolocator.getCurrentPosition(
+    final Position getPositionData = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    CameraPosition _position = CameraPosition(
+    final CameraPosition _position = CameraPosition(
       target: LatLng(getPositionData.latitude, getPositionData.longitude),
       zoom: 17,
     );
@@ -65,8 +70,8 @@ class MapSampleState extends State<MapSample> {
     controller.animateCamera(CameraUpdate.newCameraPosition(_position));
 
     markers.clear();
-    var markerIdVal = 'set';
-    final MarkerId markerId = MarkerId(markerIdVal);
+    const String markerIdVal = 'set';
+    const MarkerId markerId = MarkerId(markerIdVal);
     final Marker marker = Marker(
         markerId: markerId,
         position: LatLng(

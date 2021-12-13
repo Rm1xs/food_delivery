@@ -55,24 +55,6 @@ class SignUp extends StatelessWidget {
                         SizedBox(height: 8.h, child: EmailInput()),
                         SizedBox(height: 8.h, child: PasswordInput()),
                         SizedBox(height: 8.h, child: ConfirmPasswordInput()),
-                        // Row(
-                        //   children: [
-                        //     RoundCheckBox(
-                        //       onTap: (selected) {},
-                        //     ),
-                        //     SizedBox(width: 10),
-                        //     Text('Keep me Signed In'),
-                        //   ],
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     RoundCheckBox(
-                        //       onTap: (selected) {},
-                        //     ),
-                        //     SizedBox(width: 10),
-                        //     Text('Email Me About Special'),
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),

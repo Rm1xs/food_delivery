@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  String hintText;
-  Icon prefixIcon;
-  Icon? suffixIcon;
-
   TextFieldWidget({
     required this.hintText,
     required this.prefixIcon,
     required this.suffixIcon,
   });
+
+  String hintText;
+  Icon prefixIcon;
+  Icon? suffixIcon;
 
   @override
   Widget build(BuildContext context) {

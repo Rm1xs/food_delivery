@@ -1,12 +1,11 @@
-import 'package:food_delivery/core/domain/usescase/food_usecase.dart';
 import 'package:food_delivery/features/food/data/models/food_model.dart';
 import 'package:food_delivery/features/food/data/models/restaurant_model.dart';
 import 'package:food_delivery/features/food/domain/repositories/food_repository.dart';
 
-class FoodUseCaseImplementation extends FoodUseCase {
-  final FoodRepository repository;
-
+class FoodUseCaseImplementation {
   FoodUseCaseImplementation(this.repository);
+
+  final FoodRepository repository;
 
   @override
   Future<RestaurantModel> getRestaurants(double lat, double lon) {

@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
-import 'package:food_delivery/features/food/presentation/screen/food_main_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sizer/sizer.dart';
@@ -29,14 +25,11 @@ class CompleteRegistration extends StatefulWidget {
 }
 
 class _CompleteRegistrationState extends State<CompleteRegistration> {
-  //Get current user and Firebase instance
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //Phone number refactor mask
   MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
       mask: '+# (###) ###-##-###', filter: {'#': RegExp(r'[0-9]')});
 
-  //Controllers
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -56,10 +49,6 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
       if (_auth.currentUser!.phoneNumber != null) {
         showSmsEnterField = false;
         size = 28;
-        // Navigator.of(context).push(MaterialPageRoute<dynamic>(
-        //     builder: (BuildContext context) => const FoodMainNavigation()));
-        // scheduleMicrotask(() => Navigator.push<void>(context,
-        //     MaterialPageRoute(builder: (_) => const FoodMainNavigation())));
       } else {
         showSmsEnterField = true;
         size = 22;
@@ -112,7 +101,6 @@ class _CompleteRegistrationState extends State<CompleteRegistration> {
           child: Padding(
             padding: EdgeInsets.all(5.h),
             child: Column(
-
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

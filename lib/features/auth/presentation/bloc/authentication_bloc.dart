@@ -1,8 +1,9 @@
 import 'dart:async';
+
+import 'package:bloc/bloc.dart';
 import 'package:food_delivery/features/auth/data/models/user.dart';
 import 'package:food_delivery/features/auth/domain/usecases/auth_usecase_implementation.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/bloc.dart';
-import 'package:bloc/bloc.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
@@ -18,7 +19,7 @@ class AuthenticationBloc
     on<AppUserChanged>(_onUserChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
     _userSubscription = _authenticationRepository.user().listen(
-          (user) => add(AppUserChanged(user)),
+          (User user) => add(AppUserChanged(user)),
         );
   }
 
@@ -26,22 +27,17 @@ class AuthenticationBloc
   late final StreamSubscription<User> _userSubscription;
 
   void _onUserChanged(AppUserChanged event, Emitter<AuthenticationState> emit) {
-    if(event.user.isNotEmpty && event.user.name != null && event.user.phone != null){
-      //emit(AuthenticationState.authenticated(event.user));
+    if (event.user.isNotEmpty &&
+        event.user.name != null &&
+        event.user.phone != null) {
       emit(AuthenticationState.completeInfo(event.user));
-    }
-    else if(event.user.isNotEmpty){
+    } else if (event.user.isNotEmpty) {
       emit(AuthenticationState.needInfo(event.user));
+    } else if (event.user.isEmpty) {
+      emit(const AuthenticationState.unauthenticated());
+    } else {
+      emit(const AuthenticationState.unauthenticated());
     }
-    else if(event.user.isEmpty){
-      emit(AuthenticationState.unauthenticated());
-    }
-    else{
-      emit(AuthenticationState.unauthenticated());
-    }
-    // emit(event.user.isNotEmpty
-    //     ? AuthenticationState.authenticated(event.user)
-    //     : const AuthenticationState.unauthenticated());
   }
 
   void _onLogoutRequested(

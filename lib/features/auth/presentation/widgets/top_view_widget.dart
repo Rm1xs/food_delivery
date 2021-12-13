@@ -13,7 +13,7 @@ class TopViewWidget extends StatelessWidget {
       child: Stack(
         children: [
           ShaderMask(
-            shaderCallback: (rect) {
+            shaderCallback: (Rect rect) {
               return const LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -37,7 +37,6 @@ class TopViewWidget extends StatelessWidget {
           Center(
             child: Container(
               height: 25.h,
-              //width: getProportionateScreenWidth(100),
               child: Image.asset(
                 'assets/images/Logo.png',
                 fit: BoxFit.fill,
@@ -45,8 +44,6 @@ class TopViewWidget extends StatelessWidget {
             ),
           ),
         ],
-
-        //Text('Sign Up For Free'),
       ),
     );
   }

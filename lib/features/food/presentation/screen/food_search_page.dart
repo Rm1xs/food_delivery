@@ -154,7 +154,7 @@ class _SearchState extends State<Search> {
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.fromLTRB(
-                                              6.w, 2.h, 6.w, 0),
+                                              0.w, 2.h, 6.w, 0),
                                           child: ClayContainer(
                                             color: Colors.white,
                                             spread: 5,
@@ -238,21 +238,21 @@ class _SearchState extends State<Search> {
                                                       ],
                                                     ),
                                                   ),
-                                                  // Padding(
-                                                  //   padding: EdgeInsets.fromLTRB(
-                                                  //       0.w, 0.h, 0.w, 0),
-                                                  //   child: Text(
-                                                  //     '7€',
-                                                  //     style: GoogleFonts.ptSans(
-                                                  //       textStyle: TextStyle(
-                                                  //         fontSize: 18.sp,
-                                                  //         fontWeight: FontWeight.bold,
-                                                  //         color: const Color.fromRGBO(
-                                                  //             218, 99, 23, 1),
-                                                  //       ),
-                                                  //     ),
-                                                  //   ),
-                                                  // )
+                                                  Padding(
+                                                    padding: EdgeInsets.fromLTRB(
+                                                        0.w, 0.h, 2.w, 0),
+                                                    child: Text(
+                                                      '20€',
+                                                      style: GoogleFonts.ptSans(
+                                                        textStyle: TextStyle(
+                                                          fontSize: 15.sp,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: const Color.fromRGBO(
+                                                              218, 99, 23, 1),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
                                                 ],
                                               ),
                                             ),

@@ -164,7 +164,8 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                                 Navigator.push<void>(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => AddPaymentPage()));
+                                        builder: (_) =>
+                                            const AddPaymentPage()));
                               },
                               child: ClayContainer(
                                 borderRadius: 20,
@@ -189,7 +190,7 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                         MaterialPageRoute(
                             builder: (_) => const FoodMainNavigation()))
                   },
-                  child: Text('Skip'),
+                  child: const Text('Skip'),
                 ),
               ],
             ),

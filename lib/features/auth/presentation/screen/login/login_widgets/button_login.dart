@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:food_delivery/features/auth/presentation/screen/login/cubit/login_cubit.dart';
 import 'package:food_delivery/features/auth/presentation/screen/login/cubit/login_state.dart';
 import 'package:formz/formz.dart';
@@ -11,8 +10,9 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.status != current.status,
-      builder: (context, state) {
+      buildWhen: (LoginState previous, LoginState current) =>
+          previous.status != current.status,
+      builder: (BuildContext context, LoginState state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator(
                 color: Color.fromRGBO(21, 190, 119, 1),

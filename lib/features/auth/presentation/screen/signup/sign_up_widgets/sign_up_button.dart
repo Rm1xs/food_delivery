@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/core/route/routes_path.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/cubit/sign_up_cubit.dart';
 import 'package:food_delivery/features/auth/presentation/screen/signup/cubit/sign_up_state.dart';
 import 'package:formz/formz.dart';
@@ -11,8 +10,9 @@ class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(
-      buildWhen: (previous, current) => previous.status != current.status,
-      builder: (context, state) {
+      buildWhen: (SignUpState previous, SignUpState current) =>
+          previous.status != current.status,
+      builder: (BuildContext context, SignUpState state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : Container(
@@ -47,7 +47,6 @@ class SignUpButton extends StatelessWidget {
                     ),
                     backgroundColor:
                         MaterialStateProperty.all(Colors.transparent),
-                    // elevation: MaterialStateProperty.all(3),
                     shadowColor: MaterialStateProperty.all(Colors.transparent),
                   ),
                   onPressed: state.status.isValidated

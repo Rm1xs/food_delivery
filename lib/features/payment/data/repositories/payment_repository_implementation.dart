@@ -11,8 +11,8 @@ class PaymentRepositoryImplementation implements PaymentRepository {
     final String idToken = tokenResult.uid;
     final CollectionReference card =
         FirebaseFirestore.instance.collection('Cards');
-    CardModel post = CardModel(number, dateTime, holder, cvv);
-    Map<String, dynamic> postData = post.toJson();
+    final CardModel post = CardModel(number, dateTime, holder, cvv);
+    final Map<String, dynamic> postData = post.toJson();
     await card.doc(idToken.toString()).set(postData);
   }
 

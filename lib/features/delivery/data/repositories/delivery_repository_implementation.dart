@@ -17,8 +17,8 @@ class DeliveryRepositoryImplementation implements DeliveryRepository {
     final String idToken = tokenResult.uid;
     final CollectionReference data =
         FirebaseFirestore.instance.collection('Delivery');
-    DeliveryModel post = DeliveryModel(id, items, price, adress, date);
-    Map<String, dynamic> postData = post.toJson();
+    final DeliveryModel post = DeliveryModel(id, items, price, adress, date);
+    final Map<String, dynamic> postData = post.toJson();
     await data.doc(idToken.toString()).set(postData);
   }
 }

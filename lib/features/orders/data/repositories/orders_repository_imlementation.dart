@@ -30,7 +30,7 @@ class OrdersRepositoryImplementation implements OrdersRepository {
     await FirebaseFirestore.instance
         .collection('Delivery Profiles')
         .doc(idToken.toString())
-        .update({'orders': []});
+        .update({'orders': <dynamic>[]});
     result.forEach((dynamic element) {
       if (element.keys.elementAt(0) != id) {
         //print(element.keys.elementAt(0));
@@ -38,49 +38,8 @@ class OrdersRepositoryImplementation implements OrdersRepository {
         print(myMap.toString());
         pushToDb(myMap);
         myMap.clear();
-        //myMap.remove(element.keys.elementAt(0));
-        //var data = [myMap];
-        //myMap.remove(element.keys.elementAt(0));
-        //postData.add(myMap);
-        //myMap.clear();
-        //postData.add(data);
       }
-      //myMap.clear();
     });
-
-    //await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken.toString()).update({'orders' : FieldValue.delete()});
-    // await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken.toString()).update({
-    //   'orders': FieldValue.arrayUnion([myMap])
-    // });
-
-    // myMap.forEach((key, dynamic value) {
-    //   var data = [key, value];
-    //   postData.add(data);
-    // });
-    //
-    // print(postData.toString());
-    // await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken.toString()).update({
-    //   'orders': FieldValue.arrayUnion([postData])
-    // });
-    //postData.add(list);
-    // await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken.toString()).update({
-    //   'orders': FieldValue.arrayUnion([postData])
-    // });
-    //await FirebaseFirestore.instance.collection('Delivery Profiles').doc(idToken).update({'orders': FieldValue.arrayUnion(postData)});
-
-    //print(t.data()!.values.elementAt(2));
-
-    //print(d.firestore.app.name);
-    //.doc('0').update({id: FieldValue.delete()});
-    //.update({'orders': FieldValue.delete()});
-
-    //var d = coll.then((value) => print(value.data()!.isEmpty));
-    //print(coll);
-    // var querySnapshots = await collection.get();
-    // for (var doc in querySnapshots.docs) {
-    //   await doc.reference.delete();
-    // }
-    //a.collection('orders').where(id, isEqualTo : id).get();
   }
 
   Future<void> pushToDb(Map<String, dynamic> data) async {
@@ -90,7 +49,7 @@ class OrdersRepositoryImplementation implements OrdersRepository {
         .collection('Delivery Profiles')
         .doc(idToken.toString())
         .update({
-      'orders': FieldValue.arrayUnion([data])
+      'orders': FieldValue.arrayUnion(<dynamic>[data])
     }).whenComplete(() => print('compl'));
   }
 
@@ -122,9 +81,9 @@ class OrdersRepositoryImplementation implements OrdersRepository {
             .collection('Delivery Profiles')
             .doc(idToken)
             .get();
-    document.data()!['orders'].forEach((dynamic element) => {
+    document.data()!['orders'].forEach((dynamic element) => <dynamic>{
           element.values.forEach(
-              (value) => {price += int.parse(value.keys.elementAt(0))}),
+              (dynamic value) => {price += int.parse(value.keys.elementAt(0))}),
         });
     return price;
   }

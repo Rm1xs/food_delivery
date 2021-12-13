@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:food_delivery/features/auth/data/models/user.dart';
 
 abstract class AuthRepository {

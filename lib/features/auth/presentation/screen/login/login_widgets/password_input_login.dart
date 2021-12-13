@@ -7,15 +7,16 @@ class PasswordInputLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.password != current.password,
-      builder: (context, state) {
+      buildWhen: (LoginState previous, LoginState current) =>
+          previous.password != current.password,
+      builder: (BuildContext context, LoginState state) {
         return TextField(
           key: const Key('loginForm_passwordInput_textField'),
-          onChanged: (password) =>
+          onChanged: (String password) =>
               context.read<LoginCubit>().passwordChanged(password),
           obscureText: true,
           decoration: InputDecoration(
-              errorStyle: TextStyle(height: 0),
+              errorStyle: const TextStyle(height: 0),
               errorText: state.password.invalid ? '' : null,
               focusedErrorBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.redAccent, width: 1),

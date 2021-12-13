@@ -1,21 +1,14 @@
-import 'package:food_delivery/core/domain/usescase/payment_usecase.dart';
 import 'package:food_delivery/features/payment/domain/repositories/payment_repository.dart';
 
-class PaymentUseCaseImplementation extends PaymentUseCase {
-  final PaymentRepository repository;
-
+class PaymentUseCaseImplementation {
   PaymentUseCaseImplementation(this.repository);
+
+  final PaymentRepository repository;
 
   @override
   Future<void> saveCardInfo(
       String number, String dateTime, String holder, String cvv) async {
     return await repository.saveCardInfo(number, dateTime, holder, cvv);
-  }
-
-  @override
-  Future<void> validateCard() {
-    // TODO: implement validateCard
-    throw UnimplementedError();
   }
 
   @override

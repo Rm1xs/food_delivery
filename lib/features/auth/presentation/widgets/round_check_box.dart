@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class RoundCheckBox extends StatefulWidget {
   const RoundCheckBox({
@@ -49,7 +48,7 @@ class _RoundCheckBoxState extends State<RoundCheckBox> {
     checkedColor = widget.checkedColor ?? Colors.green;
     borderColor = widget.borderColor ?? Colors.grey;
     checkedWidget =
-        widget.checkedWidget ?? Icon(Icons.check, color: Colors.white);
+        widget.checkedWidget ?? const Icon(Icons.check, color: Colors.white);
     uncheckedWidget = widget.uncheckedWidget ?? const SizedBox.shrink();
     super.initState();
   }
@@ -63,7 +62,7 @@ class _RoundCheckBoxState extends State<RoundCheckBox> {
     }
     if (animationDuration != widget.animationDuration) {
       animationDuration =
-          widget.animationDuration ?? Duration(milliseconds: 200);
+          widget.animationDuration ?? const Duration(milliseconds: 200);
     }
     if (size != widget.size) {
       size = widget.size ?? 25.0;
@@ -76,7 +75,7 @@ class _RoundCheckBoxState extends State<RoundCheckBox> {
     }
     if (checkedWidget != widget.checkedWidget) {
       checkedWidget =
-          widget.checkedWidget ?? Icon(Icons.check, color: Colors.white);
+          widget.checkedWidget ?? const Icon(Icons.check, color: Colors.white);
     }
     if (uncheckedWidget != widget.uncheckedWidget) {
       uncheckedWidget = widget.uncheckedWidget ?? const SizedBox.shrink();

@@ -1,8 +1,8 @@
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/delivery/presentation/cubit/delivery_cubit.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -10,7 +10,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../injection.dart';
 
 class GeneralInfoContent extends StatefulWidget {
-  GeneralInfoContent({Key? key}) : super(key: key);
+  const GeneralInfoContent({Key? key}) : super(key: key);
 
   @override
   State<GeneralInfoContent> createState() => _GeneralInfoContentState();
@@ -22,6 +22,7 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
     displayName.text = _auth.currentUser?.displayName ?? 'Unknown';
     email.text = _auth.currentUser?.email ?? 'Unknown';
     phone.text = _auth.currentUser?.phoneNumber ?? 'Unknown';
+    //asveDeliveryOrder('123', );
     super.initState();
   }
 
@@ -30,6 +31,7 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
   TextEditingController phone = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
             ],
           );
         }
-        Map<dynamic, dynamic> snapshotData = snapshot.data!.data() as Map;
+        final Map<dynamic, dynamic> snapshotData = snapshot.data!.data() as Map;
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +106,7 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
                   ),
                 ),
               ),
-              TextField(),
+              const TextField(),
               favourite(snapshotData),
             ],
           ),
@@ -201,4 +203,6 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
       ),
     );
   }
+
+  void saveDeliveryOrder(String id, List<String> items, String price, String adress, String date) async => await sl<DeliveryCubit>().saveDeliveryOrder(id, items, price, adress, date);
 }

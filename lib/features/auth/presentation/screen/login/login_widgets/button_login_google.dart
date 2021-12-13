@@ -3,15 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:food_delivery/features/auth/presentation/screen/login/cubit/login_cubit.dart';
 import 'package:food_delivery/features/auth/presentation/screen/login/cubit/login_state.dart';
-import 'package:formz/formz.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 class ButtonLoginGoogle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
-      builder: (context, state) {
+      builder: (BuildContext context, LoginState state) {
         return Padding(
           padding: EdgeInsets.fromLTRB(5.w, 2.h, 5.w, 0.h),
           child: SizedBox(
