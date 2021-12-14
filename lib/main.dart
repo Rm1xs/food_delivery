@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -7,12 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/injection.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:sizer/sizer.dart';
+
 import 'core/route/flow_route/routes/auth_route.dart';
 import 'features/auth/domain/usecases/auth_usecase_implementation.dart';
 import 'features/auth/presentation/bloc/authentication_bloc.dart';
 import 'features/auth/presentation/bloc/authentication_state.dart';
-import 'injection.dart' as di;
 import 'features/notification/service/notification.dart' as notify;
+import 'injection.dart' as di;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

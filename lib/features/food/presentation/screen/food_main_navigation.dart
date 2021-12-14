@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/default/ui_elements/bottom_bar.dart';
+import 'package:food_delivery/features/delivery/domain/usecases/delivery_usecase_implemeentation.dart';
+import 'package:food_delivery/features/delivery/presentation/cubit/delivery_cubit.dart';
 import 'package:food_delivery/features/food/domain/usecases/food_usecase_implementation.dart';
 import 'package:food_delivery/features/food/presentation/cubit/food_cubit.dart';
 import 'package:food_delivery/features/orders/domain/usecases/orders_usecase_implementation.dart';
@@ -32,8 +34,13 @@ class _FoodMainNavigationState extends State<FoodMainNavigation>
   static final List<Widget> _pages = <Widget>[
     const FoodMainPage(),
     const Search(),
-    BlocProvider<ProfileCubit>(
-      create: (_) => ProfileCubit(sl<ProfileUseCaseImplementation>()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<DeliveryCubit>.value(
+            value: DeliveryCubit(sl<DeliveryUseCaseImplementation>())),
+        BlocProvider<ProfileCubit>.value(
+            value: ProfileCubit(sl<ProfileUseCaseImplementation>())),
+      ],
       child: const ProfilePageContent(),
     ),
     BlocProvider<OrdersCubit>(

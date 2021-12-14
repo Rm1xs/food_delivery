@@ -5,19 +5,26 @@ import 'package:food_delivery/features/delivery/domain/repositories/delivery_rep
 
 class DeliveryRepositoryImplementation implements DeliveryRepository {
   @override
-  Future<DocumentSnapshot<Object?>> getDelivery() {
-    // TODO: implement getDelivery
-    throw UnimplementedError();
+  Future<DocumentSnapshot<Object?>> getDelivery() async {
+    final User tokenResult = FirebaseAuth.instance.currentUser!;
+    final String idToken = tokenResult.uid;
+    final DocumentSnapshot<Map<String, dynamic>> document =
+        await FirebaseFirestore.instance
+            .collection('Delivery')
+            .doc(idToken)
+            .get();
+    return document;
   }
 
   @override
-  Future<void> saveDelivery(String id, List<String> items, String price,
-      String adress, String date) async {
+  Future<void> saveDelivery(String id, List<String>? items, String? price,
+      String? adress, String? name, String? phone, String? date) async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference data =
         FirebaseFirestore.instance.collection('Delivery');
-    final DeliveryModel post = DeliveryModel(id, items, price, adress, date);
+    final DeliveryModel post =
+        DeliveryModel(id, items, price, adress, name, phone, date);
     final Map<String, dynamic> postData = post.toJson();
     await data.doc(idToken.toString()).set(postData);
   }

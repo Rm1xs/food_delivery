@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:food_delivery/features/delivery/presentation/delivey_man_page.dart';
+import 'package:food_delivery/features/delivery/presentation/delivey_main_page.dart';
 import 'package:food_delivery/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -40,14 +40,14 @@ class _OrderPageState extends State<OrderPage> {
                 case ConnectionState.waiting:
                   return Padding(
                     padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: const Center(child: CircularProgressIndicator()),
                   );
                 default:
                   if (snapshot.hasError)
                     return Text('Error: ${snapshot.error}');
                   else {
                     Map<dynamic, dynamic> snapshotData =
-                    snapshot.data!.data() as Map;
+                        snapshot.data!.data() as Map;
                     return SingleChildScrollView(
                       child: Flex(
                         direction: Axis.horizontal,
@@ -57,13 +57,13 @@ class _OrderPageState extends State<OrderPage> {
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: snapshotData['orders'].length ?? 0,
-                              itemBuilder: (context, i) {
+                              itemBuilder: (BuildContext context, int i) {
                                 final dynamic map = snapshotData['orders'][i];
                                 final dynamic data = map.values.elementAt(0);
                                 //priceResult += int.parse(data.keys.elementAt(0));
                                 return Padding(
                                   padding:
-                                  EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+                                      EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
                                   child: ClayContainer(
                                     color: Colors.white,
                                     spread: 5,
@@ -78,7 +78,7 @@ class _OrderPageState extends State<OrderPage> {
                                               5.w, 1.h, 3.w, 1.h),
                                           child: ClipRRect(
                                             borderRadius:
-                                            BorderRadius.circular(15.0),
+                                                BorderRadius.circular(15.0),
                                             child: Image.network(
                                               data.values.elementAt(0),
                                               fit: BoxFit.scaleDown,
@@ -90,24 +90,24 @@ class _OrderPageState extends State<OrderPage> {
                                               3.w, 2.h, 0.w, 0),
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(
                                                 width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                                        .size
+                                                        .width *
                                                     0.35,
                                                 child: Text(
                                                   map.keys.elementAt(0),
                                                   maxLines: 1,
                                                   overflow:
-                                                  TextOverflow.ellipsis,
+                                                      TextOverflow.ellipsis,
                                                   softWrap: false,
                                                   style: GoogleFonts.ptSans(
                                                     textStyle: TextStyle(
                                                         fontSize: 12.sp,
                                                         fontWeight:
-                                                        FontWeight.bold),
+                                                            FontWeight.bold),
                                                   ),
                                                 ),
                                               ),
@@ -126,7 +126,7 @@ class _OrderPageState extends State<OrderPage> {
                                                       fontSize: 13.sp,
                                                       color: Colors.green,
                                                       fontWeight:
-                                                      FontWeight.bold),
+                                                          FontWeight.bold),
                                                 ),
                                               ),
                                             ],
@@ -144,25 +144,25 @@ class _OrderPageState extends State<OrderPage> {
                                             onPressed: () => {
                                               sl<OrdersCubit>()
                                                   .removeFromOrder(
-                                                  map.keys.elementAt(0))
+                                                      map.keys.elementAt(0))
                                                   .whenComplete(
                                                     () => {
-                                                  setState(
+                                                      setState(
                                                         () {
-                                                      loader = sl<
-                                                          OrdersCubit>()
-                                                          .getItemsInOrder();
+                                                          loader = sl<
+                                                                  OrdersCubit>()
+                                                              .getItemsInOrder();
+                                                        },
+                                                      ),
                                                     },
                                                   ),
-                                                },
-                                              ),
                                             },
                                             style: ElevatedButton.styleFrom(
                                               primary: Colors.green,
                                               onPrimary: Colors.white,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                BorderRadius.circular(10.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                             ),
                                           ),
@@ -182,28 +182,9 @@ class _OrderPageState extends State<OrderPage> {
             },
           ),
         ),
-        // Expanded(
-        //   child: ListView.builder(
-        //     itemCount: 5,
-        //     itemBuilder: (context, index) {
-        //       return Padding(
-        //         padding:
-        //             const EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
-        //         child: ClayContainer(
-        //           color: Colors.white,
-        //           spread: 5,
-        //           depth: 10,
-        //           borderRadius: 20,
-        //           height: 9.h,
-        //           width: double.infinity,
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ),
         Padding(
           padding: EdgeInsets.fromLTRB(6.w, 1.h, 6.w, 10.h),
-          child: AnimatedContainerApp(), //price: priceResult,),
+          child: const AnimatedContainerApp(), //price: priceResult,),
         )
       ],
     );
@@ -353,7 +334,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                     case ConnectionState.waiting:
                       return Padding(
                         padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 0),
-                        child: Center(child: CircularProgressIndicator()),
+                        child: const Center(child: CircularProgressIndicator()),
                       );
                     default:
                       if (snapshot.hasError)
@@ -378,21 +359,6 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                   }
                 },
               ),
-              // Positioned(
-              //   top: 13.h,
-              //   right: 5.w,
-              //   child: Text(
-              //     '0',
-              //     //widget.price.toString(),
-              //     style: GoogleFonts.ptSans(
-              //       textStyle: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 14.sp,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Positioned(
                 left: 1.5.w,
                 //top: 8.h,
@@ -402,10 +368,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                   height: 6.h,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.white),
-                    onPressed: () => Navigator.push<void>(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const DeliveryMainPage())),
+                    onPressed: () => Navigator.of(context).push<Object?>(_createRoute()),
                     child: const Text(
                       'Place My Order',
                       style: TextStyle(
@@ -425,12 +388,36 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
   void animateOrder() {
     Future.delayed(
       const Duration(milliseconds: 500),
-          () => setState(() {
+      () => setState(() {
         _width = MediaQuery.of(context).size.width;
         _height = MediaQuery.of(context).size.height * 0.25;
         _color = Colors.green;
         _borderRadius = BorderRadius.circular(10);
       }),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder<dynamic>(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation) =>
+          const DeliveryMainPage(),
+      transitionDuration: const Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        const Offset begin = Offset(0.0, 1.0);
+        const Offset end = Offset.zero;
+        const Cubic curve = Curves.easeInOut;
+
+
+        final Animatable<Offset> tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }

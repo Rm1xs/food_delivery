@@ -2,12 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/features/auth/domain/repositories/auth_repository.dart';
 import 'package:food_delivery/features/auth/domain/usecases/auth_usecase_implementation.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
+import 'package:food_delivery/features/delivery/domain/repositories/delivery_repository.dart';
+import 'package:food_delivery/features/delivery/domain/usecases/delivery_usecase_implemeentation.dart';
+import 'package:food_delivery/features/delivery/presentation/cubit/delivery_cubit.dart';
 import 'package:food_delivery/features/notification/data/repository/notification_repository_implementation.dart';
 import 'package:food_delivery/features/notification/domain/repositories/notification_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'features/auth/data/repositories/auth_repository_implementation.dart';
 import 'features/auth/presentation/screen/login/cubit/login_cubit.dart';
 import 'features/auth/presentation/screen/signup/cubit/sign_up_cubit.dart';
+import 'features/delivery/data/repositories/delivery_repository_implementation.dart';
 import 'features/food/data/repositories/food_repository_implementation.dart';
 import 'features/food/domain/repositories/food_repository.dart';
 import 'features/food/domain/usecases/food_usecase_implementation.dart';
@@ -54,6 +58,9 @@ Future<void> init() async {
   sl.registerFactory(
     () => NotificationCubit(sl()),
   );
+  sl.registerFactory(
+        () => DeliveryCubit(sl()),
+  );
 
   // Use cases
   sl.registerLazySingleton(() => AuthUseCaseImplementation(sl()));
@@ -62,6 +69,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => FoodUseCaseImplementation(sl()));
   sl.registerLazySingleton(() => OrdersUseCaseImplementation(sl()));
   sl.registerLazySingleton(() => NotificationUseCaseImplementation(sl()));
+  sl.registerLazySingleton(() => DeliveryUseCaseImplementation(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
@@ -81,5 +89,8 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<NotificationRepository>(
     () => NotificationRepositoryImplementation(),
+  );
+  sl.registerLazySingleton<DeliveryRepository>(
+        () => DeliveryRepositoryImplementation(),
   );
 }

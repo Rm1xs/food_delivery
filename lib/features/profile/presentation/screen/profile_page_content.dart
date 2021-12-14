@@ -10,6 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:food_delivery/core/default/ui_elements/curve_painter.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:food_delivery/features/auth/presentation/bloc/authentication_events.dart';
+import 'package:food_delivery/features/delivery/domain/usecases/delivery_usecase_implemeentation.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:food_delivery/screens/profile_photo/profile_image.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -307,6 +308,7 @@ class _ProfilePageState extends State<ProfilePageContent> {
                               ),
                             ),
                           ),
+                          orders(),
                           Padding(
                             padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 12.h),
                             child: Container(
@@ -327,6 +329,94 @@ class _ProfilePageState extends State<ProfilePageContent> {
             ),
           ],
         );
+      },
+    );
+  }
+
+  Widget orders() {
+    return FutureBuilder(
+      future: sl<DeliveryUseCaseImplementation>().getDelivery(),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot snapshot,
+      ) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return const Text('Error');
+          } else if (snapshot.hasData) {
+            final Map<dynamic, dynamic> snapshotData =
+                snapshot.data!.data() as Map;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
+              child: ClayContainer(
+                color: Colors.white,
+                spread: 5,
+                depth: 10,
+                borderRadius: 20,
+                height: 12.h,
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(5.w, 1.h, 3.w, 1.h),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Image.network(
+                          'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(3.w, 2.h, 0.w, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: Text(
+                              snapshotData.values.elementAt(1),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+                              style: GoogleFonts.ptSans(
+                                textStyle: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Waroenk kita',
+                            style: GoogleFonts.ptSans(
+                              textStyle: TextStyle(
+                                  fontSize: 10.sp, color: Colors.grey),
+                            ),
+                          ),
+                          Text(
+                            '35',
+                            style: GoogleFonts.ptSans(
+                              textStyle: TextStyle(
+                                  fontSize: 13.sp,
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const Text('Empty data');
+          }
+        } else {
+          return Text('State: ${snapshot.connectionState}');
+        }
       },
     );
   }

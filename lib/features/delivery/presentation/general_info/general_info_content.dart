@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +25,10 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
     displayName.text = _auth.currentUser?.displayName ?? 'Unknown';
     email.text = _auth.currentUser?.email ?? 'Unknown';
     phone.text = _auth.currentUser?.phoneNumber ?? 'Unknown';
-    //asveDeliveryOrder('123', );
+    final List<String> orderList = [];
+
+    saveDeliveryOrder(getRandString(5), orderList, 'df', '', _auth.currentUser!.displayName.toString(), _auth.currentUser!.phoneNumber.toString(), '${DateTime.now()}');
+
     super.initState();
   }
 
@@ -31,7 +37,6 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
   TextEditingController phone = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
 
   @override
   Widget build(BuildContext context) {
@@ -204,5 +209,15 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
     );
   }
 
-  void saveDeliveryOrder(String id, List<String> items, String price, String adress, String date) async => await sl<DeliveryCubit>().saveDeliveryOrder(id, items, price, adress, date);
+  String getRandString(int len) {
+    final Random random = Random.secure();
+    final List<int> values =
+        List<int>.generate(len, (int i) => random.nextInt(255));
+    return base64UrlEncode(values);
+  }
+
+  void saveDeliveryOrder(String id, List<String> items, String price,
+          String adress, String name, String phone, String date) =>
+      sl<DeliveryCubit>()
+          .saveDeliveryOrder(id, items, price, adress, name, phone, date);
 }
