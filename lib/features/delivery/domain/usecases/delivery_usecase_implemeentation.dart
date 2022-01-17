@@ -13,7 +13,7 @@ class DeliveryUseCaseImplementation {
 
   @override
   Future<void> saveDelivery(
-      String id, List<String>? items, String? price, String? adress, String? name, String? phone, String? date) {
-    return repository.saveDelivery(id, items, price, adress, name, phone, date);
+      String id, List<String>? items, String? price, String? adress, String? name, String? phone, String? date, String status) {
+    return repository.saveDelivery(id, items, price, adress, name, phone, date, status);
   }
 }

@@ -11,7 +11,7 @@ class DeliveryCubit extends Cubit<void> {
   }
 
   Future<void> saveDeliveryOrder(String id, List<String>? items, String? price,
-          String? adress, String? name, String? phone, String? date) async =>
+          String? adress, String? name, String? phone, String? date, String status) async =>
       _deliveryRepository.saveDelivery(
-          id, items, price, adress, name, phone, date);
+          id, items, price, adress, name, phone, date, status);
 }

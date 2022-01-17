@@ -18,13 +18,13 @@ class DeliveryRepositoryImplementation implements DeliveryRepository {
 
   @override
   Future<void> saveDelivery(String id, List<String>? items, String? price,
-      String? adress, String? name, String? phone, String? date) async {
+      String? adress, String? name, String? phone, String? date, String status) async {
     final User tokenResult = FirebaseAuth.instance.currentUser!;
     final String idToken = tokenResult.uid;
     final CollectionReference data =
         FirebaseFirestore.instance.collection('Delivery');
     final DeliveryModel post =
-        DeliveryModel(id, items, price, adress, name, phone, date);
+        DeliveryModel(id, items, price, adress, name, phone, date, status);
     final Map<String, dynamic> postData = post.toJson();
     await data.doc(idToken.toString()).set(postData);
   }
