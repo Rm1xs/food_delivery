@@ -118,7 +118,27 @@ class _ProfilePageState extends State<ProfilePageContent> {
               ),
             ),
             Container(),
-
+            Positioned(
+              top: 15,
+              left: 360,
+              right: 5,
+              child: InkWell(
+                onTap: () => Navigator.push<void>(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ProfileImage(
+                      camera: camera,
+                    ),
+                  ),
+                ),
+                child: const Icon(
+                  Icons.upload_outlined,
+                  size: 20,
+                  color: Colors.green,
+                ),
+              ),
+            ),
+            Container(),
             //hi
             SizedBox.expand(
               child: DraggableScrollableSheet(
