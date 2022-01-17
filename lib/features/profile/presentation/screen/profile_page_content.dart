@@ -120,6 +120,10 @@ class _ProfilePageState extends State<ProfilePageContent> {
             Container(),
             Container(),
             Container(),
+            Container(),
+            Container(),
+            Container(),
+            Container(),
             //hi
             SizedBox.expand(
               child: DraggableScrollableSheet(
