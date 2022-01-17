@@ -94,7 +94,8 @@ class _ProfilePageState extends State<ProfilePageContent> {
                             );
                       }
                     },
-                  )),
+                  ),
+              ),
             ),
             Positioned(
               top: 15,
@@ -116,6 +117,10 @@ class _ProfilePageState extends State<ProfilePageContent> {
                 ),
               ),
             ),
+            Container(),
+            Container(),
+            Container(),
+            //hi
             SizedBox.expand(
               child: DraggableScrollableSheet(
                 initialChildSize: 0.6,
@@ -308,17 +313,9 @@ class _ProfilePageState extends State<ProfilePageContent> {
                               ),
                             ),
                           ),
-                          orders(),
                           Padding(
                             padding: EdgeInsets.fromLTRB(6.w, 2.h, 6.w, 12.h),
-                            child: Container(
-                              height: 15.h,
-                              width: double.infinity,
-                              child: const Image(
-                                image: AssetImage('assets/images/delivery.png'),
-                                fit: BoxFit.scaleDown,
-                              ),
-                            ),
+                            child: orders(),
                           ),
                         ],
                       ),
@@ -348,7 +345,18 @@ class _ProfilePageState extends State<ProfilePageContent> {
           } else if (snapshot.hasData) {
             final Map<dynamic, dynamic> snapshotData =
                 snapshot.data!.data() as Map;
-            return Padding(
+            return snapshotData['items'].isEmpty
+                ? Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                height: 15.h,
+                width: double.infinity,
+                child: const Image(
+                  image: AssetImage('assets/images/delivery.png'),
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
+            ) : Padding(
               padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0),
               child: ClayContainer(
                 color: Colors.white,

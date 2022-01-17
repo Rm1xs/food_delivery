@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/delivery/data/models/delivery_model.dart';
 import 'package:food_delivery/features/delivery/presentation/cubit/delivery_cubit.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
@@ -25,9 +27,18 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
     displayName.text = _auth.currentUser?.displayName ?? 'Unknown';
     email.text = _auth.currentUser?.email ?? 'Unknown';
     phone.text = _auth.currentUser?.phoneNumber ?? 'Unknown';
+    getLocation();
     final List<String> orderList = [];
 
-    saveDeliveryOrder(getRandString(5), orderList, 'df', '', _auth.currentUser!.displayName.toString(), _auth.currentUser!.phoneNumber.toString(), '${DateTime.now()}');
+    saveDeliveryOrder(
+        getRandString(5),
+        orderList,
+        'df',
+        aderss.value.text,
+        _auth.currentUser!.displayName.toString(),
+        _auth.currentUser!.phoneNumber.toString(),
+        '${DateTime.now()}',
+        StatusDelivery.Uncommitted.name);
 
     super.initState();
   }
@@ -35,6 +46,7 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
   TextEditingController displayName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
+  TextEditingController aderss = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -111,7 +123,9 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
                   ),
                 ),
               ),
-              const TextField(),
+              TextField(
+                controller: aderss,
+              ),
               favourite(snapshotData),
             ],
           ),
@@ -216,8 +230,27 @@ class _GeneralInfoContentState extends State<GeneralInfoContent> {
     return base64UrlEncode(values);
   }
 
-  void saveDeliveryOrder(String id, List<String> items, String price,
-          String adress, String name, String phone, String date) =>
-      sl<DeliveryCubit>()
-          .saveDeliveryOrder(id, items, price, adress, name, phone, date);
+  void saveDeliveryOrder(
+          String id,
+          List<String> items,
+          String price,
+          String adress,
+          String name,
+          String phone,
+          String date,
+          String status) =>
+      sl<DeliveryCubit>().saveDeliveryOrder(
+          id, items, price, adress, name, phone, date, status);
+
+  void getLocation() async {
+    final Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> locations =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    setState(() {
+      aderss.text = locations.first.street.toString() +
+          ', ' +
+          locations.first.name.toString();
+    });
+  }
 }
